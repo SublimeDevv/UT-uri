@@ -1,0 +1,74 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+.info figure i{
+    color: #004c97;
+    font-size: 30px;
+}
+.info{
+    padding: 20px 100px;
+}
+.info figure{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.info figure h1{
+    margin-right: 10px;
+    color: #004c97;
+    font-size: 40px;
+    font-family: roboto-b;
+}
+.info form p{
+    width: 100%;
+    color: #3a3a3a;
+    font-family: roboto-b;
+}
+.info form input{
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-family: roboto-l;
+    margin: 5px 0;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 10px;
+}
+.info form input:focus{
+    outline: 2px solid #004c97;
+}
+.info form textarea{
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-family: roboto-l;
+    margin: 10px 0;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 10px;
+    height: 20%;
+    resize: none;
+}
+.info form input[type="submit"]{
+    width: 30%;
+    background-color: #004c97;
+    font-family: roboto-b;
+    color: #fff;
+}
+.info form div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.info form input[type="submit"]:hover{
+    background-color: #002a52;
+    font-family: roboto-b;
+    color: #fff;
+}
+.info form textarea:focus{
+    outline: 2px solid #004c97;
+}
+@media only screen and (max-width:600px) {	
+    .info{
+        padding: 20px 20px;
+    }
+}

@@ -1,7 +1,7 @@
 .info div{
     background-image: url(../Imagenes/hotel.jpg);
     width: 100%;
-    height: 30%;
+    height: 30vh;
     background-size:auto;
     display: flex;
     align-items: center;
@@ -80,12 +80,15 @@ h3{
         width: 100%;
     }
     .info aside article{
-        
         flex-wrap: wrap;
     }
     .info aside article figure{
         width: 100%;
         margin-bottom: 30px;
+    }
+    .info div p{
+        font-size: 30px;
+        width: 60%;
     }
 }
     

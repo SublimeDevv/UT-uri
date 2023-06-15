@@ -96,6 +96,11 @@ body{
 /*Cuerpo*/
 .main{
 	width: 100%;
+    min-height: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
 	box-sizing: content-box;
 	background-color: #d4d4d4;
 }

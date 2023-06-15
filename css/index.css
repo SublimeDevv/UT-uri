@@ -71,6 +71,12 @@
 	.info span{
 		width: 100%;
 	}
+	.info span h1{
+		font-size: 35px;
+	}
+	.info span p{
+		font-size: 18px;
+	}
 	.info aside{
 		width: 100%;
 		flex-wrap: nowrap;
