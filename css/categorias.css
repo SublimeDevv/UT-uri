@@ -1,0 +1,177 @@
+.info .imagen{
+    width: 100%;
+    height: 35vh;
+    background-image: url(../imagenes/mar.jpg);
+    background-size:cover;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.info .imagen img{
+    height: 60%;
+    display: block;
+}
+.info .imagen p{
+    display: block;
+    width: 100%;
+    padding: 0 15%;
+    text-align: center;
+    color: #fff;
+    font-family: roboto-b;
+    font-size: 30px;
+}
+.info .caribe{
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    padding-left: 0px;
+    background-color: #4A6A77;
+}
+.info .caribe img{
+    width: 30%;
+}
+.info .caribe div{
+    width: 70%;
+    padding-left: 10px;
+    margin: 20px;
+    margin-left: 0;
+    outline: 5px solid #2CAAE2;
+    padding: 20px;
+}
+.info .caribe div h3{
+    font-family: roboto-b;
+    font-size: 35px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.info .caribe div p{
+    font-family: roboto-r;
+    color: #fff;
+    font-size: 20px;
+    text-align: justify;
+}
+.info h2{
+    font-family: roboto-b;
+    font-size: 30px;
+    margin: 20px 0;
+    color: #004C97;
+    text-align: center;
+}
+.info .naturaleza{
+    width: 100%;
+    display: flex;
+    background-color: #055868;
+}
+.info .naturaleza div{
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 7.5%;
+}
+.info .naturaleza div h3{
+    font-size: 30px;
+    width: 100%;
+    font-family: roboto-b;
+    color: #fff;
+    text-align: center;
+}
+.info .naturaleza div p{
+    font-size: 18px;
+    color: #fff;
+    text-align: justify;
+    font-family: roboto-r;
+}
+.info .naturaleza div button{
+    width: 100%;
+    background-color: #C0A625;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    font-family: roboto-b;
+    font-size: 20px;
+}
+.info .naturaleza img{
+    width: 50%;
+}
+.info .aventura{
+    width: 100%;
+    display: flex;
+    background-color: #37818F;
+}
+.info .aventura .text{
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 7.5%;
+}
+.info .aventura div h3{
+    font-size: 30px;
+    width: 100%;
+    font-family: roboto-b;
+    color: #fff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.info .aventura div p{
+    font-size: 18px;
+    color: #fff;
+    text-align: justify;
+    font-family: roboto-r;
+    margin-bottom: 15px;
+}
+.info .aventura div button{
+    width: 100%;
+    background-color: #78B962;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    font-family: roboto-b;
+    font-size: 20px;
+}
+.img{
+    width: 50%;
+    display: flex;
+}
+.img img{
+    width: 50%;
+}
+.info .historicos{
+    width: 100%;
+    display: flex;
+    background-color: #93442B;
+}
+.info .historicos div{
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 7.5%;
+}
+.info .historicos div h3{
+    font-size: 30px;
+    width: 100%;
+    font-family: roboto-b;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.info .historicos div p{
+    font-size: 18px;
+    color: #fff;
+    text-align: justify;
+    font-family: roboto-r;
+    margin-bottom: 15px;
+}
+.info .historicos div button{
+    width: 100%;
+    background-color: #C9BD82;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 0;
+    font-family: roboto-b;
+    font-size: 20px;
+}
+.bajo{
+    width: 50%;
+}
