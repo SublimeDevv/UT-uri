@@ -175,3 +175,31 @@
 .bajo{
     width: 50%;
 }
+@media only screen and (max-width:800px) {	
+    .info section{
+        flex-wrap: wrap;
+    }
+    .info .caribe{padding: 20px;}
+    .info .caribe div{width: 100%; margin: 0;}
+    .info .caribe img{width: 100%;}
+    .info .naturaleza{flex-wrap: wrap-reverse;}
+    .info .naturaleza div{
+        width: 100%;
+    }
+    .info .naturaleza img{
+        width: 100%;
+    }
+    .info .aventura .text{
+        width: 100%;
+    }
+    .info .aventura .img{
+        width: 100%;
+    }
+    .info .historicos{flex-wrap: wrap-reverse;}
+    .info .historicos div{
+        width: 100%;
+    }
+    .info .historicos img{
+        width: 100%;
+    }
+}
