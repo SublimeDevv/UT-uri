@@ -1,0 +1,132 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+.ruta{
+    width: 100%;
+    display: flex;
+    padding: 20px 0;
+}
+.a1{
+    text-decoration: none;
+    color: #004C97;
+    font-size: 25px;
+    font-family: roboto-b;
+}
+.ruta p{
+    font-family: roboto-b;
+    font-size: 25px;
+    margin: 0 10px;
+}
+.a2{
+    text-decoration: none;
+    font-size: 25px;
+    font-family: roboto-b;
+    color: #000;
+}
+.info{
+    padding: 0 5%;
+    min-height: 75vh;
+}
+.form {
+    width: 100%;
+    height: 100%;
+    padding: 0 15%;
+}
+.tarjetas{
+    width: 100%;
+    height: 10vh;
+    margin-bottom: 20px;
+}
+.tarjetas img{
+    height: 100%;
+    margin-right: 20px;
+}
+form{
+    width: 100%;
+    background-color: #D9D9D9;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+}
+input{
+    margin: 15px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 11px 10px;
+    font-family: roboto-r;
+}
+i{
+    font-size: 40px;
+    color: #807A7A;
+}
+span{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.fecha{
+    width: calc((100% - 250px) / 2) ;
+    text-align: center;
+}
+span *{
+    margin-right:10px;
+}
+input:focus{
+    outline: none;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; }
+.num, input[type=text]{
+    width: 100%;    
+}
+.contra{
+    width: calc((100% - 246px));
+}
+form p{
+    color: #807A7A;
+    font-family: roboto-b;
+    margin: 15px 0;
+    font-size: 20px;
+}
+input[type=submit]{
+    background-color: #004C97;
+    color: #fff;
+    width: 30%;
+}
+.boton{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+@media only screen and (max-width:800px) {
+    .a1, .a2{
+        font-size: 15px;
+    }
+    .ruta p{
+        font-size: 15px;
+    }
+    .form {
+        padding: 0 5%;
+    }
+    .uno{
+        order: 1;
+        width: 100%;
+    }
+    .nf{
+        order: 2;
+    }
+    .dos{
+        order: 2;
+        margin-right: 0;
+        width: calc(100% - 50px);
+    }
+    .fecha{
+        order: 2;
+        width: calc((100% - 60px) / 2);
+    }
+    .fecha2{
+        margin: 0;
+    }
+}
