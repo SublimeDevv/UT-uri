@@ -1,8 +1,8 @@
 .info div{
-    background-image: url(../imagenes/hotel.jpg);
+    background-image: url(../Imagenes/Quienes_Somos/banner.jpg);
     width: 100%;
-    height: 30vh;
-    background-size:auto;
+    height: 188px;
+    background-size:cover;
     display: flex;
     align-items: center;
     justify-content: center;

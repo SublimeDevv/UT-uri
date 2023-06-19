@@ -1,7 +1,8 @@
 .info .imagen{
     width: 100%;
     height: 35vh;
-    background-image: url(../imagenes/mar.jpg);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)), url(../Imagenes/mar.jpg);
+    box-shadow: inset 1100px 4px 250px 250px rgba(0, 0, 0, 0.25);
     background-size:cover;
     display: flex;
     flex-wrap: wrap;
@@ -58,6 +59,7 @@
     margin: 20px 0;
     color: #004C97;
     text-align: center;
+    text-transform: uppercase;
 }
 .info .naturaleza{
     width: 100%;
@@ -85,7 +87,7 @@
 }
 .info .naturaleza div button{
     width: 100%;
-    background-color: #C0A625;
+    background-color: #e0c53d;
     border: none;
     border-radius: 10px;
     padding: 10px 0;
@@ -123,7 +125,7 @@
 }
 .info .aventura div button{
     width: 100%;
-    background-color: #78B962;
+    background-color: #81e463;
     border: none;
     border-radius: 10px;
     padding: 10px 0;
@@ -135,7 +137,7 @@
     display: flex;
 }
 .img img{
-    width: 50%;
+    width: 100%;
 }
 .info .historicos{
     width: 100%;
