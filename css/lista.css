@@ -1,138 +1,142 @@
-.ruta{
-    width: 100%;
-    display: flex;
-    padding: 20px 30px;
+.ruta {
+  width: 100%;
+  display: flex;
+  padding: 20px 30px;
 }
-h1{
-    color: #004C97;
-    font-family: roboto-b;
-    font-size: 30px;
-    text-align: center;
-    margin-bottom: 20px;
+h1 {
+  color: #004c97;
+  font-family: roboto-b;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 20px;
 }
-h2{
-    text-align: center;
+h2 {
+  text-align: center;
 }
 
-.a1{
-    text-decoration: none;
-    color: #004C97;
-    font-size: 25px;
-    font-family: roboto-b;
+.a1 {
+  text-decoration: none;
+  color: #004c97;
+  font-size: 25px;
+  font-family: roboto-b;
 }
-.ruta p{
-    font-family: roboto-b;
-    font-size: 25px;
-    margin: 0 10px;
+.ruta p {
+  font-family: roboto-b;
+  font-size: 25px;
+  margin: 0 10px;
 }
-.a2{
-    text-decoration: none;
-    font-size: 25px;
-    font-family: roboto-b;
-    color: #000;
+.a2 {
+  text-decoration: none;
+  font-size: 25px;
+  font-family: roboto-b;
+  color: #000;
 }
-.introduccion{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0 20px;
-    justify-content: space-between;
+.introduccion {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  justify-content: space-between;
 }
-.introduccion p{
-    width: 50%;
-    text-align: justify;
-    font-size: 20px;
-    font-family: roboto-r;
+.introduccion p {
+  width: 50%;
+  text-align: justify;
+  font-size: 20px;
+  font-family: roboto-r;
 }
-.introduccion img{
-    width: 40%;
+.introduccion img {
+  width: 40%;
 }
-.seccion{
-    width: 100%;
-    padding: 20px;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff;
+.seccion {
+  width: 100%;
+  padding: 20px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
 }
-.seccion div{
-    width: 50%;
+.seccion div {
+  width: 50%;
 }
-.seccion div h2{
-    color: #2CAAE2;
-    font-family: roboto-b;
-    font-size: 30px;
-    margin-bottom: 20px;
+.seccion div h2 {
+  color: #2caae2;
+  font-family: roboto-b;
+  font-size: 30px;
+  margin-bottom: 20px;
 }
-.seccion div p{
-    text-align: justify;
-    font-size: 20px;
-    font-family: roboto-r;
-    margin-bottom: 20px;
+.seccion div p {
+  text-align: justify;
+  font-size: 20px;
+  font-family: roboto-r;
+  margin-bottom: 20px;
 }
-.seccion div span{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.seccion div span {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
-.seccion div span button{
-    border: none;
-    width: 60%;
-    background-color: #2CAAE2;
-    padding: 10px 0;
-    border-radius: 10px;
-    color: #fff;
-    margin-bottom: 20px;
+.seccion div span button {
+  border: none;
+  width: 60%;
+  background-color: #2caae2;
+  padding: 10px 0;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 20px;
 }
-.seccion figure{
-    width: 40%;
-    padding: 20px;
-    background-color: #2CAAE2;
+.seccion figure {
+  width: 40%;
+  padding: 20px;
+  background-color: #2caae2;
 }
-.seccion figure img{
-    width: 100%;
+.seccion figure img {
+  width: 100%;
 }
 /*Cambiar formatos*/
-.azul{
-    display: flex;
+.azul {
+  display: flex;
+  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
+  background-color: #2caae2;
+}
+.azul div h2 {
+  color: #fff;
+}
+.azul div p {
+  text-align: justify;
+  color: #fff;
+}
+.azul div span button {
+  background-color: #fff;
+  color: #2caae2;
+}
+.azul figure {
+  background-color: #fff;
+}
+.uno {
+  order: 2;
+}
+.dos {
+  order: 1;
+}
+@media only screen and (max-width: 1000px) {
+  .seleccion {
+    flex-wrap: nowrap;
+  }
+  .seccion div {
+    width: 100%;
+  }
+  .seccion figure {
+    width: 100%;
+  }
+  .introduccion {
     flex-wrap: wrap;
-    flex-wrap: wrap-reverse;
-    background-color: #2CAAE2;
-}
-.azul div h2{
-    color: #fff;
-}
-.azul div p{
-    text-align: justify;
-    color: #fff;
-}
-.azul div span button{
-    background-color: #fff;
-    color: #2CAAE2;
-}
-.azul figure{
-    background-color: #fff;
-}
-.uno{order: 2;}
-.dos{order: 1;}
-@media only screen and (max-width:1000px) {
-    .seleccion{
-        flex-wrap: nowrap;
-    }
-    .seccion div{
-        width: 100%;
-    }
-    .seccion figure{
-        width: 100%;
-    }
-    .introduccion{
-        flex-wrap: wrap;
-    }
-    .introduccion p{
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .introduccion img{
-        width: 100%;
-    }
+  }
+  .introduccion p {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .introduccion img {
+    width: 100%;
+  }
 }
