@@ -119,6 +119,12 @@ h2 {
 .dos {
   order: 1;
 }
+span a{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
 @media only screen and (max-width: 1000px) {
   .seleccion {
     flex-wrap: nowrap;
