@@ -102,6 +102,12 @@ input[type="submit"] {
   display: flex;
   justify-content: center;
 }
+.boton a{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-decoration: none;
+}
 @media only screen and (max-width: 800px) {
   .a1,
   .a2 {
