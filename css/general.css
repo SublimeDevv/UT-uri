@@ -78,6 +78,8 @@ body {
 .usuario figure {
   height: 80%;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
 }
 .usuario figure img {
   width: 80px;
