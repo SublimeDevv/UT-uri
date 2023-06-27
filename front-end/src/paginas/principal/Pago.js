@@ -40,7 +40,7 @@ function Pago() {
                             <p>Nombre del titular</p>
                             <input type="text" />
                             <div className={styles.boton}>
-                                <Link href="/index.html"><input type="submit" value="Pagar" /></Link>
+                                <Link to={'/'}><input type="submit" value="Pagar" /></Link>
                             </div>
                         </form>
                     </div>

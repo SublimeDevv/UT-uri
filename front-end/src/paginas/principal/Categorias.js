@@ -41,7 +41,7 @@ function Categorias() {
                                 sitios más visitados en todo el planeta. Esta ha deslumbrado por
                                 su riqueza natural y la belleza de sus playas, lagos y lagunas.
                             </p>
-                            <Link href="natural.html"><button>VER LUGARES</button></Link>
+                            <Link to={'/lista'}><button>VER LUGARES</button></Link>
                         </div>
                         <img src={require('../../images//categorias/t_Naturaleza.png')} alt="" />
                     </section>
@@ -58,7 +58,7 @@ function Categorias() {
                                 un país rico en biodiversidad, una de las ciudades más populares
                                 para realizar este tipo de turismo es Cancún, Quintana Roo.
                             </p>
-                            <Link href="aventura.html"><button>VER LUGARES</button></Link>
+                            <Link to={'/lista'}><button>VER LUGARES</button></Link>
                         </div>
                     </section>
                     <section className={styles.historicos}>
@@ -73,7 +73,7 @@ function Categorias() {
                                 historia es tan rica como fascinante, tan antigua como
                                 contemporánea.
                             </p>
-                            <Link href="/src/html/categorias/historico.html"><button>VER LUGARES</button></Link>
+                            <Link to={'/lista'}><button>VER LUGARES</button></Link>
                         </div>
                         <img src={require('../../images/categorias/t_Historiaa.jpg')} alt="" className={styles.bajo} />
                     </section>
