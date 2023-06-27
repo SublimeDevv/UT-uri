@@ -10,6 +10,22 @@
   justify-content: center;
   align-items: center;
 }
+.main {
+  width: 100%;
+  min-height: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  box-sizing: content-box;
+  background-color: #d4d4d4;
+}
+.info {
+  width: 80%;
+  background-color: #fff;
+  margin: auto;
+  box-shadow: 0px 0px 1px #333;
+}
 .info .imagen img {
   height: 60%;
   display: block;
@@ -181,7 +197,13 @@
 h3,p{
   margin: 10px 0;
 }
-div a{
+.naturaleza div a{
+  width: 100%;
+}
+.aventura div a{
+  width: 100%;
+}
+.historicos div a{
   width: 100%;
 }
 @media only screen and (max-width: 800px) {
@@ -220,6 +242,11 @@ div a{
     width: 100%;
   }
   .info .historicos img {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .info{
     width: 100%;
   }
 }

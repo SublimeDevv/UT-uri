@@ -4,6 +4,22 @@
   display: flex;
   padding: 20px 0;
 }
+.main {
+  width: 100%;
+  min-height: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  box-sizing: content-box;
+  background-color: #d4d4d4;
+}
+.info {
+  width: 80%;
+  background-color: #fff;
+  margin: auto;
+  box-shadow: 0px 0px 1px #333;
+}
 .a1 {
   text-decoration: none;
   color: #004c97;
@@ -39,7 +55,7 @@
   height: 100%;
   margin-right: 20px;
 }
-form {
+.for {
   width: 100%;
   background-color: #d9d9d9;
   padding: 20px;
@@ -58,7 +74,7 @@ i {
   font-size: 40px;
   color: #807a7a;
 }
-span {
+.for span {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -69,30 +85,30 @@ span {
   width: calc((100% - 250px) / 2);
   text-align: center;
 }
-span * {
+.for span * {
   margin-right: 10px;
 }
-input:focus {
+.for input:focus {
   outline: none;
 }
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+.for input[type="number"]::-webkit-inner-spin-button,
+.for input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 .num,
-input[type="text"] {
+.for input[type="text"] {
   width: 100%;
 }
 .contra {
   width: calc((100% - 246px));
 }
-form p {
+.for p {
   color: #807a7a;
   font-family: roboto-b;
   margin: 15px 0;
   font-size: 20px;
 }
-input[type="submit"] {
+.for input[type="submit"] {
   background-color: #004c97;
   color: #fff;
   width: 30%;
@@ -123,19 +139,22 @@ input[type="submit"] {
     order: 1;
     width: 100%;
   }
-  .nf {
+  i {
     order: 2;
   }
-  .dos {
+  .contra {
     order: 2;
     margin-right: 0;
     width: calc(100% - 50px);
   }
   .fecha {
     order: 2;
-    width: calc((100% - 60px) / 2);
+    margin: 5px;
+    width: calc((100% - 70px) / 2);
   }
-  .fecha2 {
-    margin: 0;
+}
+@media only screen and (max-width: 600px) {
+  .info{
+    width: 100%;
   }
 }

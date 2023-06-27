@@ -15,11 +15,6 @@
   font-family: roboto-l;
   src: url(/src/fonts/Roboto-Light.ttf);
 }
-body {
-  height: 100vh;
-  min-height: 600px;
-  width: 100%;
-}
 /*Menu*/
 .head {
   width: 100%;
@@ -29,23 +24,28 @@ body {
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 2fr 1fr;
   justify-content: space-between;
+  align-items: center;
   grid-template-areas:
     "img menu usr"
     "img menu usr";
   padding: 0 10px;
 }
 .logo {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
+  align-items: center;
   padding: 5px 0;
   display: flex;
   grid-area: img;
 }
-.logo a {
+.logo .a {
   width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
   height: 100%;
 }
-.logo a img {
+.logo .a img {
   height: 100%;
 }
 .menu {
@@ -56,23 +56,26 @@ body {
   justify-content: space-evenly;
   grid-area: menu;
 }
-.menu a {
+.menu .a {
   text-decoration: none;
   color: #fff;
-  font-family: roboto-b;
-  font-weight: bold;
+  height: 100%;
+  font-family: roboto-r;
+  display: flex;
+  align-items: center;
   font-size: 25px;
+  padding: 0 15px;
   text-justify: center;
 }
-.menu a:hover {
-  text-decoration: underline;
+.menu .a:hover{
+  background-color: #014385;
 }
 .usuario {
   grid-area: usr;
   display: flex;
   height: 100%;
   width: 100%;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
 }
 .usuario figure {
@@ -82,18 +85,18 @@ body {
   align-items: center;
 }
 .usuario figure img {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
 }
-.usuario figcaption a {
+.usuario figcaption .a {
   text-decoration: none;
   color: #fff;
   font-family: roboto-r;
   font-size: 20px;
 }
-.usuario figcaption a:hover {
+.usuario figcaption .a:hover {
   text-decoration: underline;
 }
 /*Cuerpo*/
@@ -183,7 +186,7 @@ body {
     justify-content: center;
     width: 100%;
   }
-  .menu a {
+  .menu .a {
     font-size: 15px;
     margin: 0 10px;
   }

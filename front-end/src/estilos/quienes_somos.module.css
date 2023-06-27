@@ -1,3 +1,19 @@
+.main {
+  width: 100%;
+  min-height: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  box-sizing: content-box;
+  background-color: #d4d4d4;
+}
+.info {
+  width: 80%;
+  background-color: #fff;
+  margin: auto;
+  box-shadow: 0px 0px 1px #333;
+}
 .info div {
   background-image: url(../images/quienes_somos/banner.jpg);
   width: 100%;
@@ -14,7 +30,7 @@
   font-size: 30px;
   text-align: center;
 }
-.info section {
+.info .sac {
   width: 100%;
   padding: 40px;
   padding-bottom: 10px;
@@ -25,10 +41,10 @@ h3 {
   font-size: 30px;
   margin-bottom: 20px;
 }
-.info section span {
+.info .sac span {
   display: flex;
 }
-.info section span p {
+.info .sac span p {
   color: #000;
   font-family: roboto-r;
   font-size: 20px;
@@ -36,7 +52,7 @@ h3 {
   width: 60%;
   margin-right: 30px;
 }
-.info section span img {
+.info .sac span img {
   width: 40%;
   border-radius: 20px;
   height: 100%;
@@ -68,15 +84,18 @@ h3 {
   font-family: roboto-l;
   font-size: 20px;
 }
+.sac span{
+  margin: 0;
+}
 @media only screen and (max-width: 1000px) {
-  .info section span {
+  .info .sac span {
     flex-wrap: wrap;
   }
-  .info section span p {
+  .info .sac span p {
     width: 100%;
     margin-bottom: 30px;
   }
-  .info section span img {
+  .info .sac span img {
     width: 100%;
   }
   .info aside article {
@@ -89,5 +108,10 @@ h3 {
   .info div p {
     font-size: 30px;
     width: 60%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .info{
+    width: 100%;
   }
 }

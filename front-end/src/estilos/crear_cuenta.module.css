@@ -1,52 +1,52 @@
-main {
+.man {
   width: 100%;
   min-height: 85vh;
   display: flex;
   justify-content: center;
 }
-section {
+.sec {
   margin-top: 10px;
   width: 100%;
   max-width: 400px;
   padding: 0 20px;
 }
-section * {
-  margin: 7.5px 0;
+.sec * {
+  margin: 5px 0;
   font-family: roboto-r;
   font-size: 20px;
 }
-section input {
+.sec input {
   padding: 10px;
   background-color: #d9d9d9;
   border-radius: 10px;
   border: none;
   width: 100%;
 }
-section span {
+.sec span {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-section input[type="submit"] {
+.sec input[type="submit"] {
   width: 70%;
   background-color: #004c97;
   color: #fff;
 }
-section input:focus {
+.sec input:focus {
   outline: none;
 }
-section img {
+.sec img {
   width: 100%;
 }
-section div {
+.sec div {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-section div * {
+.sec div * {
   width: 47.5%;
 }
-section p {
+.sec p {
   font-family: roboto-b;
   width: 100%;
   width: 100%;
@@ -61,7 +61,7 @@ a {
 .p {
   text-align: center;
 }
-footer {
+.foot {
   margin-top: 20px;
   height: 10vh;
   width: 100%;
@@ -70,17 +70,17 @@ footer {
   justify-content: center;
   flex-wrap: wrap;
 }
-footer div {
+.foot div {
   width: 100%;
   display: flex;
   justify-content: space-around;
 }
-footer div p {
+.foot div p {
   width: 30%;
   font-family: roboto-r;
   text-align: center;
 }
-footer .refe {
+.foot .refe {
   width: 100%;
   text-align: center;
   font-family: roboto-l;
