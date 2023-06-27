@@ -79,6 +79,7 @@
   background-color: #002a52;
   font-family: roboto-b;
   color: #fff;
+  cursor: pointer;
 }
 .info form textarea:focus {
   outline: 2px solid #004c97;

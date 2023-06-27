@@ -111,6 +111,12 @@
   font-family: roboto-b;
   font-size: 20px;
 }
+.info a:hover {
+  cursor: default;
+}
+.info button:hover {
+  cursor: pointer;
+}
 .info .naturaleza img {
   width: 50%;
 }

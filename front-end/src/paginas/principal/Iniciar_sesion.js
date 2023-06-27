@@ -13,7 +13,7 @@ function Iniciar_sesion() {
                     <input type="password" placeholder="Debe tener almenos 8 caracteres" />
                     <Link className={styles.olvidar}>¿Olvidaste tu contraseña?</Link>
                     <span>
-                        <input type="submit" value="Crear cuenta" />
+                        <input type="submit" value="Iniciar sesion" />
                     </span>
                     <p className={styles.p}>
                         Si no tienes una cuenta, <Link to={'/crear'}>click aqui</Link>
