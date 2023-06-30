@@ -4,12 +4,7 @@ import Footer from '../../componentes/Footer';
 import styles from '../../estilos/lista.module.css';
 import { Link } from 'react-router-dom';
 import imagen1 from '../../images/logo.png';
-import imagen2 from '../../images/logo.png';
-import imagen3 from '../../images/logo.png';
-import imagen4 from '../../images/logo.png';
-import imagen5 from '../../images/logo.png';
-import imagen6 from '../../images/logo.png';
-
+import Lista from '../../componentes/Lista';
 function Listas() {
     return (
         <>
@@ -28,86 +23,7 @@ function Listas() {
                         </p>
                         <img src={imagen1} alt="" />
                     </div>
-                    <div className={styles.seccion}>
-                        <div>
-                            <h2></h2>
-                            <p>
-                                
-                            </p>
-                            <span>
-                            <Link to={'/detalles'}>
-                                <button>Detalles y precio</button>
-                            </Link>
-                            </span>
-                        </div>
-                        <figure>
-                            <img src={imagen2} alt="" />
-                        </figure>
-                    </div>
-                    <div className={`${styles.seccion} ${styles.azul}`}>
-                        <div className={styles.uno}>
-                            <h2></h2>
-                            <p>
-                                
-                            </p>
-                            <span>
-                            <Link to={'/detalles'}>
-                                <button>Detalles y precio</button>
-                            </Link>
-                            </span>
-                        </div>
-                        <figure className={styles.dos}>
-                            <img src={imagen3} alt="" />
-                        </figure>
-                    </div>
-                    <div className={styles.seccion}>
-                        <div>
-                            <h2></h2>
-                            <p>
-
-                            </p>
-                            <span>
-                            <Link to={'/detalles'}>
-                                <button>Detalles y precio</button>
-                            </Link>
-                            </span>
-                        </div>
-                        <figure>
-                            <img src={imagen4} alt="" />
-                        </figure>
-                    </div>
-                    <div className={`${styles.seccion} ${styles.azul}`}>
-                        <div className={styles.uno}>
-                            <h2></h2>
-                            <p>
-                                
-                            </p>
-                            <span>
-                            <Link to={'/detalles'}>
-                                <button>Detalles y precio</button>
-                            </Link>
-                            </span>
-                        </div>
-                        <figure className={styles.dos}>
-                            <img src={imagen5} alt="" />
-                        </figure>
-                    </div>
-                    <div className={styles.seccion}>
-                        <div>
-                            <h2></h2>
-                            <p>
-                                
-                            </p>
-                            <span>
-                            <Link to={'/detalles'}>
-                                <button>Detalles y precio</button>
-                            </Link>
-                            </span>
-                        </div>
-                        <figure>
-                            <img src={imagen6} alt="" />
-                        </figure>
-                    </div>
+                    <Lista/>
                 </section>
             </main>
             <Footer />

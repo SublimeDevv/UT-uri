@@ -120,6 +120,13 @@ h2 {
   flex-wrap: wrap;
   flex-wrap: wrap-reverse;
   background-color: #2caae2;
+
+}
+.azul div{
+  order: 2;
+}
+.azul figure{
+  order: 1;
 }
 .azul div h2 {
   color: #fff;
@@ -137,9 +144,6 @@ h2 {
 }
 .uno {
   order: 2;
-}
-.dos {
-  order: 1;
 }
 span a{
   width: 100%;
