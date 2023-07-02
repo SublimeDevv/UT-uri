@@ -1,8 +1,8 @@
-import react from 'react';
+import React from 'react';
 import Header from '../../componentes/Header';
 import Footer from '../../componentes/Footer';
 import styles from '../../estilos/quienes_somos.module.css';
-function Quienes_somos() {
+function QuienesSomos() {
     return (
         <>
             <Header/>
@@ -54,4 +54,4 @@ function Quienes_somos() {
 
     );
 }
-export default Quienes_somos;
+export default QuienesSomos;

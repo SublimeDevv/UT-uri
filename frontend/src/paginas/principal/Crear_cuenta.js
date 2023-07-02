@@ -1,22 +1,28 @@
-import react from 'react';
+import React from 'react';
 import styles from '../../estilos/crear_cuenta.module.css'
 import { Link } from 'react-router-dom';
-function Iniciar_sesion() {
+function CrearCuenta() {
     return (
         <>
             <main className={styles.man}>
                 <section className={styles.sec}>
                     <Link to={'/'}><img src={require('../../images/logo2.png')} alt="" /></Link>
-                    <p>Nombre de usuario o correo electrónico</p>
+                    <div>
+                        <p>Nombre</p>
+                        <p>Apellidos</p>
+                    </div>
+                    <div><input type="text" /><input type="text" /></div>
+                    <p>Correo electrónico</p>
                     <input type="email" />
                     <p>Contraseña</p>
                     <input type="password" placeholder="Debe tener almenos 8 caracteres" />
-                    <Link className={styles.olvidar}>¿Olvidaste tu contraseña?</Link>
+                    <p>Confirmar contraseña</p>
+                    <input type="password" />
                     <span>
-                        <input type="submit" value="Iniciar sesion" />
+                        <input type="submit" value="Crear cuenta" />
                     </span>
                     <p className={styles.p}>
-                        Si no tienes una cuenta, <Link to={'/crear'}>click aqui</Link>
+                        Si tienes una cuenta, <Link to={'/iniciar'}>click aqui</Link>
                     </p>
                 </section>
             </main>
@@ -31,4 +37,4 @@ function Iniciar_sesion() {
         </>
     );
 }
-export default Iniciar_sesion;
+export default CrearCuenta;

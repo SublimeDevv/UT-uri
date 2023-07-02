@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import Header from '../../componentes/Header';
 import Footer from '../../componentes/Footer';
 import styles from '../../estilos/contactanos.module.css';

@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import Header from '../../componentes/Header';
 import Footer from '../../componentes/Footer';
 import styles from '../../estilos/categorias.module.css'
@@ -41,9 +41,9 @@ function Categorias() {
                                 sitios más visitados en todo el planeta. Esta ha deslumbrado por
                                 su riqueza natural y la belleza de sus playas, lagos y lagunas.
                             </p>
-                            <Link to={'/lista'}><button>VER LUGARES</button></Link>
+                            <Link to={'/lista/Naturales'}><button>VER LUGARES</button></Link>
                         </div>
-                        <img src={require('../../images//categorias/t_Naturaleza.png')} alt="" />
+                        <img src={require('../../images/categorias/t_Naturaleza.png')} alt="" />
                     </section>
                     <section className={styles.aventura}>
                         <div className={styles.img}>
@@ -58,7 +58,7 @@ function Categorias() {
                                 un país rico en biodiversidad, una de las ciudades más populares
                                 para realizar este tipo de turismo es Cancún, Quintana Roo.
                             </p>
-                            <Link to={'/lista'}><button>VER LUGARES</button></Link>
+                            <Link to={'/lista/Aventura'}><button>VER LUGARES</button></Link>
                         </div>
                     </section>
                     <section className={styles.historicos}>
@@ -73,7 +73,7 @@ function Categorias() {
                                 historia es tan rica como fascinante, tan antigua como
                                 contemporánea.
                             </p>
-                            <Link to={'/lista'}><button>VER LUGARES</button></Link>
+                            <Link to={'/lista/Historicos'}><button>VER LUGARES</button></Link>
                         </div>
                         <img src={require('../../images/categorias/t_Historiaa.jpg')} alt="" className={styles.bajo} />
                     </section>

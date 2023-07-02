@@ -1,6 +1,5 @@
 import React from "react";
 import style from "../estilos/general.module.css"
-import { Link } from 'react-router-dom';
 function Footer(){
     return(
         <footer className={style.foot}>
