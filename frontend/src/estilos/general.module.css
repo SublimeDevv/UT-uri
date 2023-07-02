@@ -46,7 +46,7 @@
   height: 100%;
 }
 .logo .a img {
-  height: 100%;
+  height: 15vh;
 }
 .menu {
   display: flex;
@@ -131,7 +131,7 @@
   margin-right: 10px;
 }
 .foot figure img {
-  height: 100%;
+  height: 10vh;
 }
 .foot figcaption {
   color: #fff;
@@ -144,8 +144,8 @@
     width: 40px;
     height: 40px;
   }
-  .menu a {
-    font-size: 18px;
+  .menu .a {
+    font-size: 15px;
   }
   .foot figcaption {
     font-size: 15px;
@@ -164,8 +164,8 @@
     width: 50%;
     height: 60%;
   }
-  .logo img {
-    height: 100%;
+  .logo .a img {
+    height: 9vh;
   }
   .usuario {
     width: 50%;
