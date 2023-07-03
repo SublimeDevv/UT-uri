@@ -1,15 +1,15 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import './App.css';
-import Categorias from './paginas/principal/Categorias';
-import Index from './paginas/principal/Index';
-import QuienesSomos from './paginas/principal/Quienes_somos';
-import Contactanos from './paginas/principal/Contactanos';
-import IniciarSesion from './paginas/principal/Iniciar_sesion';
-import CrearCuenta from './paginas/principal/Crear_cuenta';
-import Pago from './paginas/principal/Pago';
-import Listas from './paginas/principal/Listas';
-import Detalles from './paginas/principal/Detalles';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import "./App.css";
+import Categorias from "./paginas/principal/Categorias";
+import Index from "./paginas/principal/Index";
+import QuienesSomos from "./paginas/principal/Quienes_somos";
+import Contactanos from "./paginas/principal/Contactanos";
+import IniciarSesion from "./paginas/principal/Iniciar_sesion";
+import CrearCuenta from "./paginas/principal/Crear_cuenta";
+import Pago from "./paginas/principal/Pago";
+import Listas from "./paginas/principal/Listas";
+import Detalles from "./paginas/principal/Detalles";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         <Route path="/crear" element={<CrearCuenta />} />
         <Route path="/pago" element={<Pago />} />
         <Route path="/lista/:id" element={<Listas />} />
-        <Route path="/detalles/:id" element={<Detalles />} /> { }
+        <Route path="/detalles/:id" element={<Detalles />} /> {}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

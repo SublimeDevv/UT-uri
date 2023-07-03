@@ -1,12 +1,13 @@
 import styles from "../estilos/detalles.module.css";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function Detalle() {
   const { id } = useParams();
   const [detalles, setDetalle] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,6 +16,10 @@ export default function Detalle() {
           `http://localhost:8081/detalles/${id}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
+          if (respuesta.data.Resultado.length === 0) {
+            navigate("/", { replace: true });
+            return;
+          }
           setDetalle(respuesta.data.Resultado);
         } else {
           console.log("Error");
@@ -25,21 +30,31 @@ export default function Detalle() {
     };
 
     fetchData();
-  }, [id]);
-
+  }, [id, navigate]);
   return (
     <>
       {detalles.map((detalle, index) => {
-        //console.log(detalle.imgUno)
         return (
           <>
             <span className={styles.span}>
               <figure className={styles.figure}>
-                <img src={require('../images/detalles/'+detalle.imgUno)} alt="" className={styles.uno} />
-                <img src={require('../images/detalles/'+detalle.imgDos)} alt="" className={styles.dos} />
-                <img src={require('../images/detalles/'+detalle.imgTres)} alt="" className={styles.tres} />
+                <img
+                  src={require("../images/detalles/" + detalle.imgUno)}
+                  alt=""
+                  className={styles.uno}
+                />
+                <img
+                  src={require("../images/detalles/" + detalle.imgDos)}
+                  alt=""
+                  className={styles.dos}
+                />
+                <img
+                  src={require("../images/detalles/" + detalle.imgTres)}
+                  alt=""
+                  className={styles.tres}
+                />
               </figure>
-              <div className={styles.div}>
+              <div key={index} className={styles.div}>
                 <h1>{detalle.nombre}</h1>
                 <p className={styles.p}>{detalle.descripcion}</p>
                 <p className={styles.p}></p>
