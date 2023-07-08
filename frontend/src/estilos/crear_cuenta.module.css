@@ -1,3 +1,4 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
 .man {
   width: 100%;
   min-height: 85vh;
@@ -7,11 +8,10 @@
 .sec {
   margin-top: 10px;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   padding: 0 20px;
 }
 .sec * {
-  margin: 5px 0;
   font-family: roboto-r;
   font-size: 20px;
 }
@@ -27,9 +27,13 @@
   border-radius: 10px;
   border: none;
   width: 100%;
+  z-index: 1;
+  position: relative;
+  margin: 0;
 }
-.sec span {
+.sec .submit {
   width: 100%;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
@@ -47,19 +51,25 @@
 .sec input:focus {
   outline: none;
 }
-.sec img {
+.img{
   width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.sec img {
+  width: 80%;
 }
 .sec div {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.sec div * {
+.sec div span {
   width: 47.5%;
 }
 .sec p {
   font-family: roboto-b;
+  margin: 15px 0;
   width: 100%;
   width: 100%;
   color: #004c97;
@@ -104,4 +114,30 @@ a {
   color: #4484c4;
   font-family: roboto-r;
   text-align: right;
+}
+.submit i{
+  position: relative;
+  font-size: 30px;
+  width: 0;
+  right: 40px;
+  top:7px;
+  z-index: 10;
+  color: #002950;
+}
+.submit i:hover{
+  cursor: pointer;
+}
+.error{
+  width: 100%;
+  color: #f00;
+  position: relative;
+  top: -15px;
+  z-index: 0;
+  background-color: #FFC4C4;
+  padding: 20px 10px 5px;
+  margin-bottom: -10px;
+  border-radius: 0 0 10px 10px;
+}
+.ocultar{
+  display: none;
 }
