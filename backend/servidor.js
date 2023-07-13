@@ -1,6 +1,7 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import jwt from 'jsonwebtoken'
 
 import "dotenv/config";
 
@@ -50,7 +51,8 @@ app.post("/login", (peticion, respuesta) => {
     "SELECT * FROM VW_Obtener_Usuarios WHERE CorreoUsuario = ? AND Contrasenia = ?";
   conexion.query(sql, arrValores, (error, resultado) => {
     if (error) return respuesta.json({ Error: "Error en la consulta" });
-    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+    const token = jwt.sign({ correo: Correo }, "secreto");
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado, token });
   });
 });
 
@@ -61,7 +63,8 @@ app.post("/verificar", (peticion, respuesta) => {
       "SELECT * FROM VW_Obtener_Usuarios WHERE CorreoUsuario = ?";
     conexion.query(sql, arrValores, (error, resultado) => {
       if (error) return respuesta.json({ Error: "Error en la consulta" });
-      return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+      const token = jwt.sign({ correo: Correo }, "secreto");
+      return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado,token });
     });
   });
 
@@ -77,4 +80,70 @@ app.post("/registrarUsuario", (peticion, respuesta) => {
       }
   });
 });
-  
+
+
+// CRUD
+app.post('/registrarUsuario', (req, res) => {
+  const { Nombre, Apellido, Correo, Contrasenia } = req.body;
+  const query = 'CALL SP_RegistrarUsuario(?, ?, ?, ?)';
+  conexion.query(query, [Nombre, Apellido, Correo, Contrasenia], (error, resultado) => {
+    if (error) {
+      console.error('Error al registrar el usuario:', error);
+      res.status(500).json({ Error: 'No se pudo añadir al usuario' });
+    } else {
+      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+    }
+  });
+});
+
+app.post('/eliminarViaje', (req, res) => {
+  const { id } = req.body;
+  const query = 'CALL SP_EliminarViaje(?)';
+  conexion.query(query, [id], (error, resultado) => {
+    if (error) {
+      console.error('Error al eliminar el viaje:', error);
+      res.status(500).json({ Error: 'No se pudo eliminar el viaje' });
+    } else {
+      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+    }
+  });
+});
+
+app.post('/eliminarUsuario', (req, res) => {
+  const { id } = req.body;
+  const query = 'CALL SP_EliminarUsuario(?)';
+  conexion.query(query, [id], (error, resultado) => {
+    if (error) {
+      console.error('Error al eliminar el usuario:', error);
+      res.status(500).json({ Error: 'No se pudo eliminar el usuario' });
+    } else {
+      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+    }
+  });
+});
+
+app.post('/modificarUsuario', (req, res) => {
+  const { Nombre, Apellido, Correo, Contrasenia, idUsuario } = req.body;
+  const query = 'CALL SP_ModificarUsuario(?, ?, ?, ?, ?)';
+  conexion.query(query, [Nombre, Apellido, Correo, Contrasenia, idUsuario], (error, resultado) => {
+    if (error) {
+      console.error('Error al modificar el usuario:', error);
+      res.status(500).json({ Error: 'No se pudo modificar el usuario' });
+    } else {
+      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+    }
+  });
+});
+
+app.post('/modificarViaje', (req, res) => {
+  const { nombre, descripcion, personas, precio, imgUno, imgDos, imgTres, id } = req.body;
+  const query = 'CALL SP_ModificarViaje(?, ?, ?, ?, ?, ?, ?, ?)';
+  conexion.query(query, [nombre, descripcion, personas, precio, imgUno, imgDos, imgTres, id], (error, resultado) => {
+    if (error) {
+      console.error('Error al modificar el viaje:', error);
+      res.status(500).json({ Error: 'No se pudo modificar el viaje' });
+    } else {
+      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+    }
+  });
+});

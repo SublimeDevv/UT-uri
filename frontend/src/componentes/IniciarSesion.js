@@ -23,10 +23,10 @@ export default function IniciarSesion() {
   });
 
   useEffect(() => {
-    const verificarSesion = localStorage.getItem("autenticado");
+    const verificarSesion = localStorage.getItem("token");
     if (verificarSesion) {
       navigate("/");
-    } 
+    }
   }, [navigate]);
 
   const cambioEntrada = ({ target }) => {
@@ -67,7 +67,7 @@ export default function IniciarSesion() {
 
       if (resultado.length > 0) {
         navigate("/");
-        localStorage.setItem("autenticado", true);
+        localStorage.setItem("token", response.data.token)
       } else {
         setTexto({...texto,["Correo"]:"El usuario que ingresaste no existe."})
         setClas({...clas,["Correo"]:styles.error});
