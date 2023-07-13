@@ -38,6 +38,7 @@ export default function CrearUsuario() {
     }
   }, [navigate]);
 
+
   const cambioEntrada = ({ target }) => {
     const { name, value } = target;
     setBody({ ...body, [name]: value });
@@ -90,7 +91,7 @@ export default function CrearUsuario() {
       return;
     }
     try {
-      await axios.post(
+      const respuesta = await axios.post(
         "http://localhost:8081/registrarUsuario",
         {
           Nombre: body.Nombre,
@@ -105,7 +106,7 @@ export default function CrearUsuario() {
         }
       );
       navigate("/");
-      localStorage.setItem("autenticado", true);
+      localStorage.setItem("token", respuesta.data.token);
     } catch (error) {
       console.log("Error en registrar el usuario: " + error);
     }
