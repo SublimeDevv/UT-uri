@@ -1,3 +1,8 @@
+.principal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
 .navegacion{
     background-color: #212D39;
     width: 18.75%;
@@ -7,6 +12,9 @@
     display: flex;
     align-content: space-between;
     flex-wrap: wrap;
+}
+.navegacion p{
+    margin: 7px;
 }
 .head{
     width: 100%;
@@ -53,7 +61,7 @@
 }
 .head .opciones2{
     width: 100%;
-    margin-left: 60px;
+    margin-left: 50px;
     color: #fff;
     font-family:roboto-l;
 }
@@ -62,4 +70,19 @@
 }
 .navegacion .figure img{
     width: 90%;
+}
+.contenedores{
+    width: 91.25%;
+}
+.contenedores .titulo{
+    width: 100%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.titulo h1{
+    font-family: roboto-b;
+    display: inline;
+    font-size: 35px;
 }

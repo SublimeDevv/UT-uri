@@ -38,7 +38,7 @@ function Lista() {
   }
   return (
     <>
-      <h1>{listas[0].nombre_cat}</h1>
+      <h1 className={styles.h1}>{listas[0].nombre_cat}</h1>
       <div className={styles.introduccion}>
         <p>{listas[0].descripcion}</p>
         <img
