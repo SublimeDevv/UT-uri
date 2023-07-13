@@ -15,6 +15,8 @@ export default function CrearUsuario() {
   const [ocultar,setOcultar]=useState({
     uno:"password",
     dos:"password",
+    ojo1:"nf nf-md-eye",
+    ojo2:"nf nf-md-eye",
   });
   const [texto,setTexto]=useState({
     Nombre: "",
@@ -171,7 +173,7 @@ export default function CrearUsuario() {
               onChange={cambioEntrada}
               name="Contrasenia"
             />
-            <i className="nf nf-md-eye" id="1" onClick={cambiar}></i>
+            <i className={ocultar.ojo1} onClick={cambiar}></i>
           </span>
           <aside className={clas.Contrasenia}>{texto.Contrasenia}</aside>
           <p>Confirmar contraseña</p>
@@ -182,7 +184,7 @@ export default function CrearUsuario() {
               onChange={cambioEntrada}
               name="ConfirmarContrasenia"
             />
-            <i className="nf nf-md-eye" id="2" onClick={cambiar}></i>
+            <i className={ocultar.ojo2} onClick={cambiar}></i>
           </span>
           <aside className={clas.ConfirmarContrasenia}>{texto.ConfirmarContrasenia}</aside>
           <span className={styles.submit}>

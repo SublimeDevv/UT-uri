@@ -76,7 +76,7 @@ input {
   padding: 11px 10px;
   font-family: roboto-r;
 }
-i {
+.main i {
   font-size: 40px;
   color: #807a7a;
 }
@@ -145,7 +145,7 @@ i {
     order: 1;
     width: 100%;
   }
-  i {
+  .main i {
     order: 2;
   }
   .contra {
