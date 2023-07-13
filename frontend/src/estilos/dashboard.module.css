@@ -2,5 +2,64 @@
     background-color: #212D39;
     width: 18.75%;
     height: 100%;
+    padding: 20px;
     min-width: 200px;
+    display: flex;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+.head{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.head figure{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.head figcaption{
+    text-align: center;
+    color:#fff;
+    width: 100%;
+    font-family:roboto-r;
+}
+.head figure img{
+    width: 80%;
+    max-width: 150px;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    border: 5px solid #fff;
+}
+.head i{
+    color: #fff;
+    width: 100%;
+    display: inline;
+    margin: 20px 0 0 0;
+    font-size: 20px;
+}
+.head i p{
+    display: inline;
+    color: #fff;
+    margin-left: 10px;
+    font-family:roboto-r;
+}
+.head .opciones{
+    width: 100%;
+    margin-left: 30px;
+    color: #fff;
+    font-family:roboto-r;
+}
+.head .opciones2{
+    width: 100%;
+    margin-left: 60px;
+    color: #fff;
+    font-family:roboto-l;
+}
+.navegacion figure{
+    width: 100%;
+}
+.navegacion .figure img{
+    width: 90%;
 }
