@@ -36,7 +36,6 @@ function Lista() {
   if (listas.length === 0) {
     return null;
   }
-
   return (
     <>
       <h1>{listas[0].nombre_cat}</h1>
@@ -55,13 +54,13 @@ function Lista() {
           estilo = `${styles.seccion} ${styles.azul}`;
           stylecount = 0;
         }
-
+        const list = lista.info.split(".");
         return (
           <>
             <div key={index} className={estilo}>
               <div>
                 <h2>{lista.nombre_lug}</h2>
-                <p>{lista.info}</p>
+                <p>{list[0]+"."+list[1]+"."}</p>
                 <span>
                   <Link to={"/detalles/" + lista.id}>
                     <button>Detalles y precio</button>

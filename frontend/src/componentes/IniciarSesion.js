@@ -5,10 +5,23 @@ import axios from "axios";
 
 export default function IniciarSesion() {
   const navigate = useNavigate();
-  const [eCorreo, setECorreo] = useState("");
-  const [eContra, setEContra] = useState("");
-  const [clas1, setClas1] = useState(`${styles.error} ${styles.ocultar}`);
-  const [clas2, setClas2] = useState(`${styles.error} ${styles.ocultar}`);
+  const [body, setBody] = useState({
+    Correo: "",
+    Contrasenia: ""
+  });
+  const [ocultar,setOcultar]=useState({
+    uno:"password",
+    dos:"password",
+  });
+  const [clas, setClas]=useState({
+    Correo:`${styles.error} ${styles.ocultar}`,
+    Contrasenia:`${styles.error} ${styles.ocultar}`,
+  });
+  const [texto,setTexto]=useState({
+    Correo: "",
+    Contrasenia: "",
+  });
+
   useEffect(() => {
     const verificarSesion = localStorage.getItem("autenticado");
     if (verificarSesion) {
@@ -16,22 +29,24 @@ export default function IniciarSesion() {
     } 
   }, [navigate]);
 
-  const [body, setBody] = useState({
-    Correo: "",
-    Contrasenia: ""
-  });
-
   const cambioEntrada = ({ target }) => {
     const { name, value } = target;
     setBody({ ...body, [name]: value });
   };
 
   const Enviar = async () => {
-    setClas1(`${styles.error} ${styles.ocultar}`);
-    setClas2(`${styles.error} ${styles.ocultar}`);
+    for (let clases in clas){
+      clas[clases]=`${styles.error} ${styles.ocultar}`;
+    }
     if (!body.Correo.length || !body.Contrasenia) {
-      if (body.Correo.length===0) { setECorreo("Debe llenar todos los campos."); setClas1(styles.error); }
-      if (body.Contrasenia.length===0) { setEContra("Debe llenar todos los campos."); setClas2(styles.error); }
+      let actualizarClas={...clas}; let actualizarTexto={...texto};
+      for (let cuerpo in body){
+        if(body[cuerpo].length===0){
+          actualizarTexto[cuerpo]="Debe llenar todos los campos.";
+          actualizarClas[cuerpo]=styles.error;
+        }
+      }
+      setClas(actualizarClas); setTexto(actualizarTexto);
       return;
     }
 
@@ -41,8 +56,8 @@ export default function IniciarSesion() {
 
     const passcor = verificarCorreo.data.Resultado[0];
     if (passcor && passcor.Contrasenia !== body.Contrasenia) {
-      setEContra("Contraseña incorrecta."); 
-      setClas2(styles.error);
+      setTexto({...texto,["Contrasenia"]:"Contraseña incorrecta."})
+      setClas({...clas,["Contrasenia"]:styles.error});
       return;
     }
 
@@ -54,8 +69,8 @@ export default function IniciarSesion() {
         navigate("/");
         localStorage.setItem("autenticado", true);
       } else {
-        setECorreo("El usuario que ingresaste no existe."); 
-        setClas1(styles.error);  
+        setTexto({...texto,["Correo"]:"El usuario que ingresaste no existe."})
+        setClas({...clas,["Correo"]:styles.error});
       }
     } catch (error) {
       console.log("Error en el inicio de sesión: " + error);
@@ -64,22 +79,21 @@ export default function IniciarSesion() {
 
   const cambiar = (e) => {
     const elemento = e.target.id;
-    const input = document.getElementById("contra" + elemento);
     if (e.target.classList.contains("nf-md-eye")) {
       e.target.classList.remove("nf-md-eye");
       e.target.classList.add("nf-md-eye_off");
-      input.type = "text";
+      (elemento==1) ? setOcultar({...ocultar,["uno"]:"text"}) : setOcultar({...ocultar,["dos"]:"text"})
     } else {
       e.target.classList.remove("nf-md-eye_off");
       e.target.classList.add("nf-md-eye");
-      input.type = "password";
+      (elemento==1) ? setOcultar({...ocultar,["uno"]:"password"}) : setOcultar({...ocultar,["dos"]:"password"})
     }
   }
 
   return (
     <main className={styles.man}>
       <section className={styles.sec}>
-        <Link to={"/"}>
+        <Link to={"/"} className={styles.img}>
           <img src={require("../images/logo2.png")} alt="" />
         </Link>
         <p>Correo electrónico</p>
@@ -89,11 +103,11 @@ export default function IniciarSesion() {
           onChange={cambioEntrada}
           name="Correo"
         />
-        <aside className={clas1}>{eCorreo}</aside>
+        <aside className={clas.Correo}>{texto.Correo}</aside>
         <p>Contraseña</p>
         <span className={styles.submit}>
           <input
-            type="password"
+            type={ocultar.uno}
             placeholder="Debe tener al menos 8 caracteres"
             value={body.Contrasenia}
             onChange={cambioEntrada}
@@ -102,7 +116,7 @@ export default function IniciarSesion() {
           />
           <i className="nf nf-md-eye" id="1" onClick={cambiar}></i>
         </span>
-        <aside className={"error " + clas2}>{eContra}</aside>
+        <aside className={clas.Contrasenia}>{texto.Contrasenia}</aside>
         <Link className={styles.olvidar}>¿Olvidaste tu contraseña?</Link>
         <span className={styles.submit}>
           <input type="submit" value="Iniciar sesión" onClick={Enviar} />

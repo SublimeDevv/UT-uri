@@ -10,6 +10,7 @@ import CrearCuenta from "./paginas/principal/Crear_cuenta";
 import Pago from "./paginas/principal/Pago";
 import Listas from "./paginas/principal/Listas";
 import Detalles from "./paginas/principal/Detalles";
+import Dashboard from "./paginas/principal/Dashboard";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/lista/:id" element={<Listas />} />
         <Route path="/detalles/:id" element={<Detalles />} /> {}
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/dashboard" element={<Dashboard/>}/>
       </Routes>
     </BrowserRouter>
   );
