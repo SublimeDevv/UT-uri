@@ -3,11 +3,13 @@
     height: 100%;
     display: grid;
     grid-gap: 20px;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas:    "tiempo tiempo estadistica estadistica"
-                            "usuario usuario usuario admin"
-                            "lista detalle detalle detalle";
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 2fr 1fr 1fr 2fr 2fr;
+    grid-template-areas:    "tiempo tiempo tiempo estadistica estadistica estadistica"
+                            "tiempo tiempo tiempo estadistica estadistica estadistica"
+                            "usuario usuario usuario usuario admin admin"
+                            "lista lista detalle detalle detalle detalle";
+    padding: 20px;
 
 }
 .opcion{
@@ -15,6 +17,37 @@
     height: 100%;
     border-radius: 30px;
     background-color: #d9d9d9;
+    position: relative;
+}
+.opcion p{
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    left: 15px;
+    font-family: roboto-r;
+}
+.opcion h3{
+    color: #004c97;
+    font-family: roboto-b;
+    font-size: 30px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.opcion3{
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background-color: #d9d9d9;
+}
+.opcion:hover{
+    outline: 2px solid #807a7a;
+    transition-property: all;
+	transition-duration: 0.1s;
+	transform: scale(1.03);
+    top: -3px;
 }
 .hora{
     grid-area: tiempo;
@@ -27,7 +60,7 @@
     color: #807a7a;
     margin: 0;
     font-family: roboto-r;
-    font-size: 30px;
+    font-size: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,13 +73,19 @@
 .administrador{grid-area: admin;}
 .listas{grid-area: lista;}
 .detalles{grid-area: detalle;}
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 950px) {
     .componente{
         display: flex;
         flex-wrap: wrap;
         overflow-y: scroll;
     }
+    .hora p{
+        font-size: 30px;
+    }
     .opcion{
+        height: calc((100% / 3) - 15px);
+    }
+    .opcion3{
         height: calc((100% / 3) - 15px);
     }
     ::-webkit-scrollbar {

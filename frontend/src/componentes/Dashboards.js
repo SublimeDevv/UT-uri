@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/dashboards.module.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Dashboards() {
     const [valores,setValores]=useState({
-        usuario:"",
+        valor:"usuarios",
+        usuario:"Numero",
+        admin:"Numero",
+        lista:"Numero",
+        detalles:"Numero",
     });
     const [fecha,setFecha] = useState({
         call:"",
@@ -29,28 +32,24 @@ export default function Dashboards() {
     return (
         <>
             <section className={styles.componente}>
-                <span className={`${styles.hora} ${styles.opcion}`}>
+                <span className={`${styles.hora} ${styles.opcion3}`}>
                     <p><i className="nf nf-seti-time_cop"></i> {fecha.hora}</p>
                     <p><i className="nf nf-fa-calendar"></i> {fecha.call}</p>
                 </span>
-                <span className={`${styles.estadistica} ${styles.opcion}`}>
+                <span className={`${styles.estadistica} ${styles.opcion3}`}>
                     
                 </span>
                 <span className={`${styles.usuario} ${styles.opcion}`}>
-                    <p>Numero de Usuarios:</p>
-                    <h3>{valores.usuario}</h3>
+                    <h3>{valores.usuario} Usuarios</h3>
                 </span>
                 <span className={`${styles.administrador} ${styles.opcion}`}>
-                    <p></p>
-                    <h3></h3>
+                    <h3>{valores.admin} Administradores</h3>
                 </span>
                 <span className={`${styles.detalles} ${styles.opcion}`}>
-                    <p></p>
-                    <h3></h3>
+                    <h3>{valores.detalles} Viajes</h3>
                 </span>
                 <span className={`${styles.listas} ${styles.opcion}`}>
-                    <p></p>
-                    <h3></h3>
+                    <h3>{valores.lista} Lugares</h3>
                 </span>
             </section>
         </>

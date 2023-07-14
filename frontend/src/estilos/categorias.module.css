@@ -200,7 +200,14 @@
 .bajo {
   width: 50%;
 }
-h3,p{
+.info h3{
+  margin: 10px 0;
+  color: #004c97;
+  font-family: roboto-b;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.caribe p{
   margin: 10px 0;
 }
 .naturaleza div a{

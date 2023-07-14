@@ -148,9 +148,9 @@ app.post('/modificarViaje', (req, res) => {
   });
 });
 app.post("/usuarios", (peticion, respuesta) => {
-  const { Nombre } = peticion.body;
-  const query = 'call datos(?)';
-  conexion.query(query,[Nombre],(error, resultado) => {
+  const { valor } = peticion.body;
+  const query = 'select count(*) as cuenta from ?';
+  conexion.query(query,[valor],(error, resultado) => {
     if (error) {
       console.error("Error al registrar el usuario:", error);
       respuesta.status(500).json({ Error: "No se pudo añadir al usuario" });

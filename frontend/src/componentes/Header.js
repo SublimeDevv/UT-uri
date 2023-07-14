@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "../estilos/general.module.css"
 import { Link } from 'react-router-dom';
 function Header(){
+    const [text,setText]=useState(<Link className={style.a} to={'/iniciar'}>Iniciar Sesion</Link>);
     return(
         <>
         <header className={style.head}>
@@ -13,7 +14,7 @@ function Header(){
                 <img src={require('../images/usuario.png')} alt="" id={style.imgUsuario} />
                 </figure>
                 <figcaption id={style.nomUsuario}>
-                <Link className={style.a} to={'/iniciar'}>Inicia sesion</Link>
+                {text}
                 </figcaption>
             </span>
             <nav className={style.menu}>

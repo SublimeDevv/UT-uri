@@ -1,0 +1,96 @@
+/*Usuarios*/
+.musuario{
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    justify-content: center;
+    align-content: space-evenly;
+}
+
+.musuario figure{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+.musuario figcaption{
+    text-align: center;
+    color:#575454;
+    width: 100%;
+    font-size: 30px;
+    font-family:roboto-r;
+}
+.musuario figure img{
+    width: 80%;
+    max-width: 150px;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    border: 5px solid #807a7a;
+}
+.musuario p{
+    text-align: left;
+    color:#575454;
+    width: 100%;
+    font-size: 20px;
+    font-family:roboto-r;
+}
+.musuario input[type="email"]{
+    width: 100%;
+    outline: none;
+    font-family: roboto-r;
+}
+.musuario input[type="email"]:focus{
+    outline: 2px solid #575454;
+}
+.checkbox{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checkbox input{
+    width: 20px;
+    height: 20px;
+}
+.checkbox label{
+    font-size: 20px;
+    font-family: roboto-r;
+    color: #575454;
+    margin-left: 5px;
+}
+.submit{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.submit *{
+    width: 40%;
+}
+.rojo{
+    background-color: #f44;
+    color: #fff;
+}
+.rojo:hover{
+    outline: 2.5px solid #f00;
+}
+.rojo:active{
+    background-color: #f00;
+    outline: 2.5px solid #900;
+}
+.verde{
+    background-color: #44f;
+    color: #fff;
+}
+.verde:hover{
+    outline: 2.5px solid #00f;
+}
+.verde:active{
+    background-color: #00f;
+    outline: 2.5px solid #009;
+}
+/*Administradores*/
