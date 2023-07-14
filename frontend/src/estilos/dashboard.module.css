@@ -64,6 +64,7 @@
     margin-left: 50px;
     color: #fff;
     font-family:roboto-l;
+    cursor:pointer;
 }
 .navegacion figure{
     width: 100%;
@@ -81,8 +82,48 @@
     align-items: center;
     justify-content: center;
 }
+#puntero{
+    cursor: pointer;
+}
 .titulo h1{
+    width: 80%;
     font-family: roboto-b;
     display: inline;
+    text-align: center;
     font-size: 35px;
+}
+.dashboard{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+}
+#mostrar{
+    display: none;
+}
+@media only screen and (max-width: 600px) {
+    .contenedores{
+        width: 100%;
+    }
+    .ocultar{
+        position: absolute;
+        left: -300px;
+        z-index: 2;
+        transition: all 1s;
+    }
+    .mostrar{
+        position: absolute;
+        left: 0;
+		transition: all 1s;
+        z-index: 2;
+    }
+    #mostrar{
+        position: absolute;
+        left: 5%;
+        top: calc((15% - 15px)/2);
+        font-size: 30px;
+        display: block;
+        font-weight: bold;
+        cursor:pointer;
+    }
 }
