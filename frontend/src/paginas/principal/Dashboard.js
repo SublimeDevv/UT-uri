@@ -15,7 +15,7 @@ export default function Dashboard() {
         nombre: "Nombre",
     });
     useEffect(() => {
-        if (localStorage.getItem("nivel")==1) {
+        if (!localStorage.getItem("token")) {
             navigate("/");
         }
         const fetchData = async () => {

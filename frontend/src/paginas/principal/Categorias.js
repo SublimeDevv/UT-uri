@@ -1,12 +1,39 @@
-import React from 'react';
 import Header from '../../componentes/Header';
 import Footer from '../../componentes/Footer';
-import styles from '../../estilos/categorias.module.css'
-import { Link } from 'react-router-dom';
+import styles from '../../estilos/categorias.module.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
+let estilo = "";
+let stylecount = 0;
 function Categorias() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [listas, setListas] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const respuesta = await axios.get(`http://localhost:8081/obtenerCategorias`);
+                if (respuesta.data.Estatus === "EXITOSO") {
+                    if (respuesta.data.Resultado.length === 0) {
+                        navigate('/', { replace: true });
+                        return;
+                    }
+                    setListas(respuesta.data.Resultado);
+                } else {
+                    console.log("Error");
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [id]);
     return (
         <>
-            <Header/>
+            <Header />
             <main className={styles.main}>
                 <section className={styles.info}>
                     <div className={styles.imagen}>
@@ -31,52 +58,33 @@ function Categorias() {
                         </div>
                     </section>
                     <h2>Categorias</h2>
-                    <section className={styles.naturaleza}>
-                        <div>
-                            <h3>TOURS DE NATURALEZA</h3>
-                            <p>
-                                El estado de Quintana Roo es una de las regiones más bellas del
-                                mundo; por algo es el estado mexicano más atractivo para el
-                                turismo nacional e internacional y marco de Cancún, uno de los
-                                sitios más visitados en todo el planeta. Esta ha deslumbrado por
-                                su riqueza natural y la belleza de sus playas, lagos y lagunas.
-                            </p>
-                            <Link to={'/lista/Naturales'}><button>VER LUGARES</button></Link>
-                        </div>
-                        <img src={require('../../images/categorias/t_Naturaleza.png')} alt="" />
-                    </section>
-                    <section className={styles.aventura}>
-                        <div className={styles.img}>
-                            <img src={require('../../images/categorias/t_Aventura.jpg')} alt="" />
-                        </div>
-                        <div className={styles.text}>
-                            <h3>TOURS DE AVENTURA</h3>
-                            <p>
-                                El turismo de aventura es una actividad, que desafía las
-                                capacidades físicas y mentales de las personas que buscan una
-                                dosis de adrenalina en lugares rodeados de naturaleza. México es
-                                un país rico en biodiversidad, una de las ciudades más populares
-                                para realizar este tipo de turismo es Cancún, Quintana Roo.
-                            </p>
-                            <Link to={'/lista/Aventura'}><button>VER LUGARES</button></Link>
-                        </div>
-                    </section>
-                    <section className={styles.historicos}>
-                        <div>
-                            <h3>TOURS HISTORICOS</h3>
-                            <p>
-                                Los sitios arqueológicos de la Riviera Maya ocupan un lugar
-                                privilegiado en los tours culturales, pero no son los únicos
-                                lugares de interés donde los turistas sedientos de conocimiento se
-                                deleitan con el arte y la historia. Los tours culturales son una
-                                excelente manera de aprender más sobre esta magnífica región cuya
-                                historia es tan rica como fascinante, tan antigua como
-                                contemporánea.
-                            </p>
-                            <Link to={'/lista/Historicos'}><button>VER LUGARES</button></Link>
-                        </div>
-                        <img src={require('../../images/categorias/t_Historiaa.jpg')} alt="" className={styles.bajo} />
-                    </section>
+                    {listas.map((lista, index) => {
+                        if (stylecount === 0) {
+                            stylecount = 1;
+                            estilo = styles.seccion;
+                        } else {
+                            estilo = `${styles.seccion} ${styles.azul}`;
+                            stylecount = 0;
+                        }
+                        return (
+                            <>
+                                <div key={index} className={estilo}>
+                                    <figure>
+                                        <img src={require("../../images/categorias/" + lista.Imagen)} alt="Sin imagen" />
+                                    </figure>
+                                    <div>
+                                        <h2>Tours {lista.Nombre}</h2>
+                                        <p>{lista.Descripcion}</p>
+                                        <span>
+                                            <Link to={"/lista/" + lista.Nombre}>
+                                                <button>Ver Lugares</button>
+                                            </Link>
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        );
+                    })}
                 </section>
             </main>
             <Footer />

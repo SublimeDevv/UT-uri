@@ -44,10 +44,11 @@
   display: flex;
   padding: 20px;
   padding-left: 0px;
-  background-color: #4a6a77;
+  background-color: #055868;
 }
 .info .caribe img {
-  width: 30%;
+  width: 40%;
+  position: relative;
 }
 .info .caribe div {
   width: 70%;
@@ -78,146 +79,102 @@
   text-align: center;
   text-transform: uppercase;
 }
-.info .naturaleza {
+.seccion {
   width: 100%;
-  display: flex;
-  background-color: #055868;
-}
-.info .naturaleza div {
-  width: 50%;
-  display: flex;
   flex-wrap: wrap;
-  padding: 20px 7.5%;
-}
-.info .naturaleza div h3 {
-  font-size: 30px;
-  width: 100%;
-  font-family: roboto-b;
-  color: #fff;
-  text-align: center;
-}
-.info .naturaleza div p {
-  font-size: 18px;
-  color: #fff;
-  text-align: justify;
-  font-family: roboto-r;
-}
-.info .naturaleza div button {
-  width: 100%;
-  background-color: #e0c53d;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 0;
-  font-family: roboto-b;
-  font-size: 20px;
-}
-.info a:hover {
-  cursor: default;
-}
-.info button:hover {
-  cursor: pointer;
-}
-.info .naturaleza img {
-  width: 50%;
-}
-.info .aventura {
-  width: 100%;
   display: flex;
-  background-color: #37818f;
+  background-color: #fff;
 }
-.info .aventura .text {
+.seccion div {
   width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 20px 7.5%;
+  padding: 20px;
 }
-.info .aventura div h3 {
-  font-size: 30px;
-  width: 100%;
-  font-family: roboto-b;
-  color: #fff;
-  margin-bottom: 15px;
-  text-align: center;
-}
-.info .aventura div p {
-  font-size: 18px;
-  color: #fff;
-  text-align: justify;
-  font-family: roboto-r;
-  margin-bottom: 15px;
-}
-.info .aventura div button {
-  width: 100%;
-  background-color: #81e463;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 0;
-  font-family: roboto-b;
-  font-size: 20px;
-}
-.img {
-  width: 50%;
-  display: flex;
-}
-.img img {
-  width: 100%;
-}
-.info .historicos {
-  width: 100%;
-  display: flex;
-  background-color: #93442b;
-}
-.info .historicos div {
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 20px 7.5%;
-}
-.info .historicos div h3 {
-  font-size: 30px;
-  width: 100%;
-  font-family: roboto-b;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 15px;
-}
-.info .historicos div p {
-  font-size: 18px;
-  color: #fff;
-  text-align: justify;
-  font-family: roboto-r;
-  margin-bottom: 15px;
-}
-.info .historicos div button {
-  width: 100%;
-  background-color: #c9bd82;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 0;
-  font-family: roboto-b;
-  font-size: 20px;
-}
-.bajo {
-  width: 50%;
-}
-.info h3{
-  margin: 10px 0;
-  color: #004c97;
+.seccion div h2 {
+  color: #2caae2;
   font-family: roboto-b;
   font-size: 30px;
   margin-bottom: 20px;
 }
-.caribe p{
-  margin: 10px 0;
+.seccion div p {
+  text-align: justify;
+  font-size: 19px;
+  font-family: roboto-r;
+  margin-bottom: 20px;
 }
-.naturaleza div a{
+.seccion div span {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.seccion div span button {
+  border: none;
+  width: 60%;
+  background-color: #2caae2;
+  padding: 10px 0;
+  border-radius: 10px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.seccion figure {
+  width: 50%;
+  display: flex;
+}
+.seccion figure img {
   width: 100%;
 }
-.aventura div a{
-  width: 100%;
+/*Cambiar formatos*/
+.azul {
+  display: flex;
+  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
+  background-color: #2caae2;
+
 }
-.historicos div a{
-  width: 100%;
+.azul div{
+  order: 1;
+}
+.azul figure{
+  order: 2;
+}
+.azul div h2 {
+  color: #fff;
+}
+.azul div p {
+  text-align: justify;
+  color: #fff;
+}
+.azul div span button {
+  background-color: #fff;
+  color: #2caae2;
+}
+.azul figure {
+  background-color: #fff;
+}
+@media only screen and (max-width: 1000px) {
+  .seleccion {
+    flex-wrap: nowrap;
+  }
+  .seccion div {
+    width: 100%;
+  }
+  .seccion figure {
+    width: 100%;
+  }
+  .introduccion {
+    flex-wrap: wrap;
+  }
+  .introduccion p {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .introduccion img {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .info{
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 800px) {
   .info section {
@@ -231,30 +188,6 @@
     margin: 0;
   }
   .info .caribe img {
-    width: 100%;
-  }
-  .info .naturaleza {
-    flex-wrap: wrap-reverse;
-  }
-  .info .naturaleza div {
-    width: 100%;
-  }
-  .info .naturaleza img {
-    width: 100%;
-  }
-  .info .aventura .text {
-    width: 100%;
-  }
-  .info .aventura .img {
-    width: 100%;
-  }
-  .info .historicos {
-    flex-wrap: wrap-reverse;
-  }
-  .info .historicos div {
-    width: 100%;
-  }
-  .info .historicos img {
     width: 100%;
   }
 }

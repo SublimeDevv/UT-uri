@@ -45,10 +45,10 @@ export default function MAdministradores() {
                     {listas.map((lista, index) => {
                         return (
                             <>
-                                <span tabIndex="0" className={styles.contAdmin} id={lista.id} onClick={(event) => { seleccionar(lista.id,event); }} >
+                                <span tabIndex="0" className={styles.contAdmin} id={lista.Id} onClick={(event) => { seleccionar(lista.Id,event); }} >
                                     <img src={require('../images/' + lista.Avatar)} alt="Imagen de administrador"/>
-                                    <p className={styles.p}>{lista.NombreUsuario}</p>
-                                    <p className={styles.p}>{lista.ApellidoUsuario}</p>
+                                    <p className={styles.p}>{lista.Nombre}</p>
+                                    <p className={styles.p}>{lista.Apellido}</p>
                                 </span>
                             </>
 
