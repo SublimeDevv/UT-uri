@@ -94,3 +94,11 @@ app.post("/VerificarCorreo", (peticion, respuesta) => {
     }
   });
 });
+
+app.get("/ObtenerProductos", (peticion, respuesta) => {
+  const sql = "SELECT * FROM VW_Obtener_Viajes";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
