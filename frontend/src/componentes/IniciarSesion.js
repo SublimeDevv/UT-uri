@@ -66,8 +66,10 @@ export default function IniciarSesion() {
       const resultado = response.data.Resultado;
 
       if (resultado.length > 0) {
-        navigate("/");
-        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("correo",response.data.Resultado[0].CorreoUsuario);
+        localStorage.setItem("nivel", response.data.Resultado[0].nivel);
+        navigate("/dashboard");
       } else {
         setTexto({...texto,["Correo"]:"El usuario que ingresaste no existe."})
         setClas({...clas,["Correo"]:styles.error});

@@ -32,7 +32,7 @@ export default function CrearUsuario() {
   });
 
   useEffect(() => {
-    const verificarSesion = localStorage.getItem("autenticado");
+    const verificarSesion = localStorage.getItem("token");
     if (verificarSesion) {
       navigate("/");
     }
@@ -105,8 +105,9 @@ export default function CrearUsuario() {
           },
         }
       );
-      navigate("/");
       localStorage.setItem("token", respuesta.data.token);
+      localStorage.setItem("correo",respuesta.data.Resultado[0].CorreoUsuario);
+      navigate("/");
     } catch (error) {
       console.log("Error en registrar el usuario: " + error);
     }

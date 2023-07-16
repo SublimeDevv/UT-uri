@@ -159,3 +159,31 @@ app.post("/usuarios", (peticion, respuesta) => {
     }
 });
 });
+app.get("/ObtenerProductos", (peticion, respuesta) => {
+  const sql = "SELECT * FROM VW_Obtener_Listas";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+app.get("/ObtenerUsuarios", (peticion, respuesta) => {
+  const sql = "SELECT * FROM ver_usuarios";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+app.get("/obtenerCantidad", (peticion, respuesta) => {
+  const sql = "select * from cantidad";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+app.get("/obtenerLista", (peticion, respuesta) => {
+  const sql = "select nombre_cat from vw_obtener_listas group by nombre_cat";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
