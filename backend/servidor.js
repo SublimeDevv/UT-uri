@@ -102,3 +102,24 @@ app.get("/ObtenerProductos", (peticion, respuesta) => {
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
+app.get("/ObtenerUsuarios", (peticion, respuesta) => {
+  const sql = "select * from vw_obtener_usuarios where RolID = 1";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+app.get("/obtenerCantidad", (peticion, respuesta) => {
+  const sql = "select * from cantidad";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+app.get("/obtenerLista", (peticion, respuesta) => {
+  const sql = "select Nombre from vw_obtenercategorias";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});

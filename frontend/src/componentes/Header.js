@@ -22,7 +22,7 @@ function Header(){
             </figure>
             <span className={style.usuario}>
                 <figure>
-                <img src={require('../images/usuario.png')} alt="" id={style.imgUsuario} />
+                <img src={require('../images/default_avatar.jpg')} alt="" id={style.imgUsuario} />
                 </figure>
                 <figcaption id={style.nomUsuario}>
                 {text}

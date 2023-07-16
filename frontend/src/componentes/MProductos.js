@@ -116,7 +116,7 @@ export default function MProductos() {
                     {listas.map((lista, index) => {
                         return (
                             <>
-                                <option value={lista.nombre_cat}>{lista.nombre_cat}</option>
+                                <option value={lista.Nombre}>{lista.Nombre}</option>
                             </>
 
                         );

@@ -64,7 +64,7 @@ export default function CrearUsuario() {
       Correo: body.Correo
     });
 
-    if (verificarCorreo.data.Resultado[0]) {
+    if (verificarCorreo.data.Resultado && verificarCorreo.data.Resultado.length > 0) {
       setTexto({...texto,["Correo"]:"El correo que ingresaste ya existe."});
       setClas({...clas,["Correo"]:styles.error});
       return;
@@ -106,8 +106,8 @@ export default function CrearUsuario() {
         }
       );
       navigate("/");
-      localStorage.setItem("token", respuesta.data.token);
-      localStorage.setItem("correo",respuesta.data.Resultado[0].CorreoUsuario);
+      localStorage.setItem("token", respuesta.data.Token);
+      localStorage.setItem("correo",body.Correo);
     } catch (error) {
       console.log(error)
       console.log("Error al registrar el usuario: " + error);
