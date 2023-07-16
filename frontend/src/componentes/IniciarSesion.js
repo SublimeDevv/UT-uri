@@ -45,10 +45,10 @@ export default function IniciarSesion() {
     try {
     const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", { Correo: body.Correo });
     if (verificarCorreo.data.Estatus !== 'EXITOSO') return setErrores({ Correo: "El usuario que ingresaste no existe." });
-
     const verificarUsuario = await axios.post("http://localhost:8081/IniciarSesion", body);
     if (verificarUsuario.data.Estatus === "EXITOSO") {
       localStorage.setItem("token", verificarUsuario.data.token);
+      localStorage.setItem("correo",body.Correo);
       navigate("/");
       await obtenerUsuarioActual();
     } else {
