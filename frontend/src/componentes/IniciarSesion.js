@@ -48,7 +48,6 @@ export default function IniciarSesion() {
     const verificarUsuario = await axios.post("http://localhost:8081/IniciarSesion", body);
     if (verificarUsuario.data.Estatus === "EXITOSO") {
       localStorage.setItem("token", verificarUsuario.data.token);
-      localStorage.setItem("correo",body.Correo);
       navigate("/");
       await obtenerUsuarioActual();
     } else {

@@ -52,12 +52,12 @@ export default function Productos() {
           estilo = `${styles.seccion} ${styles.azul}`;
           stylecount = 0;
         }
-        const list = lista.info.split(".");
+        const list = lista.Informacion.split(".");
         return (
           <>
             <div key={index} className={estilo}>
               <div>
-                <h2>{lista.nombre_lug}</h2>
+                <h2>{lista.NombreLugar}</h2>
                 <p>{list[0]+"."+list[1]+"."}</p>
                 <span>
                   <Link to={"/detalles/" + lista.Id}>

@@ -134,7 +134,6 @@ export default function CrearUsuario() {
 
       navigate("/");
       localStorage.setItem("token", respuesta.data.Token);
-      localStorage.setItem("correo",body.Correo);
       await obtenerUsuarioActual();
     } catch (error) {
       console.log("Error al registrar el usuario: " + error);
