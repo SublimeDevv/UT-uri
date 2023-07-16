@@ -7,7 +7,7 @@ export default function MUsuario() {
         checkbox: false,
     });
     const [menu, setMenu] = useState({
-        img: "usuario.png",
+        img: "default_avatar.jpg",
         nombre: "Nombre",
     });
     const [texto, setTexto] = useState({
@@ -38,23 +38,23 @@ export default function MUsuario() {
             setClas(actualizarClas); setTexto(actualizarTexto);
             return;
         }
-        const verificarCorreo = await axios.post("http://localhost:8081/verificar", {
+        const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", {
             Correo: body.Correo
         });
 
-        if (!verificarCorreo.data.Resultado[0]) {
+        if (!(verificarCorreo.data.Resultado && verificarCorreo.data.Resultado.length > 0)) {
             setTexto({ ...texto, ["Correo"]: "El correo que ingresaste no existe." });
             setClas({ ...clas, ["Correo"]: styles.error });
             setMenu({
-                img: "usuario.png",
+                img: "default_avatar.jpg",
                 nombre:"Error",
             });
             return;
         }
         
         setMenu({
-            img: verificarCorreo.data.Resultado[0].img,
-            nombre:verificarCorreo.data.Resultado[0].NombreUsuario,
+            img: verificarCorreo.data.Resultado[0].Avatar,
+            nombre:verificarCorreo.data.Resultado[0].Nombre,
         });
     }
     const cambiar = () => {

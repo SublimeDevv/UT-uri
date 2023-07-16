@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
     const navigate = useNavigate();
     const [menu, setMenu] = useState({
-        img: "usuario.png",
+        img: "default_avatar.jpg",
         nombre: "Nombre",
     });
     useEffect(() => {
@@ -20,13 +20,13 @@ export default function Dashboard() {
         }
         const fetchData = async () => {
             try {
-                const verificarCorreo = await axios.post("http://localhost:8081/verificar", {
+                const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", {
                     Correo: localStorage.getItem("correo"),
                 });
                 if (verificarCorreo.data.Estatus === "EXITOSO") {
                     setMenu({
-                        img: verificarCorreo.data.Resultado[0].img,
-                        nombre: verificarCorreo.data.Resultado[0].NombreUsuario,
+                        img: verificarCorreo.data.Resultado[0].Avatar,
+                        nombre: verificarCorreo.data.Resultado[0].Nombre,
                     });
                 } else {
                     console.log("Error");
