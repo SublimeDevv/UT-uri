@@ -15,7 +15,7 @@ function Lista() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/lista/${id}`);
+        const respuesta = await axios.get(`http://localhost:8081/ObtenerViajes/${id}`);
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {
             navigate('/', { replace: true });
@@ -36,17 +36,20 @@ function Lista() {
   if (listas.length === 0) {
     return null;
   }
+
   return (
     <>
-      <h1 className={styles.h1}>{listas[0].nombre_cat}</h1>
+      <h1 className={styles.h1}>{listas[0].NombreCategoria}</h1>
       <div className={styles.introduccion}>
-        <p>{listas[0].descripcion}</p>
+        <p>{listas[0].Descripcion}</p>
         <img
-          src={require("../images/categorias/" + listas[0].CategoriaImg)}
-          alt=""
+          src={require("../images/categorias/" + listas[0].Imagen)}
+          alt="Sin imagen"
         />
       </div>
       {listas.map((lista, index) => {
+        const obtenerImagenes = JSON.parse(lista.Imagenes)
+        console.log(obtenerImagenes[0])
         if (stylecount === 0) {
           stylecount = 1;
           estilo = styles.seccion;
@@ -54,21 +57,21 @@ function Lista() {
           estilo = `${styles.seccion} ${styles.azul}`;
           stylecount = 0;
         }
-        const list = lista.info.split(".");
+        const list = lista.Informacion.split(".");
         return (
           <>
             <div key={index} className={estilo}>
               <div>
-                <h2>{lista.nombre_lug}</h2>
+                <h2>{lista.NombreLugar}</h2>
                 <p>{list[0]+"."+list[1]+"."}</p>
                 <span>
-                  <Link to={"/detalles/" + lista.id}>
+                  <Link to={"/detalles/" + lista.Id}>
                     <button>Detalles y precio</button>
                   </Link>
                 </span>
               </div>
               <figure>
-                <img src={require("../images/" + lista.img)} alt="" />
+                <img src={require("../images/"+ obtenerImagenes[0])} alt="Sin imagen" />
               </figure>
             </div>
           </>

@@ -60,7 +60,7 @@ export default function CrearUsuario() {
       return;
     }
 
-    const verificarCorreo = await axios.post("http://localhost:8081/verificar", {
+    const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", {
       Correo: body.Correo
     });
 
@@ -92,7 +92,7 @@ export default function CrearUsuario() {
     }
     try {
       const respuesta = await axios.post(
-        "http://localhost:8081/registrarUsuario",
+        "http://localhost:8081/RegistrarUsuario",
         {
           Nombre: body.Nombre,
           Apellido: body.Apellido,
@@ -106,9 +106,10 @@ export default function CrearUsuario() {
         }
       );
       navigate("/");
-      localStorage.setItem("token", respuesta.data.token);
+      localStorage.setItem("token", respuesta.data.Token);
     } catch (error) {
-      console.log("Error en registrar el usuario: " + error);
+      console.log(error)
+      console.log("Error al registrar el usuario: " + error);
     }
   };
   const cambiar = (e) => {

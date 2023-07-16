@@ -9,17 +9,10 @@ export default function IniciarSesion() {
     Correo: "",
     Contrasenia: ""
   });
-  const [ocultar,setOcultar]=useState({
-    uno:"password",
-    dos:"password",
-  });
-  const [clas, setClas]=useState({
-    Correo:`${styles.error} ${styles.ocultar}`,
-    Contrasenia:`${styles.error} ${styles.ocultar}`,
-  });
-  const [texto,setTexto]=useState({
+  const [ocultar, setOcultar] = useState(true);
+  const [errores, setErrores] = useState({
     Correo: "",
-    Contrasenia: "",
+    Contrasenia: ""
   });
 
   useEffect(() => {
@@ -29,66 +22,43 @@ export default function IniciarSesion() {
     }
   }, [navigate]);
 
-  const cambioEntrada = ({ target }) => {
-    const { name, value } = target;
-    setBody({ ...body, [name]: value });
+  const cambioEntrada = (e) => {
+    setBody({ ...body, [e.target.name]: e.target.value });
+    setErrores({ ...errores, [e.target.name]: "" });
   };
 
   const Enviar = async () => {
-    for (let clases in clas){
-      clas[clases]=`${styles.error} ${styles.ocultar}`;
-    }
-    if (!body.Correo.length || !body.Contrasenia) {
-      let actualizarClas={...clas}; let actualizarTexto={...texto};
-      for (let cuerpo in body){
-        if(body[cuerpo].length===0){
-          actualizarTexto[cuerpo]="Debe llenar todos los campos.";
-          actualizarClas[cuerpo]=styles.error;
-        }
-      }
-      setClas(actualizarClas); setTexto(actualizarTexto);
-      return;
-    }
+    setErrores({ Correo: "", Contrasenia: "" });
 
-    const verificarCorreo = await axios.post("http://localhost:8081/verificar", {
-      Correo: body.Correo
-    });
-
-    const passcor = verificarCorreo.data.Resultado[0];
-    if (passcor && passcor.Contrasenia !== body.Contrasenia) {
-      setTexto({...texto,["Contrasenia"]:"Contraseña incorrecta."})
-      setClas({...clas,["Contrasenia"]:styles.error});
+    if (!body.Correo || !body.Contrasenia) {
+      setErrores((prevenirErrores) => ({
+        ...prevenirErrores,
+        Correo: body.Correo ? "" : "Debe llenar todos los campos.",
+        Contrasenia: body.Contrasenia ? "" : "Debe llenar todos los campos."
+      }));
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:8081/login", body);
-      const resultado = response.data.Resultado;
+      const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", { Correo: body.Correo });
+      if (verificarCorreo.data.Estatus !== 'EXITOSO') return setErrores({ Correo: "El usuario que ingresaste no existe." });
 
-      if (resultado.length > 0) {
+      const verificarUsuario = await axios.post("http://localhost:8081/IniciarSesion", body);
+      if (verificarUsuario.data.Estatus === "EXITOSO") {
         navigate("/");
-        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("token", verificarUsuario.data.token);
       } else {
-        setTexto({...texto,["Correo"]:"El usuario que ingresaste no existe."})
-        setClas({...clas,["Correo"]:styles.error});
+        setErrores({ Contrasenia: "Contraseña incorrecta." });
       }
+
     } catch (error) {
-      console.log("Error en el inicio de sesión: " + error);
+      console.log("Se produjo un error: ", error);
     }
   };
 
-  const cambiar = (e) => {
-    const elemento = e.target.id;
-    if (e.target.classList.contains("nf-md-eye")) {
-      e.target.classList.remove("nf-md-eye");
-      e.target.classList.add("nf-md-eye_off");
-      (elemento==1) ? setOcultar({...ocultar,["uno"]:"text"}) : setOcultar({...ocultar,["dos"]:"text"})
-    } else {
-      e.target.classList.remove("nf-md-eye_off");
-      e.target.classList.add("nf-md-eye");
-      (elemento==1) ? setOcultar({...ocultar,["uno"]:"password"}) : setOcultar({...ocultar,["dos"]:"password"})
-    }
-  }
+  const toggleMostrarContrasenia = () => {
+    setOcultar(!ocultar);
+  };
 
   return (
     <main className={styles.man}>
@@ -103,20 +73,24 @@ export default function IniciarSesion() {
           onChange={cambioEntrada}
           name="Correo"
         />
-        <aside className={clas.Correo}>{texto.Correo}</aside>
+        {errores.Correo && <aside className={styles.error}>{errores.Correo}</aside>}
         <p>Contraseña</p>
         <span className={styles.submit}>
           <input
-            type={ocultar.uno}
+            type={ocultar ? "password" : "text"}
             placeholder="Debe tener al menos 8 caracteres"
             value={body.Contrasenia}
             onChange={cambioEntrada}
             name="Contrasenia"
-            id="contra1"
           />
-          <i className="nf nf-md-eye" id="1" onClick={cambiar}></i>
+          <i
+            className={`nf ${ocultar ? "nf-md-eye" : "nf-md-eye_off"}`}
+            onClick={toggleMostrarContrasenia}
+          ></i>
         </span>
-        <aside className={clas.Contrasenia}>{texto.Contrasenia}</aside>
+        {errores.Contrasenia && (
+          <aside className={styles.error}>{errores.Contrasenia}</aside>
+        )}
         <Link className={styles.olvidar}>¿Olvidaste tu contraseña?</Link>
         <span className={styles.submit}>
           <input type="submit" value="Iniciar sesión" onClick={Enviar} />
