@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/dashboards.module.css";
 import axios from "axios";
+import Vusuarios from "./Vusuarios";
+import Vadmins from "./Vadmins";
+import Vlistas from "./Vlistas";
+import Vproductos from "./Vproductos";
 
-export default function Dashboards() {
+export default function Dashboards({components}) {
+    const redirigir = (componente) =>{
+        components(componente);
+    }
     const [valores, setValores] = useState({
         usuario: "Numero",
         admin: "Numero",
@@ -57,16 +64,16 @@ export default function Dashboards() {
                 <span className={`${styles.estadistica} ${styles.opcion3}`}>
 
                 </span>
-                <span className={`${styles.usuario} ${styles.opcion}`}>
+                <span className={`${styles.usuario} ${styles.opcion}`} onClick={() => redirigir(<Vusuarios/>)}>
                     <h3>{valores.usuario} Usuarios</h3>
                 </span>
-                <span className={`${styles.administrador} ${styles.opcion}`}>
+                <span className={`${styles.administrador} ${styles.opcion}`} onClick={() => redirigir(<Vadmins/>)}>
                     <h3>{valores.admin} Admins</h3>
                 </span>
-                <span className={`${styles.detalles} ${styles.opcion}`}>
+                <span className={`${styles.detalles} ${styles.opcion}`} onClick={() => redirigir(<Vproductos/>)}>
                     <h3>{valores.detalles} Viajes</h3>
                 </span>
-                <span className={`${styles.listas} ${styles.opcion}`}>
+                <span className={`${styles.listas} ${styles.opcion}`} onClick={() => redirigir(<Vlistas/>)}>
                     <h3>{valores.lista} Lugares</h3>
                 </span>
             </section>

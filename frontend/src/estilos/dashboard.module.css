@@ -1,3 +1,7 @@
+html{
+    width: 100vw;
+    height: 100vh;
+}
 .principal{
     width: 100%;
     height: 100%;
@@ -73,7 +77,8 @@
     width: 90%;
 }
 .contenedores{
-    width: 91.25%;
+    width: 91.25vw;
+    overflow-x: auto;
 }
 .contenedores .titulo{
     width: 100%;

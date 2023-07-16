@@ -5,6 +5,10 @@ import MUsuario from "../../componentes/MUsuario";
 import MAdministradores from "../../componentes/MAdministradores";
 import MProductos from "../../componentes/MProductos";
 import MListas from "../../componentes/MListas";
+import Vusuarios from "../../componentes/Vusuarios";
+import Vadmins from "../../componentes/Vadmins";
+import Vlistas from "../../componentes/Vlistas";
+import Vproductos from "../../componentes/Vproductos";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -38,11 +42,11 @@ export default function Dashboard() {
 
         fetchData();
     }, []);
+    const components = (componente) => { setComponentes(componente); ocultar(); }
     const [clases, setClases] = useState({ menu: `${styles.navegacion} ${styles.ocultar}`, });
-    const [componentes, setComponentes] = useState(<Dashboards />);
+    const [componentes, setComponentes] = useState(<Dashboards  components={components}/>);
     const mostrar = () => { setClases({ ...clases, ["menu"]: `${styles.navegacion} ${styles.mostrar}` }); }
     const ocultar = () => { setClases({ ...clases, ["menu"]: `${styles.navegacion} ${styles.ocultar}` }); }
-    const components = (componente) => { setComponentes(componente); ocultar(); }
 
     return (
         <>
@@ -53,10 +57,10 @@ export default function Dashboard() {
                             <img src={require('../../images/' + menu.img)} />
                             <figcaption>{menu.nombre}</figcaption>
                         </figure>
-                        <i className="nf nf-md-home_account" id={styles.puntero}><p onClick={() => components(<Dashboards />)}>Dashboard</p></i>
+                        <i className="nf nf-md-home_account" id={styles.puntero}><p onClick={() => components(<Dashboards  components={components}/>)}>Dashboard</p></i>
                         <i className="nf nf-fae-tools"><p>Administracion</p></i>
                         <p className={styles.opciones}>Usuarios</p>
-                        <p className={styles.opciones2} onClick={() => components(<MUsuario />)}>Usuarios</p>
+                        <p className={styles.opciones2} onClick={() => components(<MUsuario/>)}>Usuarios</p>
                         <p className={styles.opciones2} onClick={() => components(<MAdministradores />)}>Administradores</p>
                         <p className={styles.opciones}>Listas</p>
                         <p className={styles.opciones2} onClick={() => components(<MListas />)}>Listas</p>
