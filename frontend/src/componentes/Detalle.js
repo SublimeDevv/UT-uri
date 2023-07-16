@@ -13,7 +13,7 @@ export default function Detalle() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/detalles/${id}`
+          `http://localhost:8081/ObtenerDetalles/${id}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {
@@ -34,38 +34,39 @@ export default function Detalle() {
   return (
     <>
       {detalles.map((detalle, index) => {
+        const obtenerImagenes = JSON.parse(detalle.Imagenes)
         return (
           <>
             <span className={styles.span}>
               <figure className={styles.figure}>
                 <img
-                  src={require("../images/detalles/" + detalle.imgUno)}
+                  src={require("../images/detalles/" + obtenerImagenes[1])}
                   alt=""
                   className={styles.uno}
                 />
                 <img
-                  src={require("../images/detalles/" + detalle.imgDos)}
+                  src={require("../images/detalles/" + obtenerImagenes[2])}
                   alt=""
                   className={styles.dos}
                 />
                 <img
-                  src={require("../images/detalles/" + detalle.imgTres)}
+                  src={require("../images/detalles/" + obtenerImagenes[3])}
                   alt=""
                   className={styles.tres}
                 />
               </figure>
               <div key={index} className={styles.div}>
-                <h1>{detalle.nombre}</h1>
-                <p className={styles.p}>{detalle.descripcion}</p>
+                <h1>{detalle.Nombre}</h1>
+                <p className={styles.p}>{detalle.Descripcion}</p>
                 <p className={styles.p}></p>
                 <span>
                   <figure className={styles.fig}>
                     <div className={styles.orden}>
-                      <i className="nf nf-md-walk">{detalle.personas}</i>
+                      <i className="nf nf-md-walk">{detalle.Personas}</i>
                     </div>
                     <p className={styles.Personas}>Personas</p>
                   </figure>
-                  <p className={styles.p2}>$ {detalle.precio}</p>
+                  <p className={styles.p2}>$ {detalle.Precio}</p>
                 </span>
                 <section id={styles.boton}>
                   <Link to={"/pago"}>

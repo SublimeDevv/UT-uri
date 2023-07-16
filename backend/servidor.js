@@ -1,14 +1,14 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
+import bcrypt from 'bcrypt';
 
 import "dotenv/config";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 
 const conexion = mysql.createConnection({
   server: process.env.SERVER,
@@ -22,142 +22,77 @@ conexion.connect((error) => {
   else console.log("¡Conectado al servidor!");
 });
 
-app.listen(8081, () => {
+app.listen(process.env.PORT, () => {
   console.log("Servidor iniciado");
 });
 
-app.get("/lista/:id", (peticion, respuesta) => {
+app.get("/ObtenerViajes/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "SELECT * FROM VW_Obtener_Listas WHERE nombre_cat = ?";
+  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE NombreCategoria = ?";
   conexion.query(sql, [id], (error, resultado) => {
-    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    if (error) return respuesta.status(500).json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
 
-app.get("/detalles/:id", (peticion, respuesta) => {
+app.get("/ObtenerDetalles/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "SELECT * FROM VW_Obtener_Detalles WHERE idlugar = ?";
+  const sql = "SELECT * FROM VW_Obtener_Lugares_Detalles WHERE LugarID = ?";
   conexion.query(sql, [id], (error, resultado) => {
-    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    if (error) return respuesta.status(500).json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
 
-app.post("/login", (peticion, respuesta) => {
-  const { Correo, Contrasenia } = peticion.body;
-  const arrValores = [Correo, Contrasenia];
-  const sql =
-    "SELECT * FROM VW_Obtener_Usuarios WHERE CorreoUsuario = ? AND Contrasenia = ?";
-  conexion.query(sql, arrValores, (error, resultado) => {
-    if (error) return respuesta.json({ Error: "Error en la consulta" });
-    const token = jwt.sign({ correo: Correo }, "secreto");
-    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado, token });
-  });
-});
-
-app.post("/verificar", (peticion, respuesta) => {
-    const { Correo } = peticion.body;
-    const arrValores = [Correo];
-    const sql =
-      "SELECT * FROM VW_Obtener_Usuarios WHERE CorreoUsuario = ?";
-    conexion.query(sql, arrValores, (error, resultado) => {
-      if (error) return respuesta.json({ Error: "Error en la consulta" });
-      const token = jwt.sign({ correo: Correo }, "secreto");
-      return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado,token });
-    });
-  });
-
-app.post("/registrarUsuario", (peticion, respuesta) => {
-    const { Nombre, Apellido, Correo, Contrasenia } = peticion.body;
-    const query = "CALL SP_RegistrarUsuario(?, ?, ?, ?)";
-    conexion.query(query, [Nombre, Apellido, Correo, Contrasenia], (error, resultado) => {
+app.post("/RegistrarUsuario", async (peticion, respuesta) => {
+  const { Nombre, Apellido, Correo, Contrasenia } = peticion.body;
+  try {
+    const hash = await bcrypt.hash(Contrasenia, 10);
+    const query = "CALL SP_Registrar_Usuario(?, ?, ?, ?)";
+    conexion.query(query, [Nombre, Apellido, Correo, hash], (error) => {
       if (error) {
-        console.error("Error al registrar el usuario:", error);
-        respuesta.status(500).json({ Error: "No se pudo añadir al usuario" });
+        respuesta.status(500).json({ Error: "¡Oops! No se pudo registrar al usuario" });
       } else {
-        respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+        const token = jwt.sign({ correo: Correo }, "secreto");
+        respuesta.json({ Estatus: "EXITOSO", Token: token });
       }
-  });
+    });
+  } catch (error) {
+    respuesta.status(500).json({ Error: "¡Oops! No se pudo registrar al usuario" });
+  }
 });
 
-
-// CRUD
-app.post('/registrarUsuario', (req, res) => {
-  const { Nombre, Apellido, Correo, Contrasenia } = req.body;
-  const query = 'CALL SP_RegistrarUsuario(?, ?, ?, ?)';
-  conexion.query(query, [Nombre, Apellido, Correo, Contrasenia], (error, resultado) => {
-    if (error) {
-      console.error('Error al registrar el usuario:', error);
-      res.status(500).json({ Error: 'No se pudo añadir al usuario' });
+app.post("/IniciarSesion", (peticion, respuesta) => {
+  const { Correo, Contrasenia } = peticion.body;
+  const query = "SELECT Contrasenia FROM VW_Obtener_Usuarios WHERE Correo = ?";
+  conexion.query(query, [Correo], (error, resultados) => {
+    if (error) return respuesta.json({ Error: "Error en la consulta." });
+    if (resultados.length === 0) return respuesta.json({ Error: "Error en la consulta" });
+    const usuario = resultados[0];
+    const match = bcrypt.compareSync(Contrasenia, usuario.Contrasenia);
+    if (match) {
+      const token = jwt.sign({ correo: Correo }, "secreto");
+      return respuesta.json({ Estatus: "EXITOSO", Resultado: usuario, token });
     } else {
-      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+      return respuesta.json({ Error: "Error en las credenciales del usuario" });
     }
   });
 });
 
-app.post('/eliminarViaje', (req, res) => {
-  const { id } = req.body;
-  const query = 'CALL SP_EliminarViaje(?)';
-  conexion.query(query, [id], (error, resultado) => {
+app.post("/VerificarCorreo", (peticion, respuesta) => {
+  const { Correo } = peticion.body;
+  const query = "SELECT * FROM VW_Obtener_Usuarios WHERE Correo = ?";
+  conexion.query(query, [Correo], (error, resultados) => {
     if (error) {
-      console.error('Error al eliminar el viaje:', error);
-      res.status(500).json({ Error: 'No se pudo eliminar el viaje' });
+      return respuesta.json({ Error: "Error en la consulta" });
     } else {
-      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
+      if (resultados.length > 0) {
+        return respuesta.json({ Estatus: "EXITOSO", Resultado: resultados });
+      } else {
+        return respuesta.json({ Error: "El usuario no existe" });
+      }
     }
   });
-});
-
-app.post('/eliminarUsuario', (req, res) => {
-  const { id } = req.body;
-  const query = 'CALL SP_EliminarUsuario(?)';
-  conexion.query(query, [id], (error, resultado) => {
-    if (error) {
-      console.error('Error al eliminar el usuario:', error);
-      res.status(500).json({ Error: 'No se pudo eliminar el usuario' });
-    } else {
-      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
-    }
-  });
-});
-
-app.post('/modificarUsuario', (req, res) => {
-  const { Nombre, Apellido, Correo, Contrasenia, idUsuario } = req.body;
-  const query = 'CALL SP_ModificarUsuario(?, ?, ?, ?, ?)';
-  conexion.query(query, [Nombre, Apellido, Correo, Contrasenia, idUsuario], (error, resultado) => {
-    if (error) {
-      console.error('Error al modificar el usuario:', error);
-      res.status(500).json({ Error: 'No se pudo modificar el usuario' });
-    } else {
-      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
-    }
-  });
-});
-
-app.post('/modificarViaje', (req, res) => {
-  const { nombre, descripcion, personas, precio, imgUno, imgDos, imgTres, id } = req.body;
-  const query = 'CALL SP_ModificarViaje(?, ?, ?, ?, ?, ?, ?, ?)';
-  conexion.query(query, [nombre, descripcion, personas, precio, imgUno, imgDos, imgTres, id], (error, resultado) => {
-    if (error) {
-      console.error('Error al modificar el viaje:', error);
-      res.status(500).json({ Error: 'No se pudo modificar el viaje' });
-    } else {
-      res.json({ Estatus: 'EXITOSO', Resultado: resultado });
-    }
-  });
-});
-app.post("/usuarios", (peticion, respuesta) => {
-  const { valor } = peticion.body;
-  const query = 'select count(*) as cuenta from ?';
-  conexion.query(query,[valor],(error, resultado) => {
-    if (error) {
-      console.error("Error al registrar el usuario:", error);
-      respuesta.status(500).json({ Error: "No se pudo añadir al usuario" });
-    } else {
-      respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
-    }
-});
 });
 app.get("/ObtenerProductos", (peticion, respuesta) => {
   const sql = "SELECT * FROM VW_Obtener_Listas";
