@@ -10,14 +10,13 @@ let estilo = "";
 let stylecount = 0;
 
 export default function Productos() {
-  const { id } = useParams();
   const navigate = useNavigate();
   const [listas, setListas] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/obtenerProductos`);
+        const respuesta = await axios.get(`http://localhost:8081/ObtenerProductos`);
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {
             navigate('/', { replace: true });
@@ -45,6 +44,7 @@ export default function Productos() {
         <section className={styles.info}>
       <h1 className={styles.h1}>Todos Nuestros Productos</h1>
       {listas.map((lista, index) => {
+        const obtenerImagenes = JSON.parse(lista.Imagenes)
         if (stylecount === 0) {
           stylecount = 1;
           estilo = styles.seccion;
@@ -52,21 +52,21 @@ export default function Productos() {
           estilo = `${styles.seccion} ${styles.azul}`;
           stylecount = 0;
         }
-        const list = lista.info.split(".");
+        const list = lista.Informacion.split(".");
         return (
           <>
             <div key={index} className={estilo}>
               <div>
-                <h2>{lista.nombre_lug}</h2>
+                <h2>{lista.NombreLugar}</h2>
                 <p>{list[0]+"."+list[1]+"."}</p>
                 <span>
-                  <Link to={"/detalles/" + lista.id}>
+                  <Link to={"/detalles/" + lista.Id}>
                     <button>Detalles y precio</button>
                   </Link>
                 </span>
               </div>
               <figure>
-                <img src={require("../../images/" + lista.img)} alt="" />
+                <img src={require("../../images/" + obtenerImagenes[0])} alt="" />
               </figure>
             </div>
           </>

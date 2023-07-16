@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "../estilos/crear_cuenta.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../UserContext";
 
 export default function CrearUsuario() {
+  const { usuario, obtenerUsuarioActual } = useContext(UserContext);
   const navigate = useNavigate();
   const [body, setBody] = useState({
     Nombre: "",
@@ -12,24 +14,25 @@ export default function CrearUsuario() {
     Contrasenia: "",
     ConfirmarContrasenia: "",
   });
-  const [ocultar,setOcultar]=useState({
-    uno:"password",
-    dos:"password",
+  const [ocultar, setOcultar] = useState({
+    uno: "password",
+    dos: "password",
   });
-  const [texto,setTexto]=useState({
+  const [texto, setTexto] = useState({
     Nombre: "",
     Apellido: "",
     Correo: "",
     Contrasenia: "",
     ConfirmarContrasenia: "",
   });
-  const [clas, setClas]=useState({
-    Nombre:`${styles.error} ${styles.ocultar}`,
-    Apellido:`${styles.error} ${styles.ocultar}`,
-    Correo:`${styles.error} ${styles.ocultar}`,
-    Contrasenia:`${styles.error} ${styles.ocultar}`,
-    ConfirmarContrasenia:`${styles.error} ${styles.ocultar}`,
+  const [clas, setClas] = useState({
+    Nombre: `${styles.error} ${styles.ocultar}`,
+    Apellido: `${styles.error} ${styles.ocultar}`,
+    Correo: `${styles.error} ${styles.ocultar}`,
+    Contrasenia: `${styles.error} ${styles.ocultar}`,
+    ConfirmarContrasenia: `${styles.error} ${styles.ocultar}`,
   });
+
 
   useEffect(() => {
     const verificarSesion = localStorage.getItem("token");
@@ -38,58 +41,81 @@ export default function CrearUsuario() {
     }
   }, [navigate]);
 
-
   const cambioEntrada = ({ target }) => {
     const { name, value } = target;
     setBody({ ...body, [name]: value });
   };
 
   const Enviar = async () => {
-    for (let clases in clas){
-      clas[clases]=`${styles.error} ${styles.ocultar}`;
+    for (let clases in clas) {
+      clas[clases] = `${styles.error} ${styles.ocultar}`;
     }
-    if (!body.Nombre.length || !body.Apellido.length || !body.Correo.length || !body.Contrasenia || !body.ConfirmarContrasenia.length) {
-      let actualizarClas={...clas}; let actualizarTexto={...texto};
-      for (let cuerpo in body){
-        if(body[cuerpo].length===0){
-          actualizarTexto[cuerpo]="Debe llenar todos los campos.";
-          actualizarClas[cuerpo]=styles.error;
+    if (
+      !body.Nombre.length ||
+      !body.Apellido.length ||
+      !body.Correo.length ||
+      !body.Contrasenia ||
+      !body.ConfirmarContrasenia.length
+    ) {
+      let actualizarClas = { ...clas };
+      let actualizarTexto = { ...texto };
+      for (let cuerpo in body) {
+        if (body[cuerpo].length === 0) {
+          actualizarTexto[cuerpo] = "Debe llenar todos los campos.";
+          actualizarClas[cuerpo] = styles.error;
         }
       }
-      setClas(actualizarClas); setTexto(actualizarTexto);
+      setClas(actualizarClas);
+      setTexto(actualizarTexto);
       return;
     }
 
-    const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", {
-      Correo: body.Correo
-    });
+    const verificarCorreo = await axios.post(
+      "http://localhost:8081/VerificarCorreo",
+      {
+        Correo: body.Correo,
+      }
+    );
 
-    if (verificarCorreo.data.Resultado[0]) {
-      setTexto({...texto,["Correo"]:"El correo que ingresaste ya existe."});
-      setClas({...clas,["Correo"]:styles.error});
+    if (verificarCorreo.data.Estatus === 'EXITOSO') {
+      setTexto({ ...texto, ["Correo"]: "El correo que ingresaste ya existe." });
+      setClas({ ...clas, ["Correo"]: styles.error });
       return;
     }
 
     const correoRegex = /^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/;
     const filtrarCaracteres = correoRegex.test(body.Correo);
-    if (!filtrarCaracteres){
-      setTexto({...texto,["Correo"]:"El correo que ingresaste no debe contener caracteres especiales y espacios en blancos."});
-      setClas({...clas,["Correo"]:styles.error});
+    if (!filtrarCaracteres) {
+      setTexto({
+        ...texto,
+        ["Correo"]:
+          "El correo que ingresaste no debe contener caracteres especiales y espacios en blancos.",
+      });
+      setClas({ ...clas, ["Correo"]: styles.error });
       return;
     }
-    const contraseniaRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const contraseniaRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     const comprobarContrasenia = contraseniaRegex.test(body.Contrasenia);
     if (!comprobarContrasenia) {
-      setTexto({...texto,["Contrasenia"]:"La contraseña debe tener mínimo 8 caracteres, mayúsculas y minúsculas, digitos y al menos un caracter especial(?=.*[@$!%*#?&])"});
-      setClas({...clas,["Contrasenia"]:styles.error});
+      setTexto({
+        ...texto,
+        ["Contrasenia"]:
+          "La contraseña debe tener mínimo 8 caracteres, mayúsculas y minúsculas, digitos y al menos un caracter especial(?=.*[@$!%*#?&])",
+      });
+      setClas({ ...clas, ["Contrasenia"]: styles.error });
       return;
     }
 
     if (body.Contrasenia !== body.ConfirmarContrasenia) {
-      setTexto({...texto,["ConfirmarContrasenia"]:"Las contraseñas deben coincidir."});
-      setClas({...clas,["ConfirmarContrasenia"]:styles.error});
+      setTexto({
+        ...texto,
+        ["ConfirmarContrasenia"]: "Las contraseñas deben coincidir.",
+      });
+      setClas({ ...clas, ["ConfirmarContrasenia"]: styles.error });
       return;
     }
+
     try {
       const respuesta = await axios.post(
         "http://localhost:8081/RegistrarUsuario",
@@ -105,26 +131,32 @@ export default function CrearUsuario() {
           },
         }
       );
+
       navigate("/");
-      localStorage.setItem("token", respuesta.data.token);
-      localStorage.setItem("correo",respuesta.data.Resultado[0].CorreoUsuario);
+      localStorage.setItem("token", respuesta.data.Token);
+      await obtenerUsuarioActual();
     } catch (error) {
-      console.log(error)
       console.log("Error al registrar el usuario: " + error);
     }
   };
+
   const cambiar = (e) => {
     const elemento = e.target.id;
     if (e.target.classList.contains("nf-md-eye")) {
       e.target.classList.remove("nf-md-eye");
       e.target.classList.add("nf-md-eye_off");
-      (elemento==1) ? setOcultar({...ocultar,["uno"]:"text"}) : setOcultar({...ocultar,["dos"]:"text"})
+      elemento == 1
+        ? setOcultar({ ...ocultar, ["uno"]: "text" })
+        : setOcultar({ ...ocultar, ["dos"]: "text" });
     } else {
       e.target.classList.remove("nf-md-eye_off");
       e.target.classList.add("nf-md-eye");
-      (elemento==1) ? setOcultar({...ocultar,["uno"]:"password"}) : setOcultar({...ocultar,["dos"]:"password"})
+      elemento == 1
+        ? setOcultar({ ...ocultar, ["uno"]: "password" })
+        : setOcultar({ ...ocultar, ["dos"]: "password" });
     }
-  }
+  };
+
   return (
     <>
       <main className={styles.man}>
@@ -168,7 +200,7 @@ export default function CrearUsuario() {
           <span className={styles.submit}>
             <input
               type={ocultar.uno}
-              placeholder="Debe tener almenos 8 caracteres"
+              placeholder="Debe tener al menos 8 caracteres"
               value={body.Contrasenia}
               onChange={cambioEntrada}
               name="Contrasenia"
@@ -186,7 +218,9 @@ export default function CrearUsuario() {
             />
             <i className={"nf nf-md-eye"} id="2" onClick={cambiar}></i>
           </span>
-          <aside className={clas.ConfirmarContrasenia}>{texto.ConfirmarContrasenia}</aside>
+          <aside className={clas.ConfirmarContrasenia}>
+            {texto.ConfirmarContrasenia}
+          </aside>
           <span className={styles.submit}>
             <input type="submit" value="Crear cuenta" onClick={Enviar} />
           </span>
