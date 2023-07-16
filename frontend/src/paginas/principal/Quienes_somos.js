@@ -38,7 +38,7 @@ function QuienesSomos() {
             <article>
               <figure>
                 <img
-                  src={require("../../images/quienes_somos/vision2.jpg")}
+                  src={require("../../images/quienes_somos/mision_vision.jpg")}
                   alt=""
                 />
                 <figcaption>Mision y vision</figcaption>

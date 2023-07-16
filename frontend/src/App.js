@@ -11,6 +11,7 @@ import Pago from "./paginas/principal/Pago";
 import Listas from "./paginas/principal/Listas";
 import Detalles from "./paginas/principal/Detalles";
 import Dashboard from "./paginas/principal/Dashboard";
+import Productos from "./paginas/principal/Productos";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/detalles/:id" element={<Detalles />} /> {}
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/productos" element={<Productos/>}/>
       </Routes>
     </BrowserRouter>
   );
