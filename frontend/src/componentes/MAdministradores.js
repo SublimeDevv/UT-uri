@@ -21,7 +21,7 @@ export default function MAdministradores() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const respuesta = await axios.get(`http://localhost:8081/obtenerUsuarios`);
+                const respuesta = await axios.get(`http://localhost:8081/ObtenerUsuarios`);
                 if (respuesta.data.Estatus === "EXITOSO") {
                     setListas(respuesta.data.Resultado);
                 } else {
@@ -46,7 +46,7 @@ export default function MAdministradores() {
                         return (
                             <>
                                 <span tabIndex="0" className={styles.contAdmin} id={lista.id} onClick={(event) => { seleccionar(lista.id,event); }} >
-                                    <img src={require('../images/' + lista.img)} alt="Imagen de administrador"/>
+                                    <img src={require('../images/' + lista.Avatar)} alt="Imagen de administrador"/>
                                     <p className={styles.p}>{lista.NombreUsuario}</p>
                                     <p className={styles.p}>{lista.ApellidoUsuario}</p>
                                 </span>
