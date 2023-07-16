@@ -43,10 +43,10 @@ export default function IniciarSesion() {
       const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", { Correo: body.Correo });
       if (verificarCorreo.data.Estatus !== 'EXITOSO') return setErrores({ Correo: "El usuario que ingresaste no existe." });
 
-      if (resultado.length > 0) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("correo",response.data.Resultado[0].CorreoUsuario);
-        localStorage.setItem("nivel", response.data.Resultado[0].nivel);
+      if (verificarCorreo.length > 0) {
+        localStorage.setItem("token", verificarCorreo.data.token);
+        localStorage.setItem("correo",verificarCorreo.data.Resultado[0].CorreoUsuario);
+        localStorage.setItem("nivel", verificarCorreo.data.Resultado[0].nivel);
         navigate("/dashboard");
       } else {
         setErrores({ Contrasenia: "Contraseña incorrecta." });
