@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "../estilos/crear_cuenta.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../UserContext";
 
 export default function IniciarSesion() {
   const navigate = useNavigate();
@@ -15,12 +16,14 @@ export default function IniciarSesion() {
     Contrasenia: ""
   });
 
+  const { usuario, obtenerUsuarioActual } = useContext(UserContext);
+
   useEffect(() => {
     const verificarSesion = localStorage.getItem("token");
-    if (verificarSesion) {
-      navigate("/");
+    if (verificarSesion && !usuario) {
+      navigate("/")
     }
-  }, [navigate]);
+  }, [usuario]);
 
   const cambioEntrada = (e) => {
     setBody({ ...body, [e.target.name]: e.target.value });
@@ -40,21 +43,21 @@ export default function IniciarSesion() {
     }
 
     try {
-      const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", { Correo: body.Correo });
-      if (verificarCorreo.data.Estatus !== 'EXITOSO') return setErrores({ Correo: "El usuario que ingresaste no existe." });
+    const verificarCorreo = await axios.post("http://localhost:8081/VerificarCorreo", { Correo: body.Correo });
+    if (verificarCorreo.data.Estatus !== 'EXITOSO') return setErrores({ Correo: "El usuario que ingresaste no existe." });
 
-      if (verificarCorreo.length > 0) {
-        localStorage.setItem("token", verificarCorreo.data.token);
-        localStorage.setItem("correo",verificarCorreo.data.Resultado[0].CorreoUsuario);
-        localStorage.setItem("nivel", verificarCorreo.data.Resultado[0].nivel);
-        navigate("/dashboard");
-      } else {
-        setErrores({ Contrasenia: "Contraseña incorrecta." });
-      }
-
-    } catch (error) {
-      console.log("Se produjo un error: ", error);
+    const verificarUsuario = await axios.post("http://localhost:8081/IniciarSesion", body);
+    if (verificarUsuario.data.Estatus === "EXITOSO") {
+      localStorage.setItem("token", verificarUsuario.data.token);
+      navigate("/");
+      await obtenerUsuarioActual();
+    } else {
+      setErrores({ Contrasenia: "Contraseña incorrecta." });
     }
+
+  } catch (error) {
+    console.log("Se produjo un error: ", error);
+  }
   };
 
   const toggleMostrarContrasenia = () => {

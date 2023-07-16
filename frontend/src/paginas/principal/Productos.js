@@ -16,7 +16,7 @@ export default function Productos() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/obtenerProductos`);
+        const respuesta = await axios.get(`http://localhost:8081/ObtenerProductos`);
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {
             navigate('/', { replace: true });
@@ -52,12 +52,13 @@ export default function Productos() {
           estilo = `${styles.seccion} ${styles.azul}`;
           stylecount = 0;
         }
+        const list = lista.info.split(".");
         return (
           <>
             <div key={index} className={estilo}>
               <div>
-                <h2>{lista.NombreLugar}</h2>
-                <p>{lista.Informacion}</p>
+                <h2>{lista.nombre_lug}</h2>
+                <p>{list[0]+"."+list[1]+"."}</p>
                 <span>
                   <Link to={"/detalles/" + lista.Id}>
                     <button>Detalles y precio</button>

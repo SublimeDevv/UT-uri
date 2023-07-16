@@ -22,7 +22,7 @@ function Contactanos() {
                         <p>Mensaje</p>
                         <textarea name="" id="" cols="30" rows="10"></textarea>
                         <div>
-                            <input type="submit" />
+                            <input type="submit" value="Enviar" />
                         </div>
                     </form>
                 </section>

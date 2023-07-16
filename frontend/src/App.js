@@ -15,6 +15,8 @@ import Productos from "./paginas/principal/Productos";
 
 function App() {
   return (
+    <>
+  
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
@@ -31,6 +33,7 @@ function App() {
         <Route path="/productos" element={<Productos/>}/>
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
 

@@ -26,6 +26,37 @@ app.listen(process.env.PORT, () => {
   console.log("Servidor iniciado");
 });
 
+  const autenticarUsuario = (peticion, respuesta, siguiente) => {
+    const token = peticion.header("Authorization");
+    if (!token) {
+      return respuesta.status(401).json({ Error: "Acceso no autorizado" });
+    }
+    try {
+      const decoded = jwt.verify(token, process.env.JWT);
+      peticion.user = decoded; 
+      siguiente();
+    } catch (error) {
+      return respuesta.status(401).json({ Error: "Acceso no autorizado" });
+    }
+  };
+
+  app.get("/UsuarioActual", autenticarUsuario, (peticion, respuesta) => {
+    const { correo } = peticion.user;
+    const query = "SELECT * FROM VW_Obtener_Usuarios WHERE Correo = ?";
+    conexion.query(query, [correo], (error, resultados) => {
+      if (error) {
+        return respuesta.status(500).json({ Error: "Error en la consulta" });
+      } else {
+        if (resultados.length > 0) {
+          const usuario = resultados[0];
+          return respuesta.json({ Estatus: "EXITOSO", Resultado: usuario });
+        } else {
+          return respuesta.status(404).json({ Error: "Usuario no encontrado" });
+        }
+      }
+    });
+  });
+
 app.get("/ObtenerViajes/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
   const sql = "SELECT * FROM VW_Obtener_Viajes WHERE NombreCategoria = ?";
