@@ -122,6 +122,12 @@
 .seccion figure img {
   width: 100%;
 }
+.info a:hover {
+  cursor: default;
+}
+.info button:hover {
+  cursor: pointer;
+}
 /*Cambiar formatos*/
 .azul {
   display: flex;
