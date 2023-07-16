@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/vistas.module.css";
 import axios from "axios";
+import MUsuario from "./MUsuario";
 
 export default function Vusuarios() {
     const [listas, setListas] = useState([]);
@@ -50,7 +51,6 @@ export default function Vusuarios() {
                     })}
                 </table>
                 </div>
-                <div className={styles.boton}><button>Añadir</button></div>
             </section>
         </>
     );

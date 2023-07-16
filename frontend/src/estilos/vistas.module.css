@@ -13,7 +13,7 @@
     width: 100%;
     overflow-x: scroll;
     overflow-y: scroll;
-    height: 80%;
+    height: 90%;
 }
 table {
     width: 100%;
@@ -34,25 +34,4 @@ td {
     font-family: roboto-r;
     text-align: center;
     border: 1px solid #989898;
-}
-.boton{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    height: 10%;
-}
-.boton button{
-    width: 40%;
-    height: 100%;
-    border-radius: 10px;
-    border: none;
-    font-family: roboto-r;
-    font-size: 20px;
-    background-color: #131a22;
-    color: #fff;
-}
-.boton button:hover{
-    outline:2px solid #131a22;
-    background-color: #ddd;
-    color: #000;
 }

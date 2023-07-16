@@ -45,7 +45,6 @@ export default function Vproductos() {
                         })}
                     </table>
                 </div>
-                <div className={styles.boton}><button>Añadir</button></div>
             </section>
         </>
     );

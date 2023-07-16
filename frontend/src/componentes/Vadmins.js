@@ -50,7 +50,6 @@ export default function Vadmins() {
                         })}
                     </table>
                 </div>
-                <div className={styles.boton}><button>Añadir</button></div>
             </section>
         </>
     );
