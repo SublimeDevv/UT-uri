@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../../estilos/dashboard.module.css";
 import Dashboards from "../../componentes/Dashboards";
 import MUsuario from "../../componentes/MUsuario";
@@ -7,8 +7,10 @@ import MProductos from "../../componentes/MProductos";
 import MListas from "../../componentes/MListas";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../UserContext";
 
-export default function Dashboard() {
+function Dashboard() {
+    const { usuario } = useContext(UserContext)
     const navigate = useNavigate();
     const [menu, setMenu] = useState({
         img: "default_avatar.jpg",
@@ -50,8 +52,8 @@ export default function Dashboard() {
                 <aside className={clases.menu}>
                     <div className={styles.head}>
                         <figure>
-                            <img src={require('../../images/' + menu.img)} />
-                            <figcaption>{menu.nombre}</figcaption>
+                            <img src={require('../../images/avatares/' + usuario.Avatar)} />
+                            <figcaption>{usuario.Nombre}</figcaption>
                         </figure>
                         <i className="nf nf-md-home_account" id={styles.puntero}><p onClick={() => components(<Dashboards />)}>Dashboard</p></i>
                         <i className="nf nf-fae-tools"><p>Administracion</p></i>
@@ -67,7 +69,7 @@ export default function Dashboard() {
                 <i className="nf nf-cod-menu" id={styles.mostrar} onClick={mostrar}></i>
                 <section className={styles.contenedores} onClick={ocultar}>
                     <div className={styles.titulo}>
-                        <h1>¡Bienvenido {menu.nombre}!</h1>
+                        <h1>¡Bienvenido {usuario.Nombre}!</h1>
                     </div>
                     <div className={styles.dashboard}>
                         {componentes}
@@ -77,3 +79,5 @@ export default function Dashboard() {
         </>
     );
 }
+
+export default Dashboard;

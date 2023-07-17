@@ -11,28 +11,30 @@ import Pago from "./paginas/principal/Pago";
 import Listas from "./paginas/principal/Listas";
 import Detalles from "./paginas/principal/Detalles";
 import Dashboard from "./paginas/principal/Dashboard";
+import RutaPrivada from "./RutaPrivada";
 import Productos from "./paginas/principal/Productos";
 
 function App() {
   return (
     <>
-  
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/categorias" element={<Categorias />} />
-        <Route path="/quienes_somos" element={<QuienesSomos />} />
-        <Route path="/contactanos" element={<Contactanos />} />
-        <Route path="/iniciar" element={<IniciarSesion />} />
-        <Route path="/crear" element={<CrearCuenta />} />
-        <Route path="/pago" element={<Pago />} />
-        <Route path="/lista/:id" element={<Listas />} />
-        <Route path="/detalles/:id" element={<Detalles />} /> {}
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path="/productos" element={<Productos/>}/>
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/quienes_somos" element={<QuienesSomos />} />
+          <Route path="/contactanos" element={<Contactanos />} />
+          <Route path="/iniciar" element={<IniciarSesion />} />
+          <Route path="/crear" element={<CrearCuenta />} />
+          <Route path="/pago" element={<Pago />} />
+          <Route path="/lista/:id" element={<Listas />} />
+          <Route path="/detalles/:id" element={<Detalles />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route element={<RutaPrivada roles={[1]}/>}>
+            <Route path="/dashboard" element={<Dashboard/>}/>
+          </Route>
+          <Route path="/productos" element={<Productos />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

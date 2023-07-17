@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import style from "../estilos/general.module.css";
 import { Link } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 function Header() {
-
+  const { usuario } = useContext(UserContext)
+  
   const [EstadoUsuario, setEstadoUsuario] = useState(false);
   const [text, setText] = useState(
     <Link className={style.a} to={"/iniciar"}>
@@ -47,7 +49,7 @@ function Header() {
           {EstadoUsuario && (
             <figure>
               <img
-                src={require("../images/default_avatar.jpg")}
+                src={require("../images/avatares/"+ usuario.Avatar)}
                 alt=""
                 id={style.imgUsuario}
               />
