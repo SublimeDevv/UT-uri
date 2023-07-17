@@ -141,3 +141,28 @@ app.get("/ObtenerUsuarios", (peticion, respuesta) => {
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
+
+app.put("/CambiarRolUsuario/:id", (peticion, respuesta) => {
+  const usuarioId = peticion.params.id;
+  const nuevoRol = peticion.body.nuevoRol;
+  const query = "CALL CambiarRolUsuario(?, ?)";
+  conexion.query(query, [usuarioId, nuevoRol], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al cambiar el rol del usuario" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarUsuario/:id", (peticion, respuesta) => {
+  const usuarioId = peticion.params.id;
+  const query = "CALL EliminarUsuario(?)";
+  conexion.query(query, [usuarioId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar el usuario" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
