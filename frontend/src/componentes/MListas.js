@@ -71,8 +71,8 @@ export default function MListas() {
     return (
         <>
             <section className={styles.mlistas}>
-                <h1 className={styles.h1}>Agregando listas</h1>
-                <label>Nombre de la lista:</label>
+                <h1 className={styles.h1}>Agregando categorias</h1>
+                <label>Nombre de la categoria:</label>
                 <input type="text" name="nombre" onChange={cambioEntrada}></input>
                 <aside className={clas.nombre} id="aside">{texto.nombre}</aside>
                 <label>Informacion:</label>

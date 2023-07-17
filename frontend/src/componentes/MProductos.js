@@ -108,10 +108,10 @@ export default function MProductos() {
         <>
             <section className={styles.mlistas}>
                 <h1 className={styles.h1}>Agregando productos</h1>
-                <label>Nombre de la lista:</label>
+                <label>Nombre del producto:</label>
                 <input type="text" name="nombre" onChange={cambioEntrada}></input>
                 <aside className={clas.nombre} id="aside">{texto.nombre}</aside>
-                <label>A que lista pertence:</label>
+                <label>A que categoria pertence:</label>
                 <select>
                     {listas.map((lista, index) => {
                         return (
@@ -123,7 +123,8 @@ export default function MProductos() {
                     })}
                 </select>
                 <label>Informacion:</label>
-                <textarea name="info" onChange={cambioEntrada}></textarea>
+                <textarea name="inategorias
+Nombre de la categoriafo" onChange={cambioEntrada}></textarea>
                 <aside className={clas.info} id="aside">{texto.info}</aside>
                 <label htmlFor="input">Sube una imagen:</label>
                 <input type="file" accept=".jpg,.jpeg,.png" id="inputarchivo1" onChange={seleccionar1} />

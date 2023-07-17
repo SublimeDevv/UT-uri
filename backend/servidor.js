@@ -142,35 +142,35 @@ app.get("/ObtenerUsuarios", (peticion, respuesta) => {
   });
 });
 app.get("/obtenerCantidad", (peticion, respuesta) => {
-  const sql = "select * from cantidad";
+  const sql = "SELECT * FROM VW_Cantidad";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
 app.get("/obtenerLista", (peticion, respuesta) => {
-  const sql = "select Nombre from vw_obtenercategorias;";
+  const sql = "SELECT Nombre FROM VW_Obtener_Categorias;";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
 app.get("/obtenerCategorias", (peticion, respuesta) => {
-  const sql = "select * from vw_obtenercategorias;";
+  const sql = "SELECT * FROM VW_Obtener_Categorias;";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
 app.get("/Usuarios", (peticion, respuesta) => {
-  const sql = "SELECT * FROM VW_Obtener_Usuarios where RolID = 2";
+  const sql = "SELECT * FROM VW_Obtener_Usuarios WHERE RolID = 2";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
 app.get("/Listas", (peticion, respuesta) => {
-  const sql = "select * from vw_obtenercategorias";
+  const sql = "SELECT * FROM VW_Obtener_Categorias";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });

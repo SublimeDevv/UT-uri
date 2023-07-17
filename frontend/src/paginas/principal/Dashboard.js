@@ -61,11 +61,11 @@ function Dashboard() {
                         </figure>
                         <i className="nf nf-md-home_account" id={styles.puntero}><p onClick={() => components(<Dashboards  components={components}/>)}>Dashboard</p></i>
                         <i className="nf nf-fae-tools"><p>Administracion</p></i>
-                        <p className={styles.opciones}>Usuarios</p>
+                        <p className={styles.opciones}>Personas</p>
                         <p className={styles.opciones2} onClick={() => components(<MUsuario/>)}>Usuarios</p>
                         <p className={styles.opciones2} onClick={() => components(<MAdministradores />)}>Administradores</p>
                         <p className={styles.opciones}>Listas</p>
-                        <p className={styles.opciones2} onClick={() => components(<MListas />)}>Listas</p>
+                        <p className={styles.opciones2} onClick={() => components(<MListas />)}>Categorias</p>
                         <p className={styles.opciones2} onClick={() => components(<MProductos />)}>Productos</p>
                     </div>
                     <figure className={styles.figure}><img src={require('../../images/logo.png')}></img></figure>

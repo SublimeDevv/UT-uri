@@ -58,11 +58,11 @@ export default function MAdministradores() {
                   }}
                 >
                   <img
-                    src={require("../images/" + lista.Avatar)}
+                    src={require("../images/avatares/" + lista.Avatar)}
                     alt="Imagen de administrador"
                   />
-                  <p className={styles.p}>{lista.NombreUsuario}</p>
-                  <p className={styles.p}>{lista.ApellidoUsuario}</p>
+                  <p className={styles.p}>{lista.Nombre}</p>
+                  <p className={styles.p}>{lista.Apellido}</p>
                 </span>
               </>
             );

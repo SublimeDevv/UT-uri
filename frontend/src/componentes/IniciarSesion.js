@@ -48,8 +48,8 @@ export default function IniciarSesion() {
     const verificarUsuario = await axios.post("http://localhost:8081/IniciarSesion", body);
     if (verificarUsuario.data.Estatus === "EXITOSO") {
       localStorage.setItem("token", verificarUsuario.data.token);
-      navigate("/");
       await obtenerUsuarioActual();
+      navigate("/");
     } else {
       setErrores({ Contrasenia: "Contraseña incorrecta." });
     }

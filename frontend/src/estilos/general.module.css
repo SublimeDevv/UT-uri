@@ -47,6 +47,7 @@
 }
 .logo .a img {
   height: 15vh;
+  min-height: 100px;
 }
 .menu {
   display: flex;
@@ -133,6 +134,7 @@
 }
 .foot figure img {
   height: 10vh;
+  min-height: 50px;
 }
 .foot figcaption {
   color: #fff;
@@ -166,6 +168,7 @@
   }
   .logo .a img {
     height: 9vh;
+    min-height: 50px;
   }
   .usuario {
     width: 50%;

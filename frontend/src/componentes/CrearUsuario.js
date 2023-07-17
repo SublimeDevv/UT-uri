@@ -5,7 +5,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 export default function CrearUsuario() {
-  const { usuario, obtenerUsuarioActual } = useContext(UserContext);
+  const { obtenerUsuarioActual } = useContext(UserContext);
   const navigate = useNavigate();
   const [body, setBody] = useState({
     Nombre: "",
@@ -132,9 +132,9 @@ export default function CrearUsuario() {
         }
       );
 
-      navigate("/");
       localStorage.setItem("token", respuesta.data.Token);
       await obtenerUsuarioActual();
+      navigate("/");
     } catch (error) {
       console.log("Error al registrar el usuario: " + error);
     }

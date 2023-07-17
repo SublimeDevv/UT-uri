@@ -183,6 +183,7 @@
 }
 .contAdmin img{
     width: 70%;
+    max-height: 100px;
     border-radius: 30px;
 }
 .madmin button{

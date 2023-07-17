@@ -39,10 +39,11 @@ html{
 }
 .head figure img{
     width: 80%;
-    max-width: 150px;
+    max-width: 130px;
+    max-height: 130px;
     margin-bottom: 10px;
     border-radius: 50%;
-    border: 5px solid #fff;
+    border: 2px solid #fff;
 }
 .head i{
     color: #fff;

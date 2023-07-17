@@ -143,7 +143,7 @@ export default function MUsuario() {
     <>
       <section className={styles.musuario}>
         <figure>
-          <img src={require("../images/" + menu.img)} alt="Avatar" />
+          <img src={require("../images/avatares/" + menu.img)} alt="Avatar" />
           <figcaption>{menu.nombre}</figcaption>
         </figure>
         <p>Correo electrónico</p>
