@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/dashboards.module.css";
 import axios from "axios";
+import Vusuarios from "./Vusuarios";
+import Vadmins from "./Vadmins";
+import Vlistas from "./Vlistas";
+import Vproductos from "./Vproductos";
 
 export default function Dashboards() {
   const [valores, setValores] = useState({

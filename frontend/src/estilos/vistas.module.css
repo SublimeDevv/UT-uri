@@ -1,0 +1,37 @@
+.vusuarios {
+    padding: 20px;
+    width: 90%;
+}
+.vusuarios h1{
+    font-family: roboto-b;
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.scroll {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 90%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    background-color: #fff;
+}
+thead {
+    padding: 10px;
+    background-color: #131a22;
+    color: #fff;
+    font-family: roboto-b;
+    text-transform: uppercase;
+    text-align: center;
+}
+td {
+    padding: 10px;
+    font-family: roboto-r;
+    text-align: center;
+    border: 1px solid #989898;
+}
