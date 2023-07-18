@@ -3,6 +3,7 @@ import mysql from "mysql";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer';
 
 import "dotenv/config";
 
@@ -196,6 +197,267 @@ app.delete("/EliminarUsuario/:id", (peticion, respuesta) => {
   conexion.query(query, [usuarioId], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al eliminar el usuario" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.post('/FormularioContacto', (peticion, respuesta) => {
+  const { nombre, correo, asunto, mensaje } = peticion.body;
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+      user: 'uturiproject@gmail.com',
+      pass: process.env.PASSWORD_EMAIL,
+    },
+  });
+  const datos = {
+    from: correo,
+    to: 'uturiproject@gmail.com',
+    subject: asunto,
+    text: `Nombre:del usuario ${nombre}\n Correo: ${correo}\n Mensaje: ${mensaje}`,
+  };
+  transporter.sendMail(datos, (error, info) => {
+    if (error) {
+      respuesta.status(500).send('Error al enviar el correo');
+    } else {
+      respuesta.send('Correo enviado');
+    }
+  });
+});
+
+app.post("/AgregarCategoria", (peticion, respuesta) => {
+  const { nombreCategoria, descripcionCategoria, imagenCategoria } = peticion.body;
+  const query = "CALL SP_Agregar_Categoria(?, ?, ?)";
+  conexion.query(query, [nombreCategoria, descripcionCategoria, imagenCategoria], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al agregar la categoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarCategoria/:categoriaId", (peticion, respuesta) => {
+  const categoriaId = peticion.params.categoriaId;
+  const query = "CALL SP_Eliminar_Categoria(?)";
+  conexion.query(query, [categoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar la categoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.post("/AgregarLugar", (peticion, respuesta) => {
+  const { nombreLugar, informacionLugar, imagenesLugar, categoriaId } = peticion.body;
+  const query = "CALL SP_Agregar_Lugar(?, ?, ?, ?)";
+  conexion.query(query, [nombreLugar, informacionLugar, imagenesLugar, categoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al agregar el lugar" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarLugar/:lugarId", (peticion, respuesta) => {
+  const lugarId = peticion.params.lugarId;
+  const query = "CALL SP_Eliminar_Lugar(?)";
+  conexion.query(query, [lugarId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar el lugar" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.post("/AgregarSubcategoriaLugar", (peticion, respuesta) => {
+  const { lugarId, subcategoriaId } = peticion.body;
+  const query = "CALL SP_Agregar_Lugar_Subcategoria(?, ?)";
+  conexion.query(query, [lugarId, subcategoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al agregar la subcategoría al lugar" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarSubcategoriaLugar/:lugarId/:subcategoriaId", (peticion, respuesta) => {
+  const lugarId = peticion.params.lugarId;
+  const subcategoriaId = peticion.params.subcategoriaId;
+  const query = "CALL SP_Eliminar_Lugar_Subcategoria(?, ?)";
+  conexion.query(query, [lugarId, subcategoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar la subcategoría del lugar" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.post("/AgregarDetalle", (peticion, respuesta) => {
+  const { descripcionDetalle, personasDetalle, precioDetalle, lugarId } = peticion.body;
+  const query = "CALL SP_Agregar_Detalle(?, ?, ?, ?)";
+  conexion.query(query, [descripcionDetalle, personasDetalle, precioDetalle, lugarId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al agregar el detalle" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarDetalle/:detalleId", (peticion, respuesta) => {
+  const detalleId = peticion.params.detalleId;
+  const query = "CALL SP_Eliminar_Detalle(?)";
+  conexion.query(query, [detalleId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar el detalle" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.post("/AgregarRol", (peticion, respuesta) => {
+  const { nombreRol, descripcionRol } = peticion.body;
+  const query = "CALL SP_Agregar_Rol(?, ?)";
+  conexion.query(query, [nombreRol, descripcionRol], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al agregar el rol" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarRol/:rolId", (peticion, respuesta) => {
+  const rolId = peticion.params.rolId;
+  const query = "CALL SP_Eliminar_Rol(?)";
+  conexion.query(query, [rolId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar el rol" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarUsuario/:usuarioId", (peticion, respuesta) => {
+  const usuarioId = peticion.params.usuarioId;
+  const query = "CALL SP_Eliminar_Usuario(?)";
+  conexion.query(query, [usuarioId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar el usuario" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarReserva/:reservaId", (peticion, respuesta) => {
+  const reservaId = peticion.params.reservaId;
+  const { usuarioId, detallesId, fechaReserva } = peticion.body;
+  const query = "CALL SP_Actualizar_Reserva(?, ?, ?)";
+  conexion.query(query, [reservaId, usuarioId, detallesId, fechaReserva], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar la reserva" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.delete("/EliminarReserva/:reservaId", (peticion, respuesta) => {
+  const reservaId = peticion.params.reservaId;
+  const query = "CALL SP_Eliminar_Reserva(?)";
+  conexion.query(query, [reservaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar la reserva" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarCategoria/:categoriaId", (peticion, respuesta) => {
+  const categoriaId = peticion.params.categoriaId;
+  const { nombreCategoria, descripcionCategoria, imagenCategoria } = peticion.body;
+  const query = "CALL SP_Actualizar_Categoria(?, ?, ?, ?)";
+  conexion.query(query, [categoriaId, nombreCategoria, descripcionCategoria, imagenCategoria], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar la categoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarLugar/:lugarId", (peticion, respuesta) => {
+  const lugarId = peticion.params.lugarId;
+  const { nombreLugar, informacionLugar, imagenesLugar, categoriaId } = peticion.body;
+  const query = "CALL SP_Actualizar_Lugar(?, ?, ?, ?, ?)";
+  conexion.query(query, [lugarId, nombreLugar, informacionLugar, imagenesLugar, categoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar el lugar" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarDetalle/:detalleId", (peticion, respuesta) => {
+  const detalleId = peticion.params.detalleId;
+  const { descripcionDetalle, personasDetalle, precioDetalle, lugarId } = peticion.body;
+  const query = "CALL SP_Actualizar_Detalle(?, ?, ?, ?, ?)";
+  conexion.query(query, [detalleId, descripcionDetalle, personasDetalle, precioDetalle, lugarId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar el detalle" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarRol/:rolId", (peticion, respuesta) => {
+  const rolId = peticion.params.rolId;
+  const { nombreRol, descripcionRol } = peticion.body;
+  const query = "CALL SP_Actualizar_Rol(?, ?, ?)";
+  conexion.query(query, [rolId, nombreRol, descripcionRol], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar el rol" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarUsuario/:usuarioId", (peticion, respuesta) => {
+  const usuarioId = peticion.params.usuarioId;
+  const { nombreUsuario, apellidoUsuario, correoUsuario, contraseniaUsuario, avatarUsuario, rolId } = peticion.body;
+  const query = "CALL SP_Actualizar_Usuario(?, ?, ?, ?, ?, ?, ?)";
+  conexion.query(query, [usuarioId, nombreUsuario, apellidoUsuario, correoUsuario, contraseniaUsuario, avatarUsuario, rolId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar el usuario" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/ActualizarReserva/:reservaId", (peticion, respuesta) => {
+  const reservaId = peticion.params.reservaId;
+  const { usuarioId, detallesId, fechaReserva } = peticion.body;
+  const query = "CALL SP_Actualizar_Reserva(?, ?, ?, ?)";
+  conexion.query(query, [reservaId, usuarioId, detallesId, fechaReserva], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al actualizar la reserva" });
     } else {
       respuesta.json({ Estatus: "EXITOSO" });
     }
