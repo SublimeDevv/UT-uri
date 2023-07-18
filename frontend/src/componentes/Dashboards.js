@@ -89,13 +89,13 @@ export default function Dashboards({ components }) {
           className={`${styles.detalles} ${styles.opcion}`}
           onClick={() => redirigir(<Vproductos />)}
         >
-          <h3>{valores.detalles} Viajes</h3>
+          <h3>{valores.detalles} Lugares</h3>
         </span>
         <span
           className={`${styles.listas} ${styles.opcion}`}
           onClick={() => redirigir(<Vlistas />)}
         >
-          <h3>{valores.lista} Lugares</h3>
+          <h3>{valores.lista} Categorias</h3>
         </span>
       </section>
     </>

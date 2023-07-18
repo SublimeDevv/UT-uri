@@ -46,8 +46,8 @@
   height: 100%;
 }
 .logo .a img {
-  height: 15vh;
-  min-height: 100px;
+  height: 12vh;
+  min-height: 90px;
 }
 .menu {
   display: flex;

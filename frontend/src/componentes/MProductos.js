@@ -20,6 +20,7 @@ export default function MProductos() {
     const [nArchivo1, setNarchivo1] = useState("Imagen");
     const [nArchivo2, setNarchivo2] = useState("Imagen");
     const [nArchivo3, setNarchivo3] = useState("Imagen");
+    const [nArchivo4, setNarchivo4] = useState("Imagen");
     const [body, setBody] = useState({
         nombre: "",
         info: "",
@@ -27,6 +28,7 @@ export default function MProductos() {
     const [archivo1, setArchivo1] = useState(null);
     const [archivo2, setArchivo2] = useState(null);
     const [archivo3, setArchivo3] = useState(null);
+    const [archivo4, setArchivo4] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -66,11 +68,19 @@ export default function MProductos() {
             setNarchivo3("Imagen");
         }
     };
+    const seleccionar4 = (e) => {
+        if (e.target.files[0]) {
+            setArchivo4(e.target.files[0]);
+            setNarchivo4(e.target.files[0].name);
+        } else {
+            setNarchivo4("Imagen");
+        }
+    };
     const subir = () => {
         clas.info = `${styles.error} ${styles.ocultar}`;
         clas.nombre = `${styles.error} ${styles.ocultar}`;
         if (body.nombre && body.info) {
-            if (nArchivo1 !== "Imagen" && nArchivo2 !== "Imagen" && nArchivo3 !== "Imagen") {
+            if (nArchivo1 !== "Imagen" && nArchivo2 !== "Imagen" && nArchivo3 !== "Imagen"&& nArchivo4 !== "Imagen") {
                 setClas({ ...clas, ["imagen1"]: `${styles.error} ${styles.ocultar}` });
                 const imagen1 = new FormData();
                 imagen1.append("imagen1", archivo1);
@@ -78,6 +88,8 @@ export default function MProductos() {
                 imagen2.append("imagen2", archivo2);
                 const imagen3 = new FormData();
                 imagen3.append("imagen1", archivo3);
+                const imagen4 = new FormData();
+                imagen4.append("imagen1", archivo4);
                 //aqui vas a poner el codigo para enviar los datos a la base de datos
                 //a la base de datos vas a enviar el body y nArchivo 1 2 y 3
                 //y al repositorio de imagenes vas a mandar imagen1 2 y 3
@@ -123,13 +135,13 @@ export default function MProductos() {
                     })}
                 </select>
                 <label>Informacion:</label>
-                <textarea name="inategorias
-Nombre de la categoriafo" onChange={cambioEntrada}></textarea>
+                <textarea name="info" onChange={cambioEntrada}></textarea>
                 <aside className={clas.info} id="aside">{texto.info}</aside>
                 <label htmlFor="input">Sube una imagen:</label>
                 <input type="file" accept=".jpg,.jpeg,.png" id="inputarchivo1" onChange={seleccionar1} />
                 <input type="file" accept=".jpg,.jpeg,.png" id="inputarchivo2" onChange={seleccionar2} />
                 <input type="file" accept=".jpg,.jpeg,.png" id="inputarchivo3" onChange={seleccionar3} />
+                <input type="file" accept=".jpg,.jpeg,.png" id="inputarchivo4" onChange={seleccionar4} />
                 <span className={styles.imagenes}>
                     <div>
                         <button><label for="inputarchivo1">{nArchivo1}</label></button>
@@ -140,10 +152,12 @@ Nombre de la categoriafo" onChange={cambioEntrada}></textarea>
                     <div>
                         <button><label for="inputarchivo3">{nArchivo3}</label></button>
                     </div>
+                    <div>
+                        <button><label for="inputarchivo4">{nArchivo4}</label></button>
+                    </div>
                 </span>
                 <div className={styles.aside2}><aside className={clas.imagen1}>{texto.imagen1} </aside></div>
                 <div className={styles.submit}>
-                    <input type="submit" className={styles.rojo} value="Borrar" />
                     <input type="submit" className={styles.verde} value="Subir" onClick={subir} />
                 </div>
             </section>

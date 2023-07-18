@@ -60,14 +60,6 @@ export default function MListas() {
         const { name, value } = target;
         setBody({ ...body, [name]: value });
     };
-    const borrar = () => {
-        clas["nombre"]=`${styles.error} ${styles.ocultar}`;
-        if (!body.nombre.length) {
-            setClas({...clas,["nombre"]:styles.error});
-            setTexto({...texto,["nombre"]:"Debe llenar este dato"});
-            return;
-        }
-    }
     return (
         <>
             <section className={styles.mlistas}>
@@ -83,7 +75,6 @@ export default function MListas() {
                 <button><label for="inputarchivo">{nArchivo}</label></button>
                 <div className={styles.aside}><aside className={clas.imagen}>{texto.imagen} </aside></div>
                 <div className={styles.submit}>
-                    <input type="submit" className={styles.rojo} value="Borrar" onClick={borrar}/>
                     <input type="submit" className={styles.verde} value="Subir" onClick={subir}/>
                 </div>
             </section>

@@ -4,6 +4,8 @@ import axios from "axios";
 
 export default function Vproductos() {
     const [listas, setListas] = useState([]);
+    const [modifiedRows, setModifiedRows] = useState({});
+    const [botones, setBotones] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -19,6 +21,55 @@ export default function Vproductos() {
         };
         fetchData();
     }, []);
+    const borrar = (valor) => {
+        //aqui agregas el axios para borrar, le envias el valor para borrar por id
+    }
+    const cancelar = (valor) => {
+        setModifiedRows((prevModifiedRows) => ({
+            ...prevModifiedRows,
+            [valor]: false,
+        }));
+        setBotones(false);
+    }
+    const enviar = (valor) => {
+        let nombre = document.getElementById("1" + valor);
+        let descripcion = document.getElementById("2" + valor);
+        let categoria = document.getElementById("3" + valor);
+        const enviarID = valor;
+        const enviarNombre = nombre.value;
+        const enviarDescripcion = descripcion.value;
+        const enviarCategoria = categoria.value;
+        //0
+        // aqui aades el axios para enviar
+        //
+        setModifiedRows((prevModifiedRows) => ({
+            ...prevModifiedRows,
+            [valor]: false,
+        }));
+        setBotones(false);
+    }
+    const modificar = (valor) => {
+        let nombre = document.getElementById("1" + valor);
+        let descripcion = document.getElementById("2" + valor);
+        let categoria = document.getElementById("3" + valor);
+        nombre.addEventListener('input', function () {
+            const nuevoValor = nombre.value;
+            nombre.value = nuevoValor;
+        });
+        descripcion.addEventListener('input', function () {
+            const nuevoValor = descripcion.value;
+            descripcion.value = nuevoValor;
+        });
+        categoria.addEventListener('input', function () {
+            const nuevoValor = categoria.value;
+            categoria.value = nuevoValor;
+        });
+        setModifiedRows((prevModifiedRows) => ({
+            ...prevModifiedRows,
+            [valor]: true,
+        }));
+        setBotones(true);
+    }
     return (
         <>
             <section className={styles.vusuarios}>
@@ -26,19 +77,33 @@ export default function Vproductos() {
                 <div className={styles.scroll}>
                     <table>
                         <thead>
+                            <td>Modificar</td>
                             <td>Id</td>
                             <td>nombre</td>
                             <td>Descripcion</td>
                             <td>nombre categorias</td>
+                            <td>Borrar</td>
                         </thead>
                         {listas.map((lista, index) => {
+                            const valor = lista.Id;
                             return (
                                 <>
                                     <tr>
+                                        <td>
+                                            {!modifiedRows[valor] ? (
+                                                <button disabled={botones} onClick={() => modificar(valor)}><i class="nf nf-fa-pencil"></i></button>
+                                            ) : (
+                                                <div className={styles.botones}>
+                                                    <button onClick={() => cancelar(valor)}><i class="nf nf-oct-x"></i></button>
+                                                    <button onClick={() => enviar(valor)}><i class="nf nf-fa-paper_plane"></i></button>
+                                                </div>
+                                            )}
+                                        </td>
                                         <td>{lista.Id}</td>
-                                        <td>{lista.NombreLugar}</td>
-                                        <td>{lista.Descripcion}</td>
-                                        <td>{lista.NombreCategoria}</td>
+                                        <td><input type="text" id={"1" + lista.Id} disabled={!modifiedRows[valor]} value={lista.NombreLugar} /></td>
+                                        <td><textarea id={"2" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Descripcion} /></td>
+                                        <td><input type="text" id={"3" + lista.Id} disabled={!modifiedRows[valor]} value={lista.NombreCategoria} /></td>
+                                        <td><button disabled={botones} onClick={() => borrar(valor)}><i class="nf nf-cod-trash"></i></button></td>
                                     </tr>
                                 </>
                             );

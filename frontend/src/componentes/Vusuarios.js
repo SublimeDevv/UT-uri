@@ -49,7 +49,7 @@ export default function Vusuarios() {
         const enviatAellido=apellido.value;
         const enviarCorreo=correo.value;
         const enviarAvatar=avatar.value;
-        //
+        //0
         // aqui aades el axios para enviar
         //
         setModifiedRows((prevModifiedRows) => ({
@@ -88,7 +88,7 @@ export default function Vusuarios() {
     return (
         <>
             <section className={styles.vusuarios}>
-                <h1>Usuarios:</h1>
+                <h1>Usuarios: {body.nombre}</h1>
                 <div className={styles.scroll}>
                     <table>
                         <thead>
