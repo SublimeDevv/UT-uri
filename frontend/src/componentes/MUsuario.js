@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "../estilos/formularios.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { UserContext } from "../UserContext";
 
 export default function MUsuario() {
+  const { usuario } = useContext(UserContext);
   const [body, setBody] = useState({
     Correo: "",
     checkbox: false,
@@ -128,6 +130,11 @@ export default function MUsuario() {
   };
 
   const borrar = async () => {
+    if (usuario.Id === body.Id)
+      return Swal.fire({
+        icon: "error",
+        title: "No puedes eliminarte a ti mismo.",
+      });
     try {
       await axios.delete(`http://localhost:8081/EliminarUsuario/${body.Id}`);
       Swal.fire({
@@ -135,7 +142,7 @@ export default function MUsuario() {
         title: "Usuario eliminado exitosamente",
       });
     } catch (error) {
-        setTexto({ ...texto, Correo: "El correo que ingresaste no existe." });
+      setTexto({ ...texto, Correo: "El correo que ingresaste no existe." });
     }
   };
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import MUsuario from "./MUsuario";
 
 export default function Vusuarios() {
+    const [needsUpdate, setNeedsUpdate] = useState(false);
     const [listas, setListas] = useState([]);
     const [body, setBody] = useState({
         id: 1,
@@ -27,10 +28,20 @@ export default function Vusuarios() {
                 console.log(error);
             }
         };
-        fetchData();
-    }, []);
-    const borrar = (valor) => {
-        //aqui agregas el axios para borrar, le envias el valor para borrar por id
+        if (needsUpdate) {
+            setNeedsUpdate(false);
+            fetchData();
+          }
+        }, [needsUpdate]);
+      
+    const borrar = async (valor) => {
+      try {
+        await axios.delete(`http://localhost:8081/EliminarUsuario/${valor}`);
+        setNeedsUpdate(true);
+        console.log("Usuario eliminado correctamente.")
+      } catch (error) {
+        console.log(error)
+      }
     }
     const cancelar = (valor) => {
         setModifiedRows((prevModifiedRows) => ({
@@ -39,19 +50,30 @@ export default function Vusuarios() {
         }));
         setBotones(false);
     }
-    const enviar = (valor) => {
+    const enviar = async (valor) => {
         let nombre = document.getElementById("1" + valor);
         let apellido = document.getElementById("2" + valor);
         let correo = document.getElementById("3" + valor);
         let avatar = document.getElementById("4" + valor);
-        const enviarID=valor;
-        const enviarNombre=nombre.value;
-        const enviatAellido=apellido.value;
-        const enviarCorreo=correo.value;
-        const enviarAvatar=avatar.value;
-        //0
-        // aqui aades el axios para enviar
-        //
+        const usuarioId = valor;
+        const nombreUsuario = nombre.value;
+        const apellidoUsuario = apellido.value;
+        const correoUsuario = correo.value;
+        const contraseniaUsuario = null;
+        const avatarUsuario = avatar.value;
+        const rolId = null;
+        const fecha = null;
+        try {
+            const respuesta = await axios.put(`http://localhost:8081/ActualizarUsuario/${usuarioId}`, {nombreUsuario, apellidoUsuario, correoUsuario, contraseniaUsuario, avatarUsuario, rolId, fecha});
+            if (respuesta.data.Estatus === "EXITOSO") {
+                console.log("Usuario modificado correctamente");
+                setNeedsUpdate(true);
+            } else {
+                console.log("Error al modificar al usuario")
+            }
+        } catch (error) {
+            console.log(error)
+        }
         setModifiedRows((prevModifiedRows) => ({
             ...prevModifiedRows,
             [valor]: false,

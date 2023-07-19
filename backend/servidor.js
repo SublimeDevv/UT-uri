@@ -4,6 +4,17 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
+import multer from 'multer';
+import path from 'path';
+
+const storage = multer.diskStorage({
+  destination: '../frontend/src/images/categorias/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); 
+  },
+})
+
+const upload = multer({ storage });
 
 import "dotenv/config";
 
@@ -25,6 +36,15 @@ conexion.connect((error) => {
 
 app.listen(process.env.PORT, () => {
   console.log("Servidor iniciado");
+});
+
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/subirImagenes', upload.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+  }
+  return res.json({ message: 'Imagen subida correctamente' });
 });
 
   const autenticarUsuario = (peticion, respuesta, siguiente) => {
@@ -60,7 +80,7 @@ app.listen(process.env.PORT, () => {
 
 app.get("/ObtenerViajes/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE NombreCategoria = ?";
+  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE NombreCategoria = ? AND Estado = 1";
   conexion.query(sql, [id], (error, resultado) => {
     if (error) return respuesta.status(500).json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -69,7 +89,7 @@ app.get("/ObtenerViajes/:id", (peticion, respuesta) => {
 
 app.get("/ObtenerDetalles/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "SELECT * FROM VW_Obtener_Lugares_Detalles WHERE LugarID = ?";
+  const sql = "SELECT * FROM VW_Obtener_Lugares_Detalles WHERE LugarID = ? AND Estado = 1";
   conexion.query(sql, [id], (error, resultado) => {
     if (error) return respuesta.status(500).json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -128,7 +148,7 @@ app.post("/VerificarCorreo", (peticion, respuesta) => {
 });
 
 app.get("/ObtenerProductos", (peticion, respuesta) => {
-  const sql = "SELECT * FROM VW_Obtener_Viajes";
+  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE Estado = 1";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -156,8 +176,8 @@ app.get("/obtenerLista", (peticion, respuesta) => {
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
   });
 });
-app.get("/obtenerCategorias", (peticion, respuesta) => {
-  const sql = "SELECT * FROM VW_Obtener_Categorias;";
+app.get("/ObtenerCategorias", (peticion, respuesta) => {
+  const sql = "SELECT * FROM VW_Obtener_Categorias WHERE Estatus = 1;";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -229,7 +249,7 @@ app.post('/FormularioContacto', (peticion, respuesta) => {
 });
 
 app.post("/AgregarCategoria", (peticion, respuesta) => {
-  const { nombreCategoria, descripcionCategoria, imagenCategoria } = peticion.body;
+  const { nombreCategoria, descripcionCategoria, imagenCategoria, imagen1 } = peticion.body;
   const query = "CALL SP_Agregar_Categoria(?, ?, ?)";
   conexion.query(query, [nombreCategoria, descripcionCategoria, imagenCategoria], (error) => {
     if (error) {
@@ -246,6 +266,18 @@ app.delete("/EliminarCategoria/:categoriaId", (peticion, respuesta) => {
   conexion.query(query, [categoriaId], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al eliminar la categoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/OcultarCategoria/:categoriaId", (peticion, respuesta) => {
+  const categoriaId = peticion.params.categoriaId;
+  const query = "CALL SP_Ocultar_Categoria(?)";
+  conexion.query(query, [categoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al ocultar la categoría" });
     } else {
       respuesta.json({ Estatus: "EXITOSO" });
     }
@@ -270,6 +302,18 @@ app.delete("/EliminarLugar/:lugarId", (peticion, respuesta) => {
   conexion.query(query, [lugarId], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al eliminar el lugar" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/OcultarLugar/:lugarId", (peticion, respuesta) => {
+  const lugarId = peticion.params.lugarId;
+  const query = "CALL SP_Ocultar_Lugar(?)";
+  conexion.query(query, [lugarId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al tratar de ocultar el lugar" });
     } else {
       respuesta.json({ Estatus: "EXITOSO" });
     }
@@ -401,9 +445,9 @@ app.put("/ActualizarCategoria/:categoriaId", (peticion, respuesta) => {
 
 app.put("/ActualizarLugar/:lugarId", (peticion, respuesta) => {
   const lugarId = peticion.params.lugarId;
-  const { nombreLugar, informacionLugar, imagenesLugar, categoriaId } = peticion.body;
-  const query = "CALL SP_Actualizar_Lugar(?, ?, ?, ?, ?)";
-  conexion.query(query, [lugarId, nombreLugar, informacionLugar, imagenesLugar, categoriaId], (error) => {
+  const { nombreLugar, informacionLugar, imagenesLugar } = peticion.body;
+  const query = "CALL SP_Actualizar_Lugar(?, ?, ?, ?)";
+  conexion.query(query, [lugarId, nombreLugar, informacionLugar, imagenesLugar], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al actualizar el lugar" });
     } else {
@@ -458,6 +502,18 @@ app.put("/ActualizarReserva/:reservaId", (peticion, respuesta) => {
   conexion.query(query, [reservaId, usuarioId, detallesId, fechaReserva], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al actualizar la reserva" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.put("/EliminarAdministrador/:adminId", (peticion, respuesta) => {
+  const adminId = peticion.params.adminId;
+  const query = "CALL SP_Eliminar_Administrador(?)";
+  conexion.query(query, [adminId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al eliminar al administrador" });
     } else {
       respuesta.json({ Estatus: "EXITOSO" });
     }

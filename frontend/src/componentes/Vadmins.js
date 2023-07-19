@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "../estilos/vistas.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { UserContext } from "../UserContext";
 
 export default function Vadmins() {
+    const { usuario } = useContext(UserContext);
     const [needsUpdate, setNeedsUpdate] = useState(false);
     
     const [listas, setListas] = useState([]);
@@ -35,8 +38,22 @@ export default function Vadmins() {
         }
     }, [needsUpdate]);
 
-    const borrar = (valor) => {
-        //aqui agregas el axios para borrar, le envias el valor para borrar por id
+    const borrar = async (adminId) => {
+        if (usuario.Id === adminId) return Swal.fire({
+            icon: "error",
+            title: "No puedes eliminarte a ti mismo.",
+          });
+          try {
+            const respuesta = await axios.put(
+              `http://localhost:8081/EliminarAdministrador/${adminId}`
+            );
+            if (respuesta.data.Estatus === "EXITOSO") {
+                setNeedsUpdate(true);
+              console.log("Administrador eliminado");
+            }
+          } catch (error) {
+            console.log("Error: " + error);
+          }
     }
     const cancelar = (valor) => {
         setModifiedRows((prevModifiedRows) => ({

@@ -44,7 +44,7 @@ export default function Dashboards({ components }) {
           setValores({
             usuario: respuesta.data.Resultado[0].usuarios,
             admin: respuesta.data.Resultado[0].administradores,
-            lista: respuesta.data.Resultado[0].lugares,
+            lista: respuesta.data.Resultado[0].categorias,
             detalles: respuesta.data.Resultado[0].viajes,
           });
         } else {
