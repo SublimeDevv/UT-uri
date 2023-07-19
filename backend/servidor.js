@@ -191,7 +191,7 @@ app.get("/Usuarios", (peticion, respuesta) => {
   });
 });
 app.get("/Listas", (peticion, respuesta) => {
-  const sql = "SELECT * FROM VW_Obtener_Categorias";
+  const sql = "SELECT * FROM VW_Obtener_Categorias WHERE Estatus = 1";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
