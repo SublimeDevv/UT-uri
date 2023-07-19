@@ -91,11 +91,11 @@ export default function Vproductos() {
                                     <tr>
                                         <td>
                                             {!modifiedRows[valor] ? (
-                                                <button disabled={botones} onClick={() => modificar(valor)}><i class="nf nf-fa-pencil"></i></button>
+                                                <button disabled={botones} onClick={() => modificar(valor)}><i class="nf nf-md-lead_pencil"></i></button>
                                             ) : (
                                                 <div className={styles.botones}>
                                                     <button onClick={() => cancelar(valor)}><i class="nf nf-oct-x"></i></button>
-                                                    <button onClick={() => enviar(valor)}><i class="nf nf-fa-paper_plane"></i></button>
+                                                    <button onClick={() => enviar(valor)}><i class="nf nf-cod-check"></i></button>
                                                 </div>
                                             )}
                                         </td>

@@ -51,11 +51,10 @@ export default function Vlistas() {
     const enviar = async (valor) => {
         let nombre = document.getElementById("1" + valor);
         let descripcion = document.getElementById("2" + valor);
-        let imagen = document.getElementById("3" + valor);
         const categoriaId = valor;
         const nombreCategoria = nombre.value;
         const descripcionCategoria = descripcion.value;
-        const imagenCategoria = imagen.value;
+        const imagenCategoria = null;
 
         try {
             const respuesta = await axios.put(`http://localhost:8081/ActualizarCategoria/${categoriaId}`, {nombreCategoria, descripcionCategoria, imagenCategoria })
@@ -79,7 +78,6 @@ export default function Vlistas() {
     const modificar = (valor) => {
         let nombre = document.getElementById("1" + valor);
         let descripcion = document.getElementById("2" + valor);
-        let imagen = document.getElementById("3" + valor);
         nombre.addEventListener('input', function () {
             const nuevoValor = nombre.value;
             nombre.value = nuevoValor;
@@ -87,10 +85,6 @@ export default function Vlistas() {
         descripcion.addEventListener('input', function () {
             const nuevoValor = descripcion.value;
             descripcion.value = nuevoValor;
-        });
-        imagen.addEventListener('input', function () {
-            const nuevoValor = imagen.value;
-            imagen.value = nuevoValor;
         });
         setModifiedRows((prevModifiedRows) => ({
             ...prevModifiedRows,
@@ -109,7 +103,6 @@ export default function Vlistas() {
                             <td>Id</td>
                             <td>nombre</td>
                             <td>Descripcion</td>
-                            <td>imagen</td>
                             <td>Borrar</td>
                         </thead>
                         {listas.map((lista, index) => {
@@ -119,18 +112,17 @@ export default function Vlistas() {
                                     <tr key={lista.Id}>
                                         <td>
                                             {!modifiedRows[valor] ? (
-                                                <button disabled={botones} onClick={() => modificar(valor)}><i class="nf nf-fa-pencil"></i></button>
+                                                <button disabled={botones} onClick={() => modificar(valor)}><i class="nf nf-md-lead_pencil"></i></button>
                                             ) : (
                                                 <div className={styles.botones}>
                                                     <button onClick={() => cancelar(valor)}><i class="nf nf-oct-x"></i></button>
-                                                    <button onClick={() => enviar(valor)}><i class="nf nf-fa-paper_plane"></i></button>
+                                                    <button onClick={() => enviar(valor)}><i class="nf nf-cod-check"></i></button>
                                                 </div>
                                             )}
                                         </td>
                                         <td>{lista.Id}</td>
                                         <td><input type="text" id={"1" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Nombre} /></td>
                                         <td><textarea id={"2" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Descripcion} /></td>
-                                        <td><input type="text" id={"3" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Imagen} /></td>
                                         <td><button disabled={botones} onClick={() => borrar(valor)}><i class="nf nf-cod-trash"></i></button></td>
                                     </tr>
                                 </>

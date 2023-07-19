@@ -4,17 +4,29 @@ import axios from "axios";
 
 export default function MAdministradores() {
   const [id, setID] = useState(7);
+  const [needsUpdate, setNeedsUpdate] = useState(false);
   const [listas, setListas] = useState([]);
   const [boton, setBoton] = useState(
     <button disabled>Borrar Administrador</button>
   );
   const seleccionar = (id, event) => {
     setID(id);
-    setBoton(<button onClick={borrar}>Borrar Administrador</button>);
+    setBoton(<button onClick={()=>{borrar()}}>Borrar Administrador</button>);
   };
-  const borrar = () => {
-    //aqui pones el post para borrar usas la variable id para enviar el admin a eliminar lo haras mediante el id
-  };
+  const borrar = async () => {
+    const usuarioId = { id };
+    try {
+      const respuesta = await axios.delete(`http://localhost:8081/EliminarUsuario/${usuarioId}`);
+      if (respuesta.data.Estatus === "EXITOSO") {
+        console.log("Admin eliminado correctamente");
+        setNeedsUpdate(true);
+      } else {
+        console.log("Error al eliminar admin")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const handleClickOutside = (event) => {
     if (!event.target.closest("span")) {
       setBoton(<button disabled>Borrar Administrador</button>);
@@ -36,11 +48,15 @@ export default function MAdministradores() {
       }
     };
     fetchData();
+    if (needsUpdate) {
+      setNeedsUpdate(false);
+      fetchData();
+    }
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [needsUpdate]);
   return (
     <>
       <section className={styles.madmin}>
