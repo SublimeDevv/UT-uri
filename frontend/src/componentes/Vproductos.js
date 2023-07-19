@@ -6,6 +6,7 @@ export default function Vproductos() {
     const [listas, setListas] = useState([]);
     const [modifiedRows, setModifiedRows] = useState({});
     const [botones, setBotones] = useState(false);
+    const [needsUpdate, setNeedsUpdate] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -20,28 +21,58 @@ export default function Vproductos() {
             }
         };
         fetchData();
-    }, []);
-    const borrar = (valor) => {
-        //aqui agregas el axios para borrar, le envias el valor para borrar por id
+        if (needsUpdate) {
+            setNeedsUpdate(false);
+            fetchData();
+        }
+    }, [needsUpdate]);
+
+    const borrar = async (valor) => {
+        const lugarId = valor;
+        try {
+            const respuesta = await axios.delete(`http://localhost:8081/EliminarLugar/${lugarId}`);
+            if (respuesta.data.Estatus === "EXITOSO") {
+                console.log("Categoria eliminada correctamente");
+                setNeedsUpdate(true);
+            } else {
+                console.log("Error al eliminar la categoria")
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
     const cancelar = (valor) => {
+        let nombre = document.getElementById("1" + valor);
+        let descripcion = document.getElementById("2" + valor);
+        nombre.style.border = "none";
+        descripcion.style.border = "none";
         setModifiedRows((prevModifiedRows) => ({
             ...prevModifiedRows,
             [valor]: false,
         }));
         setBotones(false);
     }
-    const enviar = (valor) => {
+    const enviar = async (valor) => {
         let nombre = document.getElementById("1" + valor);
         let descripcion = document.getElementById("2" + valor);
-        let categoria = document.getElementById("3" + valor);
-        const enviarID = valor;
-        const enviarNombre = nombre.value;
-        const enviarDescripcion = descripcion.value;
-        const enviarCategoria = categoria.value;
-        //0
-        // aqui aades el axios para enviar
-        //
+        nombre.style.border = "none";
+        descripcion.style.border = "none";
+        const lugarId = valor;
+        const nombreLugar = nombre.value;
+        const informacionLugar = descripcion.value;
+        const categoriaId = null;
+        try {
+            const respuesta = await axios.put(`http://localhost:8081/ActualizarLugar/${lugarId}`, {nombreLugar, informacionLugar, categoriaId })
+            console.log(respuesta.data)
+            if (respuesta.data.Estatus === "EXITOSO") {
+                console.log("Se modifico el usuario");
+                setNeedsUpdate(true);
+            } else {
+                console.log("Error al modificar al usuario")
+            }
+        } catch (error) {
+            console.log("Error del usuario")
+        }
         setModifiedRows((prevModifiedRows) => ({
             ...prevModifiedRows,
             [valor]: false,
@@ -51,7 +82,8 @@ export default function Vproductos() {
     const modificar = (valor) => {
         let nombre = document.getElementById("1" + valor);
         let descripcion = document.getElementById("2" + valor);
-        let categoria = document.getElementById("3" + valor);
+        nombre.style.border = "2px solid #131a22";
+        descripcion.style.border = "2px solid #131a22";
         nombre.addEventListener('input', function () {
             const nuevoValor = nombre.value;
             nombre.value = nuevoValor;
@@ -59,10 +91,6 @@ export default function Vproductos() {
         descripcion.addEventListener('input', function () {
             const nuevoValor = descripcion.value;
             descripcion.value = nuevoValor;
-        });
-        categoria.addEventListener('input', function () {
-            const nuevoValor = categoria.value;
-            categoria.value = nuevoValor;
         });
         setModifiedRows((prevModifiedRows) => ({
             ...prevModifiedRows,
@@ -102,7 +130,7 @@ export default function Vproductos() {
                                         <td>{lista.Id}</td>
                                         <td><input type="text" id={"1" + lista.Id} disabled={!modifiedRows[valor]} value={lista.NombreLugar} /></td>
                                         <td><textarea id={"2" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Descripcion} /></td>
-                                        <td><input type="text" id={"3" + lista.Id} disabled={!modifiedRows[valor]} value={lista.NombreCategoria} /></td>
+                                        <td>{lista.NombreCategoria}</td>
                                         <td><button disabled={botones} onClick={() => borrar(valor)}><i class="nf nf-cod-trash"></i></button></td>
                                     </tr>
                                 </>

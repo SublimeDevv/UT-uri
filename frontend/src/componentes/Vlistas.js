@@ -13,6 +13,7 @@ export default function Vlistas() {
                 const respuesta = await axios.get(`http://localhost:8081/Listas`);
                 if (respuesta.data.Estatus === "EXITOSO") {
                     setListas(respuesta.data.Resultado);
+                    setNeedsUpdate(true);
                 } else {
                     console.log("Error");
                 }
@@ -42,6 +43,10 @@ export default function Vlistas() {
         }
     }
     const cancelar = (valor) => {
+        let nombre = document.getElementById("1" + valor);
+        let descripcion = document.getElementById("2" + valor);
+        nombre.style.border = "none";
+        descripcion.style.border = "none";
         setModifiedRows((prevModifiedRows) => ({
             ...prevModifiedRows,
             [valor]: false,
@@ -51,6 +56,8 @@ export default function Vlistas() {
     const enviar = async (valor) => {
         let nombre = document.getElementById("1" + valor);
         let descripcion = document.getElementById("2" + valor);
+        nombre.style.border = "none";
+        descripcion.style.border = "none";
         const categoriaId = valor;
         const nombreCategoria = nombre.value;
         const descripcionCategoria = descripcion.value;
@@ -78,6 +85,8 @@ export default function Vlistas() {
     const modificar = (valor) => {
         let nombre = document.getElementById("1" + valor);
         let descripcion = document.getElementById("2" + valor);
+        nombre.style.border = "2px solid #131a22";
+        descripcion.style.border = "2px solid #131a22";
         nombre.addEventListener('input', function () {
             const nuevoValor = nombre.value;
             nombre.value = nuevoValor;
