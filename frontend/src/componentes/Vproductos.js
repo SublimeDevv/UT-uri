@@ -31,6 +31,12 @@ export default function Vproductos() {
   }, [needsUpdate]);
 
   const borrar = async (valor) => {
+    let nombre = document.getElementById("1" + valor);
+    let descripcion = document.getElementById("2" + valor);
+    let categoria = document.getElementById("3" + valor);
+    nombre.style.border = "none";
+    descripcion.style.border = "none";
+    categoria.style.border = "none";
     try {
       const response = await axios.put(
         `http://localhost:8081/OcultarLugar/${valor}`
@@ -47,6 +53,12 @@ export default function Vproductos() {
   };
 
   const cancelar = (valor) => {
+    let nombre = document.getElementById("1" + valor);
+    let descripcion = document.getElementById("2" + valor);
+    let categoria = document.getElementById("3" + valor);
+    nombre.style.border = "none";
+    descripcion.style.border = "none";
+    categoria.style.border = "none";
     setModifiedRows((prevModifiedRows) => ({
       ...prevModifiedRows,
       [valor]: false,
@@ -56,11 +68,15 @@ export default function Vproductos() {
   const enviar = async (valor) => {
     let nombre = document.getElementById("1" + valor);
     let descripcion = document.getElementById("2" + valor);
+    let categoria = document.getElementById("3" + valor);
     const lugarId = valor;
     const nombreLugar = nombre.value;
     const informacionLugar = descripcion.value;
     const imagenesLugar = null;
 
+    nombre.style.border = "none";
+    descripcion.style.border = "none";
+    categoria.style.border = "none";
     try {
       const respuesta = await axios.put(
         `http://localhost:8081/ActualizarLugar/${lugarId}`,
@@ -85,7 +101,10 @@ export default function Vproductos() {
     let nombre = document.getElementById("1" + valor);
     let descripcion = document.getElementById("2" + valor);
     let categoria = document.getElementById("3" + valor);
-    nombre.addEventListener("input", function () {
+    nombre.style.border = "2px solid #131a22";
+    descripcion.style.border = "2px solid #131a22";
+    categoria.style.border = "2px solid #131a22";
+    categoria.addEventListener("input", function () {
       const nuevoValor = nombre.value;
       nombre.value = nuevoValor;
     });
@@ -136,7 +155,7 @@ export default function Vproductos() {
                             <i class="nf nf-oct-x"></i>
                           </button>
                           <button onClick={() => enviar(valor)}>
-                            <i class="nf nf-fa-paper_plane"></i>
+                            <i class="nf nf-cod-check"></i>
                           </button>
                         </div>
                       )}
@@ -154,7 +173,7 @@ export default function Vproductos() {
                       <textarea
                         id={"2" + lista.Id}
                         disabled={!modifiedRows[valor]}
-                        value={lista.Descripcion}
+                        value={lista.Informacion}
                       />
                     </td>
                     <td>

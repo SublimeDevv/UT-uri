@@ -14,7 +14,15 @@ const storage = multer.diskStorage({
   },
 })
 
+const storage2 = multer.diskStorage({
+  destination: '../frontend/src/images/listas/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); 
+  },
+})
 const upload = multer({ storage });
+
+const uploadAll = multer({ storage2 });
 
 import "dotenv/config";
 
@@ -47,6 +55,12 @@ app.post('/subirImagenes', upload.single('image'), (req, res) => {
   return res.json({ message: 'Imagen subida correctamente' });
 });
 
+app.post('/subirVarias', uploadAll.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+  }
+  return res.json({ message: 'Imagen subida correctamente' });
+});
   const autenticarUsuario = (peticion, respuesta, siguiente) => {
     const token = peticion.header("Authorization");
     if (!token) {
@@ -516,6 +530,18 @@ app.put("/EliminarAdministrador/:adminId", (peticion, respuesta) => {
       respuesta.status(500).json({ Error: "Error al eliminar al administrador" });
     } else {
       respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+
+app.post('/AgregarLugarYDetalle', (peticion, respuesta) => {
+  const { p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio } = peticion.body;
+  const query = 'CALL SP_Crear_Lugar_Detalle(?, ?, ?, ?, ?, ?, ?)';
+  conexion.query(query, [p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: 'Error al agregar el lugar y detalle' });
+    } else {
+      respuesta.json({ Estatus: 'EXITOSO' });
     }
   });
 });
