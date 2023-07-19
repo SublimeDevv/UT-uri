@@ -71,6 +71,11 @@ export default function Vadmins() {
         const avatarUsuario = nArchivo;
         const rolId = null;
         const fecha = null;
+        if (nArchivo !== "default_avatar.jpg") {
+            const imagen = new FormData();
+            imagen.append("imagen", archivo);
+            //al repositorio de imagenes vas a mandar imagen
+        }
         try {
             const respuesta = await axios.put(`http://localhost:8081/ActualizarUsuario/${usuarioId}`, {nombreUsuario, apellidoUsuario, correoUsuario, contraseniaUsuario, avatarUsuario, rolId, fecha});
             if (respuesta.data.Estatus === "EXITOSO") {
