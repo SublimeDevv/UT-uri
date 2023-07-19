@@ -3,25 +3,30 @@ import styles from "../estilos/vistas.module.css";
 import axios from "axios";
 
 export default function Vlistas() {
-  const [listas, setListas] = useState([]);
-  const [modifiedRows, setModifiedRows] = useState({});
-  const [botones, setBotones] = useState(false);
-  const [needsUpdate, setNeedsUpdate] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const respuesta = await axios.get(
-          `http://localhost:8081/ObtenerCategorias`
-        );
-        if (respuesta.data.Estatus === "EXITOSO") {
-          setListas(respuesta.data.Resultado);
-        } else {
-          console.log("Error");
+    const [listas, setListas] = useState([]);
+    const [modifiedRows, setModifiedRows] = useState({});
+    const [botones, setBotones] = useState(false);
+    const [needsUpdate, setNeedsUpdate] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const respuesta = await axios.get(`http://localhost:8081/Listas`);
+                if (respuesta.data.Estatus === "EXITOSO") {
+                    setListas(respuesta.data.Resultado);
+                    setNeedsUpdate(true);
+                } else {
+                    console.log("Error");
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+        if (needsUpdate) {
+            setNeedsUpdate(false);
+            fetchData();
         }
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    
     fetchData();
     if (needsUpdate) {
       setNeedsUpdate(false);
@@ -44,22 +49,26 @@ export default function Vlistas() {
     } catch (error) {
       console.log(error);
     }
-  };
-  const cancelar = (valor) => {
-    setModifiedRows((prevModifiedRows) => ({
-      ...prevModifiedRows,
-      [valor]: false,
-    }));
-    setBotones(false);
-  };
-  const enviar = async (valor) => {
-    let nombre = document.getElementById("1" + valor);
-    let descripcion = document.getElementById("2" + valor);
-    let imagen = document.getElementById("3" + valor);
-    const categoriaId = valor;
-    const nombreCategoria = nombre.value;
-    const descripcionCategoria = descripcion.value;
-    const imagenCategoria = imagen.value;
+    const cancelar = (valor) => {
+        let nombre = document.getElementById("1" + valor);
+        let descripcion = document.getElementById("2" + valor);
+        nombre.style.border = "none";
+        descripcion.style.border = "none";
+        setModifiedRows((prevModifiedRows) => ({
+            ...prevModifiedRows,
+            [valor]: false,
+        }));
+        setBotones(false);
+    }
+    const enviar = async (valor) => {
+        let nombre = document.getElementById("1" + valor);
+        let descripcion = document.getElementById("2" + valor);
+        nombre.style.border = "none";
+        descripcion.style.border = "none";
+        const categoriaId = valor;
+        const nombreCategoria = nombre.value;
+        const descripcionCategoria = descripcion.value;
+        const imagenCategoria = null;
 
     try {
       const respuesta = await axios.put(

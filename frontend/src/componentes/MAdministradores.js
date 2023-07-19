@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 export default function MAdministradores() {
   const { usuario } = useContext(UserContext)
   const [id, setID] = useState(7);
+  const [needsUpdate, setNeedsUpdate] = useState(false);
   const [listas, setListas] = useState([]);
   const [boton, setBoton] = useState(
     <button disabled>Borrar Administrador</button>
@@ -58,12 +59,15 @@ export default function MAdministradores() {
 
   useEffect(() => {
     fetchData();
+    if (needsUpdate) {
+      setNeedsUpdate(false);
+      fetchData();
+    }
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
-
+  }, [needsUpdate]);
   return (
     <>
       <section className={styles.madmin}>
