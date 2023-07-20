@@ -52,40 +52,40 @@ export default function MProductos() {
     if (e.target.files[0]) {
       setArchivo1(e.target.files[0]);
       setNarchivo1(e.target.files[0].name);
-      document.getElementById("img1").style.backgroundColor="#84c377"
+      document.getElementById("img1").style.backgroundColor = "#84c377";
     } else {
       setNarchivo1("Imagen");
-      document.getElementById("img1").style.backgroundColor="#fff"
+      document.getElementById("img1").style.backgroundColor = "#fff";
     }
   };
   const seleccionar2 = (e) => {
     if (e.target.files[0]) {
       setArchivo2(e.target.files[0]);
       setNarchivo2(e.target.files[0].name);
-      document.getElementById("img2").style.backgroundColor="#84c377"
+      document.getElementById("img2").style.backgroundColor = "#84c377";
     } else {
       setNarchivo2("Imagen");
-      document.getElementById("img2").style.backgroundColor="#fff"
+      document.getElementById("img2").style.backgroundColor = "#fff";
     }
   };
   const seleccionar3 = (e) => {
     if (e.target.files[0]) {
       setArchivo3(e.target.files[0]);
       setNarchivo3(e.target.files[0].name);
-      document.getElementById("img3").style.backgroundColor="#84c377"
+      document.getElementById("img3").style.backgroundColor = "#84c377";
     } else {
       setNarchivo3("Imagen");
-      document.getElementById("img3").style.backgroundColor="#fff"
+      document.getElementById("img3").style.backgroundColor = "#fff";
     }
   };
   const seleccionar4 = (e) => {
     if (e.target.files[0]) {
       setArchivo4(e.target.files[0]);
       setNarchivo4(e.target.files[0].name);
-      document.getElementById("img4").style.backgroundColor="#84c377"
+      document.getElementById("img4").style.backgroundColor = "#84c377";
     } else {
       setNarchivo4("Imagen");
-      document.getElementById("img3").style.backgroundColor="#fff"
+      document.getElementById("img3").style.backgroundColor = "#fff";
     }
   };
   const subir = async () => {
@@ -105,23 +105,33 @@ export default function MProductos() {
         try {
           const formData = new FormData();
           imagenes.forEach((imagen, index) => {
-            formData.append("imagen", imagen); 
+            formData.append("imagen", imagen);
           });
-      
+
           await axios.post("http://localhost:8081/subirVarias", formData);
           console.log("Imágenes subidas correctamente");
-          swal("¡Éxito!", "El producto se agregó correctamente.", "success");
+          Swal("¡Éxito!", "El producto se agregó correctamente.", "success");
         } catch (error) {
           console.error("Error al subir las imágenes:", error.message);
         }
-      
+
         const p_Nombre = body.nombre;
         const p_Informacion = body.info;
-        const p_Imagenes = '["listas/'+nArchivo1+'", "listas/'+nArchivo2+'", "listas/'+nArchivo3+'", "listas/'+nArchivo4+'"]';
+        const p_Imagenes =
+          '["listas/' +
+          nArchivo1 +
+          '", "listas/' +
+          nArchivo2 +
+          '", "listas/' +
+          nArchivo3 +
+          '", "listas/' +
+          nArchivo4 +
+          '"]';
         const p_CategoriaID = body.id;
         const p_Descripcion = body.info;
         const p_Personas = 5;
         const p_Precio = 500.25;
+
         try {
           const respuesta = await axios.post(
             `http://localhost:8081/AgregarLugarYDetalle`,
@@ -136,20 +146,17 @@ export default function MProductos() {
             }
           );
           if (respuesta.data.Estatus === "EXITOSO") {
-            console.log("El producto se agrego correctamente");
             setNarchivo1("Imagen");
             setNarchivo2("Imagen");
             setNarchivo3("Imagen");
             setNarchivo4("Imagen");
-            setBody({
-              id: "1",
-              nombre: "",
-              info: "",
-            });
-            Swal.fire(
-              'El producto se agrego correctamente',
-              'success'
-            );
+            document.getElementById("img1").style.backgroundColor = "#fff";
+            document.getElementById("img2").style.backgroundColor = "#fff";
+            document.getElementById("img3").style.backgroundColor = "#fff";
+            document.getElementById("img4").style.backgroundColor = "#fff";
+            document.getElementById("nombre").value = "";
+            document.getElementById("info").value = "";
+            Swal.fire("El producto se agrego correctamente", "success");
           }
         } catch (error) {
           console.log("Error al crear el producto: " + error);
@@ -180,14 +187,19 @@ export default function MProductos() {
   };
   const seleccion = (e) => {
     setBody({ ...body, ["id"]: e.target.value });
-  }
+  };
   return (
     <>
       <div className={styles.contenedor}>
         <section className={styles.mlistas}>
           <h1 className={styles.h1}>Agregando productos</h1>
           <label>Nombre del producto:</label>
-          <input type="text" name="nombre" onChange={cambioEntrada}></input>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            onChange={cambioEntrada}
+          ></input>
           <aside className={clas.nombre} id="aside">
             {texto.nombre}
           </aside>
@@ -196,13 +208,15 @@ export default function MProductos() {
             {listas.map((lista, index) => {
               return (
                 <>
-                  <option value={lista.Id} onClick={seleccion}>{lista.Nombre}</option>
+                  <option value={lista.Id} onClick={seleccion}>
+                    {lista.Nombre}
+                  </option>
                 </>
               );
             })}
           </select>
           <label>Informacion:</label>
-          <textarea name="info" onChange={cambioEntrada}></textarea>
+          <textarea name="info" id="info" onChange={cambioEntrada}></textarea>
           <aside className={clas.info} id="aside">
             {texto.info}
           </aside>
@@ -234,22 +248,30 @@ export default function MProductos() {
           <span className={styles.imagenes}>
             <div>
               <button>
-                <label id="img1" for="inputarchivo1">Imagen</label>
+                <label id="img1" for="inputarchivo1">
+                  Imagen
+                </label>
               </button>
             </div>
             <div>
               <button>
-                <label id="img2" for="inputarchivo2">Imagen</label>
+                <label id="img2" for="inputarchivo2">
+                  Imagen
+                </label>
               </button>
             </div>
             <div>
               <button>
-                <label id="img3" for="inputarchivo3">Imagen</label>
+                <label id="img3" for="inputarchivo3">
+                  Imagen
+                </label>
               </button>
             </div>
             <div>
               <button>
-                <label id="img4" for="inputarchivo4">Imagen</label>
+                <label id="img4" for="inputarchivo4">
+                  Imagen
+                </label>
               </button>
             </div>
           </span>

@@ -65,7 +65,7 @@ function Lista() {
                 <p>{lista.Informacion}</p>
                 <span>
                   <Link to={"/detalles/" + lista.Id}>
-                    <button>Detalles y precio</button>
+                    <button>Detalles</button>
                   </Link>
                 </span>
               </div>

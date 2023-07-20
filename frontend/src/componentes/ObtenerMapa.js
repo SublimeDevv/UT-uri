@@ -36,7 +36,7 @@ const ObtenerMapa = () => {
     <MapContainer className={styles.mapa}
       center={Localizacion}
       zoom={13}
-      onClick={handleMapClick}
+        onClick={handleMapClick}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

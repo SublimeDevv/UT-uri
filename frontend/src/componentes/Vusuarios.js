@@ -101,8 +101,13 @@ export default function Vusuarios() {
       const fecha = null;
       if (nArchivo !== "default_avatar.jpg") {
         const imagen = new FormData();
-        imagen.append("imagen", archivo);
-        //al repositorio de imagenes vas a mandar imagen
+        imagen.append("image", archivo);
+        try {
+          await axios.post("http://localhost:8081/subirAvatares", imagen);
+          console.log("La foto del usuario se actualizo correctamente.")
+        } catch (error) {
+          console.log("Error al actualizar la foto del usuarrio: "+ error)
+        }
       }
       try {
         const respuesta = await axios.put(

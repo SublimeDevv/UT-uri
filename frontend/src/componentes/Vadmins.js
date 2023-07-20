@@ -107,7 +107,18 @@ export default function Vadmins() {
       const fecha = null;
       if (nArchivo !== "default_avatar.jpg") {
         const imagen = new FormData();
-        imagen.append("imagen", archivo);
+        imagen.append("image", archivo);
+        try {
+          await axios.post("http://localhost:8081/subirAvatares", imagen);
+          console.log("La foto del usuario se actualizo correctamente.")
+          const storedData = localStorage.getItem("usuario");
+          const datosUsuario = JSON.parse(storedData) || {};
+          datosUsuario.Avatar = nArchivo;
+          localStorage.setItem("usuario", JSON.stringify(datosUsuario));
+
+        } catch (error) {
+          console.log("Error al actualizar la foto del usuarrio: "+ error)
+        }
       }
       try {
         const respuesta = await axios.put(
@@ -176,6 +187,7 @@ export default function Vadmins() {
     }
   };
   const cambiar = async (valor) => {
+    if (valor === usuario.Id ) return Swal.fire({title: "¡No puedes bajarte de rango a ti mismo!", icon: "warning"})
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
       text: 'El administrador se volvera un usuario',

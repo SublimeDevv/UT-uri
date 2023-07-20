@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styles from "../estilos/crear_cuenta.module.css";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { UserContext } from "../UserContext";
 import Swal from "sweetalert2";
 
 export default function MUsuario() {

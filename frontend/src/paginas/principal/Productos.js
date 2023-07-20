@@ -52,16 +52,16 @@ export default function Productos() {
           estilo = `${styles.seccion} ${styles.azul}`;
           stylecount = 0;
         }
-        const list = lista.Informacion.split(".");
+
         return (
           <>
             <div key={index} className={estilo}>
               <div>
                 <h2>{lista.NombreLugar}</h2>
-                <p>{list[0]+"."+list[1]+"."}</p>
+                <p>{lista.Informacion}</p>
                 <span>
                   <Link to={"/detalles/" + lista.Id}>
-                    <button>Detalles y precio</button>
+                    <button>Detalles</button>
                   </Link>
                 </span>
               </div>
