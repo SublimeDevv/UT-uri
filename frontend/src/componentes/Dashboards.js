@@ -5,6 +5,9 @@ import Vusuarios from "./Vusuarios";
 import Vadmins from "./Vadmins";
 import Vlistas from "./Vlistas";
 import Vproductos from "./Vproductos";
+import Usuario from "./Usuario";
+import Producto from "./Producto";
+import Categorias from "./Categorias";
 
 export default function Dashboards({ components }) {
   const redirigir = (componente) => {
@@ -75,7 +78,7 @@ export default function Dashboards({ components }) {
         <span className={`${styles.estadistica} ${styles.opcion3}`}></span>
         <span
           className={`${styles.usuario} ${styles.opcion}`}
-          onClick={() => redirigir(<Vusuarios />)}
+          onClick={() => redirigir(<Usuario />)}
         >
           <h3>{valores.usuario} Usuarios</h3>
         </span>
@@ -87,13 +90,13 @@ export default function Dashboards({ components }) {
         </span>
         <span
           className={`${styles.detalles} ${styles.opcion}`}
-          onClick={() => redirigir(<Vproductos />)}
+          onClick={() => redirigir(<Producto />)}
         >
           <h3>{valores.detalles} Lugares</h3>
         </span>
         <span
           className={`${styles.listas} ${styles.opcion}`}
-          onClick={() => redirigir(<Vlistas />)}
+          onClick={() => redirigir(<Categorias />)}
         >
           <h3>{valores.lista} Categorias</h3>
         </span>

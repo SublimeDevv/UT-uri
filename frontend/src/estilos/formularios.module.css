@@ -1,4 +1,10 @@
 /*Usuarios*/
+.contenedor{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+}
 .musuario{
     width: 100%;
     max-width: 400px;
@@ -59,7 +65,7 @@
 .checkbox label{
     font-size: 20px;
     font-family: roboto-r;
-    color: #575454;
+    color: #545754;
     margin-left: 5px;
 }
 .musuario .submit{
@@ -242,6 +248,7 @@
 .mlistas label{
     font-family: roboto-r;
     font-size: 20px;
+    overflow-x: scroll;
     width: 100%;
 }
 .mlistas textarea{
@@ -290,8 +297,10 @@
 .mlistas button label{
     width: 100%;
     height: 100%;
+    overflow-x: scroll;
     display: flex;
     align-items: center;
+    border-radius: 5px;
     font-size: 20px;
     justify-content: center;
 }
@@ -340,4 +349,7 @@
 }
 .aside2{
     width: 100%;
+}
+::-webkit-scrollbar {
+    display: none;
 }

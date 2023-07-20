@@ -1,7 +1,9 @@
 @import "https://www.nerdfonts.com/assets/css/webfont.css";
 .vusuarios {
     padding: 20px;
-    width: 90%;
+    padding-bottom: 0;
+    height: calc(100% - 50px);
+    width: 100%;
 }
 .vusuarios h1{
     font-family: roboto-b;
@@ -14,7 +16,7 @@
     width: 100%;
     overflow-x: scroll;
     overflow-y: scroll;
-    height: 90%;
+    height: 80%;
 }
 table {
     width: 100%;
@@ -67,6 +69,7 @@ td textarea {
     background-color: transparent;
     padding: 5px;
     margin: 0;
+    resize: none;
     font-family: roboto-r;
     font-size: inherit;
     text-align: inherit;
@@ -120,4 +123,22 @@ td textarea {
     align-items: center;
     font-size: 15px;
     justify-content: center;
+}
+.div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.botonU{
+    width: 51px;
+    height: 51px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.botonU i{
+    color: #131a22;
+    font-size: 50px;
 }

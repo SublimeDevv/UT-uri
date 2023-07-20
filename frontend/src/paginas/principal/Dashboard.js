@@ -12,6 +12,11 @@ import Vproductos from "../../componentes/Vproductos";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
+import AltasCategorias from "../../componentes/AltasCategorias";
+import AltasLugares from "../../componentes/AltasLugares";
+import Usuario from "../../componentes/Usuario";
+import Categorias from "../../componentes/Categorias";
+import Producto from "../../componentes/Producto";
 
 function Dashboard() {
     const { usuario } = useContext(UserContext)
@@ -62,11 +67,14 @@ function Dashboard() {
                         <i className="nf nf-md-home_account" id={styles.puntero}><p onClick={() => components(<Dashboards  components={components}/>)}>Dashboard</p></i>
                         <i className="nf nf-fae-tools"><p>Administracion</p></i>
                         <p className={styles.opciones}>Personas</p>
-                        <p className={styles.opciones2} onClick={() => components(<MUsuario/>)}>Usuarios</p>
-                        <p className={styles.opciones2} onClick={() => components(<MAdministradores />)}>Administradores</p>
+                        <p className={styles.opciones2} onClick={() => components(<Usuario/>)}>Usuarios</p>
+                        <p className={styles.opciones2} onClick={() => components(<Vadmins />)}>Administradores</p>
                         <p className={styles.opciones}>Listas</p>
-                        <p className={styles.opciones2} onClick={() => components(<MListas />)}>Categorias</p>
-                        <p className={styles.opciones2} onClick={() => components(<MProductos />)}>Productos</p>
+                        <p className={styles.opciones2} onClick={() => components(<Categorias />)}>Categorias</p>
+                        <p className={styles.opciones2} onClick={() => components(<Producto />)}>Productos</p>
+                        <p className={styles.opciones}>Altas</p>
+                        <p className={styles.opciones2} onClick={() => components(<AltasCategorias/>)}>Categorias</p>
+                        <p className={styles.opciones2} onClick={() => components(<AltasLugares/>)}>Productos</p>
                     </div>
                     <figure className={styles.figure}><img src={require('../../images/logo.png')}></img></figure>
                 </aside>

@@ -3,8 +3,8 @@ html{
     height: 100vh;
 }
 .principal{
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
 }
 .navegacion{
@@ -18,7 +18,7 @@ html{
     flex-wrap: wrap;
 }
 .navegacion p{
-    margin: 7px;
+    margin: 3px;
 }
 .head{
     width: 100%;
@@ -39,11 +39,11 @@ html{
     font-family:roboto-r;
 }
 .head figure img{
-    height: 100%;
-    max-width: 130px;
-    max-height: 130px;
+    height: 100px;
+    width: 100px;
     margin-bottom: 10px;
     border-radius: 50%;
+    object-fit: cover;
     border: 2px solid #fff;
 }
 .head i{
