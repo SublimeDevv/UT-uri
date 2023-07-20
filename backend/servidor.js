@@ -22,9 +22,16 @@ const storage2 = multer.diskStorage({
   },
 });
 
+const storage3 = multer.diskStorage({
+  destination: '../frontend/src/images/avatares/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); 
+  },
+});
+
 const uploadCategorias = multer({ storage: storage1 });
 const uploadListas = multer({ storage: storage2 });
-
+const uploudAvatares =  multer({ storage: storage3 });
 
 import "dotenv/config";
 
@@ -51,6 +58,13 @@ app.listen(process.env.PORT, () => {
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/subirImagenes', uploadCategorias.single('image'), (peticion, respuesta) => {
+  if (!peticion.file) {
+    return respuesta.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+  }
+  return respuesta.json({ message: 'Imagen subida correctamente' });
+});
+
+app.post('/subirAvatares', uploudAvatares.single('image'), (peticion, respuesta) => {
   if (!peticion.file) {
     return respuesta.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
   }
