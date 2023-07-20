@@ -96,7 +96,7 @@ function Dashboard() {
             <i className="nf nf-fae-tools">
               <p>Administracion</p>
             </i>
-            <p className={styles.opciones}>Personas</p>
+            <p className={styles.opciones}><i class="nf nf-fa-user_o"></i> Personas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<Usuario />)}
@@ -109,7 +109,7 @@ function Dashboard() {
             >
               Administradores
             </p>
-            <p className={styles.opciones}>Listas</p>
+            <p className={styles.opciones}><i class="nf nf-md-format_list_bulleted"></i> Listas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<Categorias />)}
@@ -122,7 +122,7 @@ function Dashboard() {
             >
               Productos
             </p>
-            <p className={styles.opciones}>Altas</p>
+            <p className={styles.opciones}><i class="nf nf-md-transfer_up"></i> Altas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<AltasCategorias />)}

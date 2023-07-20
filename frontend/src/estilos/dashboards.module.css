@@ -70,7 +70,7 @@
 .hora i{
     margin-right: 10px;
 }
-.estadistica{grid-area: estadistica;}
+.estadistica{grid-area: estadistica; position: relative; z-index: 2;}
 .usuario{grid-area: usuario;}
 .administrador{grid-area: admin;}
 .listas{grid-area: lista;}

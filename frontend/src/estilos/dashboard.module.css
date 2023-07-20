@@ -1,10 +1,12 @@
 html{
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 }
 .principal{
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    min-width: 100vw;
+    min-height: 100vh;
     display: flex;
 }
 .navegacion{
@@ -13,6 +15,7 @@ html{
     height: 100%;
     padding: 20px;
     min-width: 200px;
+    min-height: 100vh;
     display: flex;
     align-content: space-between;
     flex-wrap: wrap;
@@ -23,6 +26,7 @@ html{
 .head{
     width: 100%;
     height: 60%;
+    padding-top: 15px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -30,7 +34,7 @@ html{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 .head figcaption{
     text-align: center;
@@ -44,7 +48,6 @@ html{
     margin-bottom: 10px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #fff;
 }
 .head i{
     color: #fff;
@@ -93,9 +96,8 @@ html{
     cursor: pointer;
 }
 .titulo h1{
-    width: 80%;
     font-family: roboto-b;
-    display: inline;
+    display:inline;
     text-align: center;
     font-size: 35px;
 }
