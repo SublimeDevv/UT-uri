@@ -7,22 +7,24 @@ import nodemailer from 'nodemailer';
 import multer from 'multer';
 import path from 'path';
 
-const storage = multer.diskStorage({
+
+const storage1 = multer.diskStorage({
   destination: '../frontend/src/images/categorias/',
   filename: function (req, file, cb) {
     cb(null, file.originalname); 
   },
-})
+});
 
 const storage2 = multer.diskStorage({
   destination: '../frontend/src/images/listas/',
   filename: function (req, file, cb) {
     cb(null, file.originalname); 
   },
-})
-const upload = multer({ storage });
+});
 
-const uploadAll = multer({ storage2 });
+const uploadCategorias = multer({ storage: storage1 });
+const uploadListas = multer({ storage: storage2 });
+
 
 import "dotenv/config";
 
@@ -48,19 +50,20 @@ app.listen(process.env.PORT, () => {
 
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/subirImagenes', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+app.post('/subirImagenes', uploadCategorias.single('image'), (peticion, respuesta) => {
+  if (!peticion.file) {
+    return respuesta.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
   }
-  return res.json({ message: 'Imagen subida correctamente' });
+  return respuesta.json({ message: 'Imagen subida correctamente' });
 });
 
-app.post('/subirVarias', uploadAll.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+app.post('/subirVarias', uploadListas.array('imagen'), (peticion, respuesta) => {
+  if (!peticion.files || peticion.files.length === 0) {
+    return respuesta.status(400).json({ error: 'No se han proporcionado imágenes' });
   }
-  return res.json({ message: 'Imagen subida correctamente' });
+  return respuesta.json({ message: 'Imágenes subidas correctamente' });
 });
+
   const autenticarUsuario = (peticion, respuesta, siguiente) => {
     const token = peticion.header("Authorization");
     if (!token) {

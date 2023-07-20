@@ -40,17 +40,17 @@ export default function Detalle() {
             <span className={styles.span}>
               <figure className={styles.figure}>
                 <img
-                  src={require("../images/detalles/" + obtenerImagenes[1])}
+                  src={require("../images/" + obtenerImagenes[1])}
                   alt=""
                   className={styles.uno}
                 />
                 <img
-                  src={require("../images/detalles/" + obtenerImagenes[2])}
+                  src={require("../images/" + obtenerImagenes[2])}
                   alt=""
                   className={styles.dos}
                 />
                 <img
-                  src={require("../images/detalles/" + obtenerImagenes[3])}
+                  src={require("../images/" + obtenerImagenes[3])}
                   alt=""
                   className={styles.tres}
                 />

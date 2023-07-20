@@ -11,17 +11,17 @@ function Index() {
           <figure className={styles.imagen}>
             <img
               className={styles.slide}
-              src={require("../../images/wall.jpg")}
+              src={require("../../images/banner1.jpg")}
               alt="Imagen 1"
             />
             <img
               className={styles.slide}
-              src={require("../../images/wall2.jpg")}
+              src={require("../../images/banner2.png")}
               alt="Imagen 2"
             />
             <img
               className={styles.slide}
-              src={require("../../images/wall3.jpg")}
+              src={require("../../images/banner3.png")}
               alt="Imagen 3"
             />
           </figure>

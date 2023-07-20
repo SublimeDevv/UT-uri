@@ -44,7 +44,7 @@
     background-color: #d9d9d9;
 }
 .opcion:hover{
-    outline: 2px solid #807a7a;
+   /* outline: 2px solid #807a7a;*/
     cursor: pointer;
     transition-property: all;
 	transition-duration: 0.1s;

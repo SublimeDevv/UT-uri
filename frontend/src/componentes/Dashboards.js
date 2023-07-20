@@ -5,6 +5,7 @@ import Vusuarios from "./Vusuarios";
 import Vadmins from "./Vadmins";
 import Vlistas from "./Vlistas";
 import Vproductos from "./Vproductos";
+import ObtenerMapa from "./ObtenerMapa";
 
 export default function Dashboards({ components }) {
   const redirigir = (componente) => {
@@ -72,7 +73,9 @@ export default function Dashboards({ components }) {
             <i className="nf nf-fa-calendar"></i> {fecha.call}
           </p>
         </span>
-        <span className={`${styles.estadistica} ${styles.opcion3}`}></span>
+        <span className={`${styles.estadistica} ${styles.opcion}`}>
+          <ObtenerMapa/>
+        </span>
         <span
           className={`${styles.usuario} ${styles.opcion}`}
           onClick={() => redirigir(<Vusuarios />)}

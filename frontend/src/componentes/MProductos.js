@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/formularios.module.css";
 import axios from "axios";
+import swal from "sweetalert";
 
 export default function MProductos() {
   const [texto, setTexto] = useState({
@@ -22,7 +23,7 @@ export default function MProductos() {
   const [nArchivo3, setNarchivo3] = useState("Imagen");
   const [nArchivo4, setNarchivo4] = useState("Imagen");
   const [body, setBody] = useState({
-    id:"1",
+    id: "1",
     nombre: "",
     info: "",
   });
@@ -90,39 +91,29 @@ export default function MProductos() {
         nArchivo4 !== "Imagen"
       ) {
         setClas({ ...clas, ["imagen1"]: `${styles.error} ${styles.ocultar}` });
-        const imagen1 = new FormData();
-        imagen1.append("imagen1", archivo1);
-        const imagen2 = new FormData();
-        imagen2.append("imagen2", archivo2);
-        const imagen3 = new FormData();
-        imagen3.append("imagen1", archivo3);
-        const imagen4 = new FormData();
-        imagen4.append("imagen1", archivo4);
+
+        const imagenes = [archivo1, archivo2, archivo3, archivo4];
+
         try {
-          await axios.post("http://localhost:8081/subirVarias", imagen1);
-          await axios.post("http://localhost:8081/subirVarias", imagen2);
-          await axios.post("http://localhost:8081/subirVarias", imagen3);
-          await axios.post("http://localhost:8081/subirVarias", imagen4);
-
+          const formData = new FormData();
+          imagenes.forEach((imagen, index) => {
+            formData.append("imagen", imagen); 
+          });
+      
+          await axios.post("http://localhost:8081/subirVarias", formData);
+          console.log("Imágenes subidas correctamente");
+          swal("¡Éxito!", "El producto se agregó correctamente.", "success");
         } catch (error) {
-          console.log("Error al subir las imagenes")
+          console.error("Error al subir las imágenes:", error.message);
         }
-
+      
         const p_Nombre = body.nombre;
         const p_Informacion = body.info;
-        const p_Imagenes = '["'+nArchivo1+'", "'+nArchivo2+'", "'+nArchivo3+'", "'+nArchivo4+'"]';
+        const p_Imagenes = '["listas/'+nArchivo1+'", "listas/'+nArchivo2+'", "listas/'+nArchivo3+'", "listas/'+nArchivo4+'"]';
         const p_CategoriaID = body.id;
         const p_Descripcion = body.info;
         const p_Personas = 5;
         const p_Precio = 500.25;
-        console.log(p_Nombre,
-          p_Informacion,
-          p_Imagenes,
-          p_CategoriaID,
-          p_Descripcion,
-          p_Personas,
-          p_Precio)
-
         try {
           const respuesta = await axios.post(
             `http://localhost:8081/AgregarLugarYDetalle`,
@@ -137,7 +128,6 @@ export default function MProductos() {
             }
           );
           if (respuesta.data.Estatus === "EXITOSO") {
-            console.log(respuesta.data)
             console.log("El producto se agrego correctamente");
           }
         } catch (error) {
@@ -167,9 +157,9 @@ export default function MProductos() {
     const { name, value } = target;
     setBody({ ...body, [name]: value });
   };
-  const seleccion = (e) =>{
-    setBody({...body,["id"]:e.target.value});
-  }
+  const seleccion = (e) => {
+    setBody({ ...body, ["id"]: e.target.value });
+  };
   return (
     <>
       <section className={styles.mlistas}>
@@ -184,7 +174,9 @@ export default function MProductos() {
           {listas.map((lista, index) => {
             return (
               <>
-                <option value={lista.Id} onClick={seleccion}>{lista.Nombre}</option>
+                <option value={lista.Id} onClick={seleccion}>
+                  {lista.Nombre}
+                </option>
               </>
             );
           })}

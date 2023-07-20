@@ -101,6 +101,12 @@
 .usuario figcaption .a:hover {
   text-decoration: underline;
 }
+
+.mapa {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
 /*Cuerpo*/
 .main {
   width: 100%;
