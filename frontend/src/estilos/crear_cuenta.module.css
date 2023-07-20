@@ -141,3 +141,59 @@ a {
 .ocultar{
   display: none;
 }
+.man2 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.sec2 {
+  margin-top: 10px;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+}
+.sec2 input {
+  padding: 10px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+  margin: 0;
+}
+.sec2 .submit {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.sec2 input[type="submit"] {
+  width: 70%;
+  background-color: #004c97;
+  color: #fff;
+}
+.sec2 input[type="submit"]:hover {
+  background-color: #002a52;
+  font-family: roboto-b;
+  color: #fff;
+  cursor: pointer;
+}
+.sec2 input:focus {
+  outline: none;
+}
+.sec2 div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.sec2 div span {
+  width: 47.5%;
+}
+.sec2 p {
+  font-family: roboto-b;
+  margin: 15px 0;
+  width: 100%;
+  width: 100%;
+  color: #004c97;
+}

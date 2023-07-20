@@ -548,3 +548,41 @@ app.post('/AgregarLugarYDetalle', (peticion, respuesta) => {
     }
   });
 });
+app.get("/AltasCategorias", (peticion, respuesta) => {
+  const sql = "SELECT * FROM VW_Obtener_Categorias WHERE Estatus = 0;";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+
+
+app.put("/AltaCategoria/:categoriaId", (peticion, respuesta) => {
+  const categoriaId = peticion.params.categoriaId;
+  const query = "CALL SP_Alta_Categoria(?)";
+  conexion.query(query, [categoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al ocultar la categoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});
+app.get("/AltasProductos", (peticion, respuesta) => {
+  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE Estado = 0";
+  conexion.query(sql, (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+app.put("/AltaProductos/:categoriaId", (peticion, respuesta) => {
+  const categoriaId = peticion.params.categoriaId;
+  const query = "CALL SP_Alta_Lugar(?)";
+  conexion.query(query, [categoriaId], (error) => {
+    if (error) {
+      respuesta.status(500).json({ Error: "Error al ocultar la categoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO" });
+    }
+  });
+});

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/formularios.module.css";
 import axios from "axios";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 
 export default function MProductos() {
   const [texto, setTexto] = useState({
@@ -52,32 +52,40 @@ export default function MProductos() {
     if (e.target.files[0]) {
       setArchivo1(e.target.files[0]);
       setNarchivo1(e.target.files[0].name);
+      document.getElementById("img1").style.backgroundColor="#84c377"
     } else {
       setNarchivo1("Imagen");
+      document.getElementById("img1").style.backgroundColor="#fff"
     }
   };
   const seleccionar2 = (e) => {
     if (e.target.files[0]) {
       setArchivo2(e.target.files[0]);
       setNarchivo2(e.target.files[0].name);
+      document.getElementById("img2").style.backgroundColor="#84c377"
     } else {
       setNarchivo2("Imagen");
+      document.getElementById("img2").style.backgroundColor="#fff"
     }
   };
   const seleccionar3 = (e) => {
     if (e.target.files[0]) {
       setArchivo3(e.target.files[0]);
       setNarchivo3(e.target.files[0].name);
+      document.getElementById("img3").style.backgroundColor="#84c377"
     } else {
       setNarchivo3("Imagen");
+      document.getElementById("img3").style.backgroundColor="#fff"
     }
   };
   const seleccionar4 = (e) => {
     if (e.target.files[0]) {
       setArchivo4(e.target.files[0]);
       setNarchivo4(e.target.files[0].name);
+      document.getElementById("img4").style.backgroundColor="#84c377"
     } else {
       setNarchivo4("Imagen");
+      document.getElementById("img3").style.backgroundColor="#fff"
     }
   };
   const subir = async () => {
@@ -129,6 +137,19 @@ export default function MProductos() {
           );
           if (respuesta.data.Estatus === "EXITOSO") {
             console.log("El producto se agrego correctamente");
+            setNarchivo1("Imagen");
+            setNarchivo2("Imagen");
+            setNarchivo3("Imagen");
+            setNarchivo4("Imagen");
+            setBody({
+              id: "1",
+              nombre: "",
+              info: "",
+            });
+            Swal.fire(
+              'El producto se agrego correctamente',
+              'success'
+            );
           }
         } catch (error) {
           console.log("Error al crear el producto: " + error);
@@ -159,92 +180,92 @@ export default function MProductos() {
   };
   const seleccion = (e) => {
     setBody({ ...body, ["id"]: e.target.value });
-  };
+  }
   return (
     <>
-      <section className={styles.mlistas}>
-        <h1 className={styles.h1}>Agregando productos</h1>
-        <label>Nombre del producto:</label>
-        <input type="text" name="nombre" onChange={cambioEntrada}></input>
-        <aside className={clas.nombre} id="aside">
-          {texto.nombre}
-        </aside>
-        <label>A que categoria pertence:</label>
-        <select>
-          {listas.map((lista, index) => {
-            return (
-              <>
-                <option value={lista.Id} onClick={seleccion}>
-                  {lista.Nombre}
-                </option>
-              </>
-            );
-          })}
-        </select>
-        <label>Informacion:</label>
-        <textarea name="info" onChange={cambioEntrada}></textarea>
-        <aside className={clas.info} id="aside">
-          {texto.info}
-        </aside>
-        <label htmlFor="input">Sube una imagen:</label>
-        <input
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          id="inputarchivo1"
-          onChange={seleccionar1}
-        />
-        <input
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          id="inputarchivo2"
-          onChange={seleccionar2}
-        />
-        <input
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          id="inputarchivo3"
-          onChange={seleccionar3}
-        />
-        <input
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          id="inputarchivo4"
-          onChange={seleccionar4}
-        />
-        <span className={styles.imagenes}>
-          <div>
-            <button>
-              <label for="inputarchivo1">{nArchivo1}</label>
-            </button>
-          </div>
-          <div>
-            <button>
-              <label for="inputarchivo2">{nArchivo2}</label>
-            </button>
-          </div>
-          <div>
-            <button>
-              <label for="inputarchivo3">{nArchivo3}</label>
-            </button>
-          </div>
-          <div>
-            <button>
-              <label for="inputarchivo4">{nArchivo4}</label>
-            </button>
-          </div>
-        </span>
-        <div className={styles.aside2}>
-          <aside className={clas.imagen1}>{texto.imagen1} </aside>
-        </div>
-        <div className={styles.submit}>
+      <div className={styles.contenedor}>
+        <section className={styles.mlistas}>
+          <h1 className={styles.h1}>Agregando productos</h1>
+          <label>Nombre del producto:</label>
+          <input type="text" name="nombre" onChange={cambioEntrada}></input>
+          <aside className={clas.nombre} id="aside">
+            {texto.nombre}
+          </aside>
+          <label>A que categoria pertence:</label>
+          <select>
+            {listas.map((lista, index) => {
+              return (
+                <>
+                  <option value={lista.Id} onClick={seleccion}>{lista.Nombre}</option>
+                </>
+              );
+            })}
+          </select>
+          <label>Informacion:</label>
+          <textarea name="info" onChange={cambioEntrada}></textarea>
+          <aside className={clas.info} id="aside">
+            {texto.info}
+          </aside>
+          <label htmlFor="input">Sube una imagen:</label>
           <input
-            type="submit"
-            className={styles.verde}
-            value="Subir"
-            onClick={subir}
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            id="inputarchivo1"
+            onChange={seleccionar1}
           />
-        </div>
-      </section>
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            id="inputarchivo2"
+            onChange={seleccionar2}
+          />
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            id="inputarchivo3"
+            onChange={seleccionar3}
+          />
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            id="inputarchivo4"
+            onChange={seleccionar4}
+          />
+          <span className={styles.imagenes}>
+            <div>
+              <button>
+                <label id="img1" for="inputarchivo1">Imagen</label>
+              </button>
+            </div>
+            <div>
+              <button>
+                <label id="img2" for="inputarchivo2">Imagen</label>
+              </button>
+            </div>
+            <div>
+              <button>
+                <label id="img3" for="inputarchivo3">Imagen</label>
+              </button>
+            </div>
+            <div>
+              <button>
+                <label id="img4" for="inputarchivo4">Imagen</label>
+              </button>
+            </div>
+          </span>
+          <div className={styles.aside2}>
+            <aside className={clas.imagen1}>{texto.imagen1} </aside>
+          </div>
+          <div className={styles.submit}>
+            <input
+              type="submit"
+              className={styles.verde}
+              value="Subir"
+              onClick={subir}
+            />
+          </div>
+        </section>
+      </div>
     </>
   );
 }

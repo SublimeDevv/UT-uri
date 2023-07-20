@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../estilos/vistas.module.css";
 import axios from "axios";
 import MUsuario from "./MUsuario";
+import Swal from "sweetalert2";
 
 export default function Vusuarios() {
   const [needsUpdate, setNeedsUpdate] = useState(false);
@@ -30,19 +31,34 @@ export default function Vusuarios() {
     }
   }, [needsUpdate]);
   const borrar = async (valor) => {
-    const usuarioId = valor;
-    try {
-      const respuesta = await axios.delete(
-        `http://localhost:8081/EliminarUsuario/${usuarioId}`
-      );
-      if (respuesta.data.Estatus === "EXITOSO") {
-        console.log("Admin eliminado correctamente");
-        setNeedsUpdate(true);
-      } else {
-        console.log("Error al eliminar admin");
+    const { value: confirmed } = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Se borrará permanentemente',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (confirmed) {
+      const usuarioId = valor;
+      try {
+        const respuesta = await axios.delete(
+          `http://localhost:8081/EliminarUsuario/${usuarioId}`
+        );
+        if (respuesta.data.Estatus === "EXITOSO") {
+          console.log("Admin eliminado correctamente");
+          setNeedsUpdate(true);
+          Swal.fire(
+            'Admin ocultado correctamente',
+            'success'
+          );
+        } else {
+          console.log("Error al eliminar admin");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
   const cancelar = (valor) => {
@@ -59,52 +75,67 @@ export default function Vusuarios() {
     setBotones(false);
   };
   const enviar = async (valor) => {
-    let nombre = document.getElementById("1" + valor);
-    let apellido = document.getElementById("2" + valor);
-    let correo = document.getElementById("3" + valor);
-    nombre.style.border = "none";
-    apellido.style.border = "none";
-    correo.style.border = "none";
-    const usuarioId = valor;
-    const nombreUsuario = nombre.value;
-    const apellidoUsuario = apellido.value;
-    const correoUsuario = correo.value;
-    const contraseniaUsuario = null;
-    const avatarUsuario = nArchivo;
-    const rolId = null;
-    const fecha = null;
-    if (nArchivo !== "default_avatar.jpg") {
-      const imagen = new FormData();
-      imagen.append("imagen", archivo);
-      //al repositorio de imagenes vas a mandar imagen
-    }
-    try {
-      const respuesta = await axios.put(
-        `http://localhost:8081/ActualizarUsuario/${usuarioId}`,
-        {
-          nombreUsuario,
-          apellidoUsuario,
-          correoUsuario,
-          contraseniaUsuario,
-          avatarUsuario,
-          rolId,
-          fecha,
-        }
-      );
-      if (respuesta.data.Estatus === "EXITOSO") {
-        console.log("Usuario modificado correctamente");
-        setNeedsUpdate(true);
-      } else {
-        console.log("Error al modificar al usuario");
+    const { value: confirmed } = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Se modificaran los datos',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (confirmed) {
+      let nombre = document.getElementById("1" + valor);
+      let apellido = document.getElementById("2" + valor);
+      let correo = document.getElementById("3" + valor);
+      nombre.style.border = "none";
+      apellido.style.border = "none";
+      correo.style.border = "none";
+      const usuarioId = valor;
+      const nombreUsuario = nombre.value;
+      const apellidoUsuario = apellido.value;
+      const correoUsuario = correo.value;
+      const contraseniaUsuario = null;
+      const avatarUsuario = nArchivo;
+      const rolId = null;
+      const fecha = null;
+      if (nArchivo !== "default_avatar.jpg") {
+        const imagen = new FormData();
+        imagen.append("imagen", archivo);
+        //al repositorio de imagenes vas a mandar imagen
       }
-    } catch (error) {
-      console.log(error);
+      try {
+        const respuesta = await axios.put(
+          `http://localhost:8081/ActualizarUsuario/${usuarioId}`,
+          {
+            nombreUsuario,
+            apellidoUsuario,
+            correoUsuario,
+            contraseniaUsuario,
+            avatarUsuario,
+            rolId,
+            fecha,
+          }
+        );
+        if (respuesta.data.Estatus === "EXITOSO") {
+          console.log("Usuario modificado correctamente");
+          Swal.fire(
+            'Usuario modificado correctamente',
+            'success'
+          );
+          setNeedsUpdate(true);
+        } else {
+          console.log("Error al modificar al usuario");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setModifiedRows((prevModifiedRows) => ({
+        ...prevModifiedRows,
+        [valor]: false,
+      }));
+      setBotones(false);
     }
-    setModifiedRows((prevModifiedRows) => ({
-      ...prevModifiedRows,
-      [valor]: false,
-    }));
-    setBotones(false);
   };
   const modificar = (valor) => {
     let nombre = document.getElementById("1" + valor);
@@ -139,6 +170,34 @@ export default function Vusuarios() {
       setNarchivo("default_avatar.jpg");
     }
   };
+  const cambiar = async (valor) => {
+    const { value: confirmed } = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'El usuario tendrá los mismos permisos que un administrador.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (confirmed) {
+      const nuevoRol = 1;
+      try {
+        await axios.put(
+          `http://localhost:8081/CambiarRolUsuario/${valor}`,
+          {
+            nuevoRol: nuevoRol,
+          }
+        );
+        Swal.fire({
+          icon: 'success',
+          title: 'Rol cambiado exitosamente',
+        });
+        setNeedsUpdate(true);
+      } catch (error) {
+      }
+    }
+  };
   return (
     <>
       <section className={styles.vusuarios}>
@@ -153,6 +212,7 @@ export default function Vusuarios() {
               <td>correo</td>
               <td>avatar</td>
               <td>Fecha de creacion</td>
+              <td>Volver admin</td>
               <td>Borrar</td>
             </thead>
             {listas.map((lista, index) => {
@@ -167,7 +227,7 @@ export default function Vusuarios() {
                           disabled={botones}
                           onClick={() => modificar(valor)}
                         >
-                          <i class="nf nf-fa-pencil"></i>
+                          <i class="nf nf-md-lead_pencil"></i>
                         </button>
                       ) : (
                         <div className={styles.botones}>
@@ -180,7 +240,7 @@ export default function Vusuarios() {
                         </div>
                       )}
                     </td>
-                    <td>{lista.Id}</td>
+                    <td id={lista.Id}>{lista.Id}</td>
                     <td>
                       <input
                         type="text"
@@ -228,6 +288,7 @@ export default function Vusuarios() {
                       )}
                     </td>
                     <td>{fecha[0]}</td>
+                    <td><button disabled={botones} onClick={() => { cambiar(valor) }}><i class="nf nf-md-transfer_up"></i></button></td>
                     <td>
                       <button disabled={botones} onClick={() => borrar(valor)}>
                         <i class="nf nf-cod-trash"></i>

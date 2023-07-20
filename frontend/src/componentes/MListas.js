@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/formularios.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 export default function MListas() {
   const [listas, setListas] = useState([]);
   const [texto, setTexto] = useState({
@@ -24,8 +25,10 @@ export default function MListas() {
     if (e.target.files[0]) {
       setArchivo(e.target.files[0]);
       setNarchivo(e.target.files[0].name);
+      document.getElementById("img").style.backgroundColor="#84c377"
     } else {
       setNarchivo("Selecciona una imagen");
+      document.getElementById("img").style.backgroundColor="#fff"
     }
   };
 
@@ -38,7 +41,7 @@ export default function MListas() {
         setClas({ ...clas, imagen: styles.error });
         setTexto({ ...texto, imagen: "Este campo es obligatorio" });
       } else {
-        setClas({ ...clas, imagen: `${styles.error} ${styles.ocultar}` });  
+        setClas({ ...clas, imagen: `${styles.error} ${styles.ocultar}` });
         const imagen1 = new FormData();
         imagen1.append("image", archivo);
         try {
@@ -50,7 +53,7 @@ export default function MListas() {
           } catch (error) {
             console.log("Error al subir la imagen: " + error);
           }
-    
+
           const respuesta = await axios.post(
             "http://localhost:8081/AgregarCategoria",
             { nombreCategoria, descripcionCategoria, imagenCategoria }
@@ -58,6 +61,15 @@ export default function MListas() {
 
           if (respuesta.data.Estatus === "EXITOSO") {
             console.log("Categoría creada con éxito");
+            setNarchivo("Selecciona una imagen");
+            setBody({
+              nombre: "",
+              info: "",
+            });
+            Swal.fire(
+              'Categoría creada con éxito',
+              'success'
+            );
           }
         } catch (error) {
           console.error(error);
@@ -83,40 +95,42 @@ export default function MListas() {
   };
   return (
     <>
-      <section className={styles.mlistas}>
-        <h1 className={styles.h1}>Agregando categorias</h1>
-        <label>Nombre de la categoria:</label>
-        <input type="text" name="nombre" onChange={cambioEntrada}></input>
-        <aside className={clas.nombre} id="aside">
-          {texto.nombre}
-        </aside>
-        <label>Informacion:</label>
-        <textarea name="info" onChange={cambioEntrada}></textarea>
-        <aside className={clas.info} id="aside">
-          {texto.info}
-        </aside>
-        <label htmlFor="input">Sube una imagen:</label>
-        <input
-          type="file"
-          accept=".jpg,.jpeg,.png"
-          id="inputarchivo"
-          onChange={seleccionar}
-        />
-        <button>
-          <label for="inputarchivo">{nArchivo}</label>
-        </button>
-        <div className={styles.aside}>
-          <aside className={clas.imagen}>{texto.imagen} </aside>
-        </div>
-        <div className={styles.submit}>
+      <div className={styles.contenedor}>
+        <section className={styles.mlistas}>
+          <h1 className={styles.h1}>Agregando categorias</h1>
+          <label>Nombre de la categoria:</label>
+          <input type="text" name="nombre" onChange={cambioEntrada}></input>
+          <aside className={clas.nombre} id="aside">
+            {texto.nombre}
+          </aside>
+          <label>Informacion:</label>
+          <textarea name="info" onChange={cambioEntrada}></textarea>
+          <aside className={clas.info} id="aside">
+            {texto.info}
+          </aside>
+          <label htmlFor="input">Sube una imagen:</label>
           <input
-            type="submit"
-            className={styles.verde}
-            value="Subir"
-            onClick={subir}
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            id="inputarchivo"
+            onChange={seleccionar}
           />
-        </div>
-      </section>
+          <button>
+            <label id="img" for="inputarchivo">Imagen</label>
+          </button>
+          <div className={styles.aside}>
+            <aside className={clas.imagen}>{texto.imagen} </aside>
+          </div>
+          <div className={styles.submit}>
+            <input
+              type="submit"
+              className={styles.verde}
+              value="Subir"
+              onClick={subir}
+            />
+          </div>
+        </section>
+      </div>
     </>
   );
 }

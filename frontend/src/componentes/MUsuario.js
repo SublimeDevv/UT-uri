@@ -1,24 +1,35 @@
-import React, { useState, useContext } from "react";
-import styles from "../estilos/formularios.module.css";
+import React, { useState, useEffect, useContext } from "react";
+import styles from "../estilos/crear_cuenta.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { UserContext } from "../UserContext";
+import Swal from "sweetalert2";
 
 export default function MUsuario() {
-  const { usuario } = useContext(UserContext);
   const [body, setBody] = useState({
+    Nombre: "",
+    Apellido: "",
     Correo: "",
-    checkbox: false,
+    Contrasenia: "",
+    ConfirmarContrasenia: "",
   });
-  const [menu, setMenu] = useState({
-    img: "default_avatar.jpg",
-    nombre: "Nombre",
+  const [ocultar, setOcultar] = useState({
+    uno: "password",
+    dos: "password",
   });
   const [texto, setTexto] = useState({
+    Nombre: "",
+    Apellido: "",
     Correo: "",
+    Contrasenia: "",
+    ConfirmarContrasenia: "",
   });
   const [clas, setClas] = useState({
+    Nombre: `${styles.error} ${styles.ocultar}`,
+    Apellido: `${styles.error} ${styles.ocultar}`,
     Correo: `${styles.error} ${styles.ocultar}`,
+    Contrasenia: `${styles.error} ${styles.ocultar}`,
+    ConfirmarContrasenia: `${styles.error} ${styles.ocultar}`,
   });
 
   const cambioEntrada = ({ target }) => {
@@ -26,168 +37,190 @@ export default function MUsuario() {
     setBody({ ...body, [name]: value });
   };
 
-  const check = () => {
-    setBody({ ...body, checkbox: !body.checkbox });
-  };
-
-  const verificar = async () => {
-    setClas({ ...clas, Correo: `${styles.error} ${styles.ocultar}` });
-
-    if (!body.Correo.length) {
+  const Enviar = async () => {
+    for (let clases in clas) {
+      clas[clases] = `${styles.error} ${styles.ocultar}`;
+    }
+    if (
+      !body.Nombre.length ||
+      !body.Apellido.length ||
+      !body.Correo.length ||
+      !body.Contrasenia ||
+      !body.ConfirmarContrasenia.length
+    ) {
       let actualizarClas = { ...clas };
       let actualizarTexto = { ...texto };
-
-      for (let campo in body) {
-        if (body[campo].length === 0) {
-          actualizarTexto[campo] = "Debe llenar este campo.";
-          actualizarClas[campo] = styles.error;
+      for (let cuerpo in body) {
+        if (body[cuerpo].length === 0) {
+          actualizarTexto[cuerpo] = "Debe llenar todos los campos.";
+          actualizarClas[cuerpo] = styles.error;
         }
       }
-
       setClas(actualizarClas);
       setTexto(actualizarTexto);
       return;
     }
 
-    try {
-      const verificarCorreo = await axios.post(
-        "http://localhost:8081/VerificarCorreo",
-        {
-          Correo: body.Correo,
-        }
-      );
-
-      if (
-        verificarCorreo.data.Resultado &&
-        verificarCorreo.data.Resultado.length > 0
-      ) {
-        const usuario = verificarCorreo.data.Resultado[0];
-        setMenu({
-          img: usuario.Avatar,
-          nombre: usuario.Nombre,
-        });
-        setBody((prevBody) => ({
-          ...prevBody,
-          Id: usuario.Id,
-          RolID: usuario.RolID,
-        }));
-      } else {
-        setClas({ ...clas, Correo: styles.error });
-        setMenu({
-          img: "default_avatar.jpg",
-          nombre: "¡Oops!",
-        });
-        setTexto({ ...texto, Correo: "El correo que ingresaste no existe." });
-        setBody((prevBody) => ({
-          ...prevBody,
-          RolID: 0,
-          Id: false,
-        }));
+    const verificarCorreo = await axios.post(
+      "http://localhost:8081/VerificarCorreo",
+      {
+        Correo: body.Correo,
       }
-    } catch (error) {
-      console.error("Error al verificar el correo:", error);
+    );
+
+    if (verificarCorreo.data.Estatus === 'EXITOSO') {
+      setTexto({ ...texto, ["Correo"]: "El correo que ingresaste ya existe." });
+      setClas({ ...clas, ["Correo"]: styles.error });
+      return;
     }
-  };
 
-  const cambiar = async () => {
-    verificar();
-
-    if (body.checkbox) {
-      if (!body.Id) {
-        return;
-      }
-      if (body.RolID === 1) {
-        return Swal.fire({
-          icon: "error",
-          title: "El usuario ya es administrador",
-        });
-      } else {
-        const nuevoRol = 1;
-        try {
-          await axios.put(
-            `http://localhost:8081/CambiarRolUsuario/${body.Id}`,
-            {
-              nuevoRol: nuevoRol,
-            }
-          );
-
-          Swal.fire({
-            icon: "success",
-            title: "Rol cambiado exitosamente",
-          });
-        } catch (error) {
-          setTexto({ ...texto, Correo: "El correo que ingresaste no existe." });
-        }
-      }
-    } else {
+    const correoRegex = /^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/;
+    const filtrarCaracteres = correoRegex.test(body.Correo);
+    if (!filtrarCaracteres) {
       setTexto({
         ...texto,
-        Correo:
-          "Si quiere convertir el usuario en administrador, debe marcar primero la casilla de checkbox.",
+        ["Correo"]:
+          "El correo que ingresaste no debe contener caracteres especiales y espacios en blancos.",
       });
-      setClas({ ...clas, Correo: styles.error });
+      setClas({ ...clas, ["Correo"]: styles.error });
+      return;
     }
-  };
-
-  const borrar = async () => {
-    if (usuario.Id === body.Id)
-      return Swal.fire({
-        icon: "error",
-        title: "No puedes eliminarte a ti mismo.",
+    const contraseniaRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const comprobarContrasenia = contraseniaRegex.test(body.Contrasenia);
+    if (!comprobarContrasenia) {
+      setTexto({
+        ...texto,
+        ["Contrasenia"]:
+          "La contraseña debe tener mínimo 8 caracteres, mayúsculas y minúsculas, digitos y al menos un caracter especial(?=.*[@$!%*#?&])",
       });
+      setClas({ ...clas, ["Contrasenia"]: styles.error });
+      return;
+    }
+
+    if (body.Contrasenia !== body.ConfirmarContrasenia) {
+      setTexto({
+        ...texto,
+        ["ConfirmarContrasenia"]: "Las contraseñas deben coincidir.",
+      });
+      setClas({ ...clas, ["ConfirmarContrasenia"]: styles.error });
+      return;
+    }
+
     try {
-      await axios.delete(`http://localhost:8081/EliminarUsuario/${body.Id}`);
-      Swal.fire({
-        icon: "success",
-        title: "Usuario eliminado exitosamente",
+      const respuesta = await axios.post(
+        "http://localhost:8081/RegistrarUsuario",
+        {
+          Nombre: body.Nombre,
+          Apellido: body.Apellido,
+          Correo: body.Correo,
+          Contrasenia: body.Contrasenia,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      Swal.fire(
+        'Usuario Registrado',
+        'success'
+      );
+      setBody({
+        Nombre: "",
+        Apellido: "",
+        Correo: "",
+        Contrasenia: "",
+        ConfirmarContrasenia: "",
       });
     } catch (error) {
-      setTexto({ ...texto, Correo: "El correo que ingresaste no existe." });
+      console.log("Error al registrar el usuario: " + error);
     }
   };
 
+  const cambiar = (e) => {
+    const elemento = e.target.id;
+    if (e.target.classList.contains("nf-md-eye")) {
+      e.target.classList.remove("nf-md-eye");
+      e.target.classList.add("nf-md-eye_off");
+      elemento == 1
+        ? setOcultar({ ...ocultar, ["uno"]: "text" })
+        : setOcultar({ ...ocultar, ["dos"]: "text" });
+    } else {
+      e.target.classList.remove("nf-md-eye_off");
+      e.target.classList.add("nf-md-eye");
+      elemento == 1
+        ? setOcultar({ ...ocultar, ["uno"]: "password" })
+        : setOcultar({ ...ocultar, ["dos"]: "password" });
+    }
+  };
+  
   return (
     <>
-      <section className={styles.musuario}>
-        <figure>
-          <img src={require("../images/avatares/" + menu.img)} alt="Avatar" />
-          <figcaption>{menu.nombre}</figcaption>
-        </figure>
-        <p>Correo electrónico</p>
-        <span className={styles.submit}>
+      <main className={styles.man2}>
+        <section className={styles.sec2}>
+          <div>
+            <p>Nombre</p>
+            <p>Apellidos</p>
+          </div>
+          <div>
+            <span>
+              <input
+                type="text"
+                value={body.Nombre}
+                onChange={cambioEntrada}
+                name="Nombre"
+              />
+              <aside className={clas.Nombre}>{texto.Nombre}</aside>
+            </span>
+            <span>
+              <input
+                type="text"
+                value={body.Apellido}
+                onChange={cambioEntrada}
+                name="Apellido"
+              />
+              <aside className={clas.Apellido}>{texto.Apellido}</aside>
+            </span>
+          </div>
+          <p>Correo electrónico</p>
           <input
             type="email"
             value={body.Correo}
             onChange={cambioEntrada}
             name="Correo"
           />
-          <i
-            tabIndex="0"
-            className={"nf nf-fa-search"}
-            id="1"
-            onClick={verificar}
-          ></i>
-        </span>
-        <aside className={clas.Correo}>{texto.Correo}</aside>
-        <div className={styles.checkbox}>
-          <input type="checkbox" checked={body.checkbox} onChange={check} />
-          <label>Convertir a administrador</label>
-        </div>
-        <span className={styles.submit}>
-          <input
-            type="button"
-            className={styles.rojo}
-            value="Borrar"
-            onClick={borrar}
-          />
-          <input
-            type="button"
-            className={styles.verde}
-            value="Cambiar Rol"
-            onClick={cambiar}
-          />
-        </span>
-      </section>
+          <aside className={clas.Correo}>{texto.Correo}</aside>
+          <p>Contraseña</p>
+          <span className={styles.submit}>
+            <input
+              type={ocultar.uno}
+              placeholder="Debe tener al menos 8 caracteres"
+              value={body.Contrasenia}
+              onChange={cambioEntrada}
+              name="Contrasenia"
+            />
+            <i className={"nf nf-md-eye"} id="1" onClick={cambiar}></i>
+          </span>
+          <aside className={clas.Contrasenia}>{texto.Contrasenia}</aside>
+          <p>Confirmar contraseña</p>
+          <span className={styles.submit}>
+            <input
+              type={ocultar.dos}
+              value={body.ConfirmarContrasenia}
+              onChange={cambioEntrada}
+              name="ConfirmarContrasenia"
+            />
+            <i className={"nf nf-md-eye"} id="2" onClick={cambiar}></i>
+          </span>
+          <aside className={clas.ConfirmarContrasenia}>
+            {texto.ConfirmarContrasenia}
+          </aside>
+          <span className={styles.submit}>
+            <input type="submit" value="Crear cuenta" onClick={Enviar} />
+          </span>
+        </section>
+      </main>
     </>
   );
 }

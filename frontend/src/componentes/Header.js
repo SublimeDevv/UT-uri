@@ -18,6 +18,7 @@ function Header() {
     if (verificarSesion) {
       setEstadoUsuario(true);
       setText(
+        
         <Link
           className={style.a}
           to={"/"}

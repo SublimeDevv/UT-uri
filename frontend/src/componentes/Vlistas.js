@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/vistas.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Vlistas() {
     const [listas, setListas] = useState([]);
@@ -28,17 +29,32 @@ export default function Vlistas() {
     }, [needsUpdate]);
 
     const borrar = async (valor) => {
-        const categoriaId = valor;
-        try {
-            const respuesta = await axios.put(`http://localhost:8081/OcultarCategoria/${categoriaId}`);
-            if (respuesta.data.Estatus === "EXITOSO") {
-                console.log("Categoria eliminada correctamente");
-                setNeedsUpdate(true);
-            } else {
-                console.log("Error al eliminar la categoria")
+        const { value: confirmed } = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Se quitará de las categorias activas',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, estoy seguro',
+            cancelButtonText: 'Cancelar',
+        });
+
+        if (confirmed) {
+            const categoriaId = valor;
+            try {
+                const respuesta = await axios.put(`http://localhost:8081/OcultarCategoria/${categoriaId}`);
+                if (respuesta.data.Estatus === "EXITOSO") {
+                    console.log("Categoria eliminada correctamente");
+                    setNeedsUpdate(true);
+                    Swal.fire(
+                        'Categoria ocultada correctamente',
+                        'success'
+                      );
+                } else {
+                    console.log("Error al eliminar la categoria")
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
         }
     }
     const cancelar = (valor) => {
@@ -53,34 +69,49 @@ export default function Vlistas() {
         setBotones(false);
     }
     const enviar = async (valor) => {
-        let nombre = document.getElementById("1" + valor);
-        let descripcion = document.getElementById("2" + valor);
-        nombre.style.border = "none";
-        descripcion.style.border = "none";
-        const categoriaId = valor;
-        const nombreCategoria = nombre.value;
-        const descripcionCategoria = descripcion.value;
-        const imagenCategoria = null;
+        const { value: confirmed } = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Se modificaran los datos',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, estoy seguro',
+            cancelButtonText: 'Cancelar',
+        });
 
-        try {
-            const respuesta = await axios.put(`http://localhost:8081/ActualizarCategoria/${categoriaId}`, {nombreCategoria, descripcionCategoria, imagenCategoria })
-            console.log(respuesta.data)
-            if (respuesta.data.Estatus === "EXITOSO") {
-                console.log("Se modifico el usuario");
-                setNeedsUpdate(true);
-            } else {
-                console.log("Error al modificar al usuario")
+        if (confirmed) {
+            let nombre = document.getElementById("1" + valor);
+            let descripcion = document.getElementById("2" + valor);
+            nombre.style.border = "none";
+            descripcion.style.border = "none";
+            const categoriaId = valor;
+            const nombreCategoria = nombre.value;
+            const descripcionCategoria = descripcion.value;
+            const imagenCategoria = null;
+
+            try {
+                const respuesta = await axios.put(`http://localhost:8081/ActualizarCategoria/${categoriaId}`, { nombreCategoria, descripcionCategoria, imagenCategoria })
+                console.log(respuesta.data)
+                if (respuesta.data.Estatus === "EXITOSO") {
+                    console.log("Se modifico el usuario");
+                    setNeedsUpdate(true);
+                    Swal.fire(
+                        'Datos Actualizados',
+                        'success'
+                      );
+                } else {
+                    console.log("Error al modificar al usuario")
+                }
+            } catch (error) {
+                console.log("Error del usuario")
             }
-        } catch (error) {
-            console.log("Error del usuario")
+
+
+            setModifiedRows((prevModifiedRows) => ({
+                ...prevModifiedRows,
+                [valor]: false,
+            }));
+            setBotones(false);
         }
-
-
-        setModifiedRows((prevModifiedRows) => ({
-            ...prevModifiedRows,
-            [valor]: false,
-        }));
-        setBotones(false);
     }
     const modificar = (valor) => {
         let nombre = document.getElementById("1" + valor);
@@ -112,7 +143,7 @@ export default function Vlistas() {
                             <td>Id</td>
                             <td>nombre</td>
                             <td>Descripcion</td>
-                            <td>Borrar</td>
+                            <td>Dar de baja</td>
                         </thead>
                         {listas.map((lista, index) => {
                             const valor = lista.Id;
@@ -132,7 +163,7 @@ export default function Vlistas() {
                                         <td>{lista.Id}</td>
                                         <td><input type="text" id={"1" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Nombre} /></td>
                                         <td><textarea id={"2" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Descripcion} /></td>
-                                        <td><button disabled={botones} onClick={() => borrar(valor)}><i class="nf nf-cod-trash"></i></button></td>
+                                        <td><button disabled={botones} onClick={() => borrar(valor)}><i class="nf nf-md-transfer_down"></i></button></td>
                                     </tr>
                                 </>
                             );

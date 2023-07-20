@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/vistas.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Vproductos() {
   const [listas, setListas] = useState([]);
@@ -31,24 +32,39 @@ export default function Vproductos() {
   }, [needsUpdate]);
 
   const borrar = async (valor) => {
-    let nombre = document.getElementById("1" + valor);
-    let descripcion = document.getElementById("2" + valor);
-    let categoria = document.getElementById("3" + valor);
-    nombre.style.border = "none";
-    descripcion.style.border = "none";
-    categoria.style.border = "none";
-    try {
-      const response = await axios.put(
-        `http://localhost:8081/OcultarLugar/${valor}`
-      );
-      if (response.data.Estatus === "EXITOSO") {
-        console.log("Viaje ocultado correctamente");
-        setNeedsUpdate(true);
-      } else {
-        console.log("Hubo un error al tratar de oculta");
+    const { value: confirmed } = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Se desactivará el producto',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (confirmed) {
+      let nombre = document.getElementById("1" + valor);
+      let descripcion = document.getElementById("2" + valor);
+      let categoria = document.getElementById("3" + valor);
+      nombre.style.border = "none";
+      descripcion.style.border = "none";
+      categoria.style.border = "none";
+      try {
+        const response = await axios.put(
+          `http://localhost:8081/OcultarLugar/${valor}`
+        );
+        if (response.data.Estatus === "EXITOSO") {
+          console.log("Viaje ocultado correctamente");
+          Swal.fire(
+            'Viaje ocultado correctamente',
+            'success'
+          );
+          setNeedsUpdate(true);
+        } else {
+          console.log("Hubo un error al tratar de oculta");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -66,36 +82,51 @@ export default function Vproductos() {
     setBotones(false);
   };
   const enviar = async (valor) => {
-    let nombre = document.getElementById("1" + valor);
-    let descripcion = document.getElementById("2" + valor);
-    let categoria = document.getElementById("3" + valor);
-    const lugarId = valor;
-    const nombreLugar = nombre.value;
-    const informacionLugar = descripcion.value;
-    const imagenesLugar = null;
+    const { value: confirmed } = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Se modificaran los datos',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar',
+    });
 
-    nombre.style.border = "none";
-    descripcion.style.border = "none";
-    categoria.style.border = "none";
-    try {
-      const respuesta = await axios.put(
-        `http://localhost:8081/ActualizarLugar/${lugarId}`,
-        { nombreLugar, informacionLugar, imagenesLugar }
-      );
-      if (respuesta.data.Estatus === "EXITOSO") {
-        console.log("Se modifico el lugar con exito");
-        setNeedsUpdate(true);
-      } else {
-        console.log("Error al modificar al el lugar");
+    if (confirmed) {
+      let nombre = document.getElementById("1" + valor);
+      let descripcion = document.getElementById("2" + valor);
+      let categoria = document.getElementById("3" + valor);
+      const lugarId = valor;
+      const nombreLugar = nombre.value;
+      const informacionLugar = descripcion.value;
+      const imagenesLugar = null;
+
+      nombre.style.border = "none";
+      descripcion.style.border = "none";
+      categoria.style.border = "none";
+      try {
+        const respuesta = await axios.put(
+          `http://localhost:8081/ActualizarLugar/${lugarId}`,
+          { nombreLugar, informacionLugar, imagenesLugar }
+        );
+        if (respuesta.data.Estatus === "EXITOSO") {
+          console.log("Se modifico el lugar con exito");
+          setNeedsUpdate(true);
+          Swal.fire(
+            'Se modificaron los datos',
+            'success'
+          );
+        } else {
+          console.log("Error al modificar al el lugar");
+        }
+      } catch (error) {
+        console.log("Error: " + error);
       }
-    } catch (error) {
-      console.log("Error: " + error);
+      setModifiedRows((prevModifiedRows) => ({
+        ...prevModifiedRows,
+        [valor]: false,
+      }));
+      setBotones(false);
     }
-    setModifiedRows((prevModifiedRows) => ({
-      ...prevModifiedRows,
-      [valor]: false,
-    }));
-    setBotones(false);
   };
   const modificar = (valor) => {
     let nombre = document.getElementById("1" + valor);
@@ -134,7 +165,7 @@ export default function Vproductos() {
               <td>nombre</td>
               <td>Descripcion</td>
               <td>nombre categorias</td>
-              <td>Borrar</td>
+              <td>Dar de baja</td>
             </thead>
             {listas.map((lista, index) => {
               const valor = lista.Id;
@@ -147,7 +178,7 @@ export default function Vproductos() {
                           disabled={botones}
                           onClick={() => modificar(valor)}
                         >
-                          <i class="nf nf-fa-pencil"></i>
+                          <i class="nf nf-md-lead_pencil"></i>
                         </button>
                       ) : (
                         <div className={styles.botones}>
@@ -186,7 +217,7 @@ export default function Vproductos() {
                     </td>
                     <td>
                       <button disabled={botones} onClick={() => borrar(valor)}>
-                        <i class="nf nf-cod-trash"></i>
+                        <i class="nf nf-md-transfer_down"></i>
                       </button>
                     </td>
                   </tr>
