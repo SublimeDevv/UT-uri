@@ -20,6 +20,7 @@
 }
 table {
     width: 100%;
+    max-height: 60vh;
     border-collapse: collapse;
     font-size: 16px;
     background-color: #fff;
@@ -132,13 +133,20 @@ td textarea {
     flex-wrap: wrap;
 }
 .botonU{
-    width: 51px;
-    height: 51px;
+    width: 40%;
     background-color: transparent;
     border: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     outline: none;
+}
+.botonU p{
+    font-family: roboto-r;
+    font-size: 25px;
+    margin-left: 10px;
 }
 .botonU i{
     color: #131a22;
-    font-size: 50px;
+    font-size: 25px;
 }

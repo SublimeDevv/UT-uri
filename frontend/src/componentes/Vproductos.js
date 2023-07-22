@@ -112,8 +112,7 @@ export default function Vproductos() {
           console.log("Se modifico el lugar con exito");
           setNeedsUpdate(true);
           Swal.fire(
-            'Se modificaron los datos',
-            'success'
+            'Se modificaron los datos'
           );
         } else {
           console.log("Error al modificar al el lugar");

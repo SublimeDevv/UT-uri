@@ -136,8 +136,7 @@ export default function Vadmins() {
         if (respuesta.data.Estatus === "EXITOSO") {
           console.log("Usuario modificado correctamente");
           Swal.fire(
-            'Datos Actualizados',
-            'success'
+            'Datos Actualizados'
           );
           setNeedsUpdate(true);
         } else {

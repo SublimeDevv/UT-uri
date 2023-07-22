@@ -121,8 +121,7 @@ export default function MUsuario() {
         }
       );
       Swal.fire(
-        'Usuario Registrado',
-        'success'
+        'Usuario Registrado'
       );
       setBody({
         Nombre: "",

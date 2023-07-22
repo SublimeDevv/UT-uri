@@ -106,7 +106,7 @@ export default function Vusuarios() {
           await axios.post("http://localhost:8081/subirAvatares", imagen);
           console.log("La foto del usuario se actualizo correctamente.")
         } catch (error) {
-          console.log("Error al actualizar la foto del usuarrio: "+ error)
+          console.log("Error al actualizar la foto del usuarrio: " + error)
         }
       }
       try {
@@ -125,8 +125,7 @@ export default function Vusuarios() {
         if (respuesta.data.Estatus === "EXITOSO") {
           console.log("Usuario modificado correctamente");
           Swal.fire(
-            'Usuario modificado correctamente',
-            'success'
+            'Usuario modificado correctamente'
           );
           setNeedsUpdate(true);
         } else {
@@ -135,6 +134,18 @@ export default function Vusuarios() {
       } catch (error) {
         console.log(error);
       }
+      setModifiedRows((prevModifiedRows) => ({
+        ...prevModifiedRows,
+        [valor]: false,
+      }));
+      setBotones(false);
+    } else {
+      let nombre = document.getElementById("1" + valor);
+      let apellido = document.getElementById("2" + valor);
+      let correo = document.getElementById("3" + valor);
+      nombre.style.border = "none";
+      apellido.style.border = "none";
+      correo.style.border = "none";
       setModifiedRows((prevModifiedRows) => ({
         ...prevModifiedRows,
         [valor]: false,

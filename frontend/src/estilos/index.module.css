@@ -27,7 +27,6 @@
   height: calc(100vw / 3);
   position: relative;
   overflow: hidden;
-  min-height: 200px;
 }
 
 .imagen {

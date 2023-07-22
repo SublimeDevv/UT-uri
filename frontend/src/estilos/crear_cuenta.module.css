@@ -168,13 +168,16 @@ a {
   display: flex;
   justify-content: center;
 }
+.sec2 .submit i{
+  color: #131a22;
+}
 .sec2 input[type="submit"] {
   width: 70%;
-  background-color: #004c97;
+  background-color: #131a22;
   color: #fff;
 }
 .sec2 input[type="submit"]:hover {
-  background-color: #002a52;
+  background-color: #131a22;
   font-family: roboto-b;
   color: #fff;
   cursor: pointer;
@@ -195,5 +198,5 @@ a {
   margin: 15px 0;
   width: 100%;
   width: 100%;
-  color: #004c97;
+  color: #131a22;
 }

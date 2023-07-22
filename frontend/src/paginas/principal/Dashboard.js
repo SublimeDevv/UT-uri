@@ -21,37 +21,27 @@ import Producto from "../../componentes/Producto";
 function Dashboard() {
   const { usuario } = useContext(UserContext);
   const navigate = useNavigate();
-  const [menu, setMenu] = useState({
-    img: "default_avatar.jpg",
-    nombre: "Nombre",
-  });
+  const [menu, setMenu] = useState("");
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/");
     }
-    const fetchData = async () => {
-      try {
-        const verificarCorreo = await axios.post(
-          "http://localhost:8081/VerificarCorreo",
-          {
-            Correo: localStorage.getItem("correo"),
-          }
-        );
-        if (verificarCorreo.data.Estatus === "EXITOSO") {
-          setMenu({
-            img: verificarCorreo.data.Resultado[0].Avatar,
-            nombre: verificarCorreo.data.Resultado[0].Nombre,
-          });
-        } else {
-          console.log("Error");
-        }
-      } catch (error) {
-        console.log(error);
+    let saludo = "¡Hola " + usuario.Nombre + "!";
+    let hola = saludo.split("");
+    let saludo2 = "";
+    function escribir(i) {
+      if (i < hola.length) {
+        saludo2 += hola[i];
+        setMenu(saludo2);
+        i++;
+        setTimeout(function () {
+          escribir(i);
+        }, 175);
       }
-    };
-
-    fetchData();
+    }
+    escribir(0);
   }, []);
+
   const components = (componente) => {
     setComponentes(componente);
     ocultar();
@@ -96,7 +86,7 @@ function Dashboard() {
             <i className="nf nf-fae-tools">
               <p>Administracion</p>
             </i>
-            <p className={styles.opciones}><i class="nf nf-fa-user_o"></i> Personas</p>
+            <p className={styles.opciones}>Personas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<Usuario />)}
@@ -109,7 +99,7 @@ function Dashboard() {
             >
               Administradores
             </p>
-            <p className={styles.opciones}><i class="nf nf-md-format_list_bulleted"></i> Listas</p>
+            <p className={styles.opciones}>Listas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<Categorias />)}
@@ -122,7 +112,7 @@ function Dashboard() {
             >
               Productos
             </p>
-            <p className={styles.opciones}><i class="nf nf-md-transfer_up"></i> Altas</p>
+            <p className={styles.opciones}>Altas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<AltasCategorias />)}
@@ -143,7 +133,7 @@ function Dashboard() {
         <i className="nf nf-cod-menu" id={styles.mostrar} onClick={mostrar}></i>
         <section className={styles.contenedores} onClick={ocultar}>
           <div className={styles.titulo}>
-            <h1>¡Bienvenido {usuario.Nombre}!</h1>
+            <h1>{menu}</h1>
           </div>
           <div className={styles.dashboard}>{componentes}</div>
         </section>

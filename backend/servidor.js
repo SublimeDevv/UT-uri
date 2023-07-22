@@ -513,11 +513,13 @@ app.put("/ActualizarRol/:rolId", (peticion, respuesta) => {
   });
 });
 
-app.put("/ActualizarUsuario/:usuarioId", (peticion, respuesta) => {
+app.put("/ActualizarUsuario/:usuarioId", async (peticion, respuesta) => {
   const usuarioId = peticion.params.usuarioId;
   const { nombreUsuario, apellidoUsuario, correoUsuario, contraseniaUsuario, avatarUsuario, rolId, fecha } = peticion.body;
+  var hash = null;
+  if(contraseniaUsuario !== null) var hash = await bcrypt.hash(contraseniaUsuario, 10);
   const query = "CALL SP_Actualizar_Usuario(?, ?, ?, ?, ?, ?, ?, ?)";
-  conexion.query(query, [usuarioId, nombreUsuario, apellidoUsuario, correoUsuario, contraseniaUsuario, avatarUsuario, rolId, fecha], (error) => {
+  conexion.query(query, [usuarioId, nombreUsuario, apellidoUsuario, correoUsuario, hash, avatarUsuario, rolId, fecha], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al actualizar el usuario" });
     } else {

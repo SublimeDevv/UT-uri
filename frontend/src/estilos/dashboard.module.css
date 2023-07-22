@@ -82,6 +82,7 @@ html{
     width: 90%;
 }
 .contenedores{
+    position: relative;
     width: 91.25vw;
     overflow-x: auto;
 }
@@ -102,6 +103,8 @@ html{
     font-size: 35px;
 }
 .dashboard{
+    position: absolute;
+    z-index: 1;
     width: 100%;
     height: 80%;
     display: flex;
@@ -117,7 +120,7 @@ html{
     .ocultar{
         position: absolute;
         left: -300px;
-        z-index: 2;
+        z-index: 20;
         transition: all 1s;
     }
     .mostrar{
@@ -132,6 +135,7 @@ html{
         top: calc((15% - 15px)/2);
         font-size: 30px;
         display: block;
+        z-index: 10;
         font-weight: bold;
         cursor:pointer;
     }

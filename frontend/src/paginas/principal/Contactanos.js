@@ -115,7 +115,7 @@ function Contactanos() {
             )}
 
             <div>
-              <input type="submit" value="Enviar" />
+              <input id="boton" type="submit" value="Enviar" />
             </div>
           </form>
         </section>

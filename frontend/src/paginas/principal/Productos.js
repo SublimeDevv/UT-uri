@@ -39,42 +39,43 @@ export default function Productos() {
   }
   return (
     <>
-    <Header/>
-    <main className={styles.main}>
+      <Header />
+      <main className={styles.main}>
         <section className={styles.info}>
-      <h1 className={styles.h1}>Todos Nuestros Productos</h1>
-      {listas.map((lista, index) => {
-        const obtenerImagenes = JSON.parse(lista.Imagenes)
-        if (stylecount === 0) {
-          stylecount = 1;
-          estilo = styles.seccion;
-        } else {
-          estilo = `${styles.seccion} ${styles.azul}`;
-          stylecount = 0;
-        }
+          <h1 className={styles.h1}></h1>
+          <h1 className={styles.h1}>Todos Nuestros Productos</h1>
+          {listas.map((lista, index) => {
+            const obtenerImagenes = JSON.parse(lista.Imagenes)
+            if (stylecount === 0) {
+              stylecount = 1;
+              estilo = styles.seccion;
+            } else {
+              estilo = `${styles.seccion} ${styles.azul}`;
+              stylecount = 0;
+            }
 
-        return (
-          <>
-            <div key={index} className={estilo}>
-              <div>
-                <h2>{lista.NombreLugar}</h2>
-                <p>{lista.Informacion}</p>
-                <span>
-                  <Link to={"/detalles/" + lista.Id}>
-                    <button>Detalles</button>
-                  </Link>
-                </span>
-              </div>
-              <figure>
-                <img src={require("../../images/" + obtenerImagenes[0])} alt="" />
-              </figure>
-            </div>
-          </>
-        );
-      })}
-      </section>
+            return (
+              <>
+                <div key={index} className={estilo}>
+                  <div>
+                    <h2>{lista.NombreLugar}</h2>
+                    <p>{lista.Informacion}</p>
+                    <span>
+                      <Link to={"/detalles/" + lista.Id}>
+                        <button>Detalles</button>
+                      </Link>
+                    </span>
+                  </div>
+                  <figure>
+                    <img src={require("../../images/" + obtenerImagenes[0])} alt="" />
+                  </figure>
+                </div>
+              </>
+            );
+          })}
+        </section>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 }

@@ -76,7 +76,7 @@ export default function Dashboards({ components }) {
             <i className="nf nf-fa-calendar"></i> {fecha.call}
           </p>
         </span>
-        <span className={`${styles.estadistica} ${styles.opcion}`}>
+        <span className={`${styles.estadistica} ${styles.opcion3}`}>
           <ObtenerMapa/>
         </span>
         <span

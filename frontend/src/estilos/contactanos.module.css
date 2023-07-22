@@ -48,7 +48,7 @@
   background-color: #d9d9d9;
   border: none;
   position: relative;
-  z-index: 100;
+  z-index: 50;
   border-radius: 10px;
 }
 .info form input:focus {
@@ -62,7 +62,7 @@
   margin: 5px 0;
   background-color: #d9d9d9;
   border: none;
-  z-index: 100;
+  z-index: 50;
   position: relative;
   border-radius: 10px;
   height: 20%;

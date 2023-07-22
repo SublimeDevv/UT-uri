@@ -95,8 +95,7 @@ export default function Vlistas() {
                     console.log("Se modifico el usuario");
                     setNeedsUpdate(true);
                     Swal.fire(
-                        'Datos Actualizados',
-                        'success'
+                        'Datos Actualizados'
                       );
                 } else {
                     console.log("Error al modificar al usuario")

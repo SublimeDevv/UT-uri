@@ -10,12 +10,12 @@ export default function Usuario() {
             {cambiar ? (
                 <div className={styles.div}>
                     <Vusuarios />
-                    <button className={styles.botonU} onClick={() => setCambiar(false)}><i class="nf nf-fa-plus_circle"></i></button>
+                    <button className={styles.botonU} onClick={() => setCambiar(false)}><i class="nf nf-fa-plus_circle"></i><p> Agregar usuario</p></button>
                 </div>
             ) : (
                 <div className={styles.div}>
                     <MUsuario />
-                    <button className={styles.botonU} onClick={() => setCambiar(true)}><i class="nf nf-md-keyboard_backspace"></i></button>
+                    <button className={styles.botonU} onClick={() => setCambiar(true)}><i class="nf nf-md-keyboard_backspace"></i><p>Volver</p></button>
                 </div>
             )}
         </>

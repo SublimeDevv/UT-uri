@@ -10,11 +10,15 @@ export default function MProductos() {
     imagen1: "Este campo es obligatorio",
     imagen2: "Este campo es obligatorio",
     imagen3: "Este campo es obligatorio",
+    x: "Este campo es obligatorio",
+    y: "Este campo es obligatorio",
   });
   const [listas, setListas] = useState([]);
   const [clas, setClas] = useState({
     nombre: `${styles.error} ${styles.ocultar}`,
     info: `${styles.error} ${styles.ocultar}`,
+    x: `${styles.error} ${styles.ocultar}`,
+    y: `${styles.error} ${styles.ocultar}`,
     imagen1: `${styles.error} ${styles.ocultar}`,
     imagen2: `${styles.error} ${styles.imagenes}`,
   });
@@ -26,6 +30,8 @@ export default function MProductos() {
     id: "1",
     nombre: "",
     info: "",
+    x: "",
+    y: "",
   });
   const [archivo1, setArchivo1] = useState(null);
   const [archivo2, setArchivo2] = useState(null);
@@ -156,6 +162,8 @@ export default function MProductos() {
             document.getElementById("img4").style.backgroundColor = "#fff";
             document.getElementById("nombre").value = "";
             document.getElementById("info").value = "";
+            document.getElementById("x").value = "";
+            document.getElementById("y").value = "";
             Swal.fire("El producto se agrego correctamente", "success");
           }
         } catch (error) {
@@ -173,11 +181,15 @@ export default function MProductos() {
         ...clas,
         ["nombre"]: body.nombre.length === 0 ? styles.error : "",
         ["info"]: body.info.length === 0 ? styles.error : "",
+        ["x"]: body.x.length === 0 ? styles.error : "",
+        ["y"]: body.y.length === 0 ? styles.error : "",
       });
       setTexto({
         ...clas,
         ["nombre"]: body.nombre.length === 0 ? "Este campo es obligatorio" : "",
         ["info"]: body.info.length === 0 ? "Este campo es obligatorio" : "",
+        ["x"]: body.x.length === 0 ? "Este campo es obligatorio" : "",
+        ["y"]: body.y.length === 0 ? "Este campo es obligatorio" : "",
       });
     }
   };
@@ -192,100 +204,135 @@ export default function MProductos() {
     <>
       <div className={styles.contenedor}>
         <section className={styles.mlistas}>
-          <h1 className={styles.h1}>Agregando productos</h1>
-          <label>Nombre del producto:</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            onChange={cambioEntrada}
-          ></input>
-          <aside className={clas.nombre} id="aside">
-            {texto.nombre}
-          </aside>
-          <label>A que categoria pertence:</label>
-          <select>
-            {listas.map((lista, index) => {
-              return (
-                <>
-                  <option value={lista.Id} onClick={seleccion}>
-                    {lista.Nombre}
-                  </option>
-                </>
-              );
-            })}
-          </select>
-          <label>Informacion:</label>
-          <textarea name="info" id="info" onChange={cambioEntrada}></textarea>
-          <aside className={clas.info} id="aside">
-            {texto.info}
-          </aside>
-          <label htmlFor="input">Sube una imagen:</label>
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            id="inputarchivo1"
-            onChange={seleccionar1}
-          />
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            id="inputarchivo2"
-            onChange={seleccionar2}
-          />
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            id="inputarchivo3"
-            onChange={seleccionar3}
-          />
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            id="inputarchivo4"
-            onChange={seleccionar4}
-          />
-          <span className={styles.imagenes}>
-            <div>
-              <button>
-                <label id="img1" for="inputarchivo1">
-                  Imagen
-                </label>
-              </button>
-            </div>
-            <div>
-              <button>
-                <label id="img2" for="inputarchivo2">
-                  Imagen
-                </label>
-              </button>
-            </div>
-            <div>
-              <button>
-                <label id="img3" for="inputarchivo3">
-                  Imagen
-                </label>
-              </button>
-            </div>
-            <div>
-              <button>
-                <label id="img4" for="inputarchivo4">
-                  Imagen
-                </label>
-              </button>
-            </div>
-          </span>
-          <div className={styles.aside2}>
-            <aside className={clas.imagen1}>{texto.imagen1} </aside>
-          </div>
-          <div className={styles.submit}>
+          <div className={styles.mlista}>
+            <h1 className={styles.h1}>Agregando productos</h1>
+            <p>Nombre del producto:</p>
             <input
-              type="submit"
-              className={styles.verde}
-              value="Subir"
-              onClick={subir}
+              type="text"
+              id="nombre"
+              name="nombre"
+              onChange={cambioEntrada}
+            ></input>
+            <aside className={clas.nombre} id="aside">
+              {texto.nombre}
+            </aside>
+            <p>A que categoria pertence:</p>
+            <div className={styles.select}>
+              <select>
+                {listas.map((lista, index) => {
+                  return (
+                    <>
+                      <option value={lista.Id} onClick={seleccion}>
+                        {lista.Nombre}
+                      </option>
+                    </>
+                  );
+                })}
+              </select>
+            </div>
+
+            <p>Informacion:</p>
+            <textarea name="info" id="info" onChange={cambioEntrada}></textarea>
+            <aside className={clas.info} id="aside">
+              {texto.info}
+            </aside>
+            <p htmlFor="input">Sube una imagen:</p>
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              id="inputarchivo1"
+              onChange={seleccionar1}
             />
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              id="inputarchivo2"
+              onChange={seleccionar2}
+            />
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              id="inputarchivo3"
+              onChange={seleccionar3}
+            />
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png"
+              id="inputarchivo4"
+              onChange={seleccionar4}
+            />
+            <span className={styles.imagenes}>
+              <div>
+                <button>
+                  <label id="img1" for="inputarchivo1">
+                    Imagen
+                  </label>
+                </button>
+              </div>
+              <div>
+                <button>
+                  <label id="img2" for="inputarchivo2">
+                    Imagen
+                  </label>
+                </button>
+              </div>
+              <div>
+                <button>
+                  <label id="img3" for="inputarchivo3">
+                    Imagen
+                  </label>
+                </button>
+              </div>
+              <div>
+                <button>
+                  <label id="img4" for="inputarchivo4">
+                    Imagen
+                  </label>
+                </button>
+              </div>
+            </span>
+            <div className={styles.aside2}>
+              <aside className={clas.imagen1}>{texto.imagen1} </aside>
+            </div>
+            <p>Coordenadas:</p>
+            <div className={styles.coordenada}>
+              <div className={styles.coordenadas}>
+                <input
+                  type="number"
+                  placeholder="Coordenada X"
+                  id="x"
+                  name="x"
+                  onChange={cambioEntrada}
+                ></input>
+                <aside className={clas.x} id="aside">
+                  {texto.x}
+                </aside>
+              </div>
+
+              <div className={styles.coordenadas}>
+                <input
+                  placeholder="Coordenada Y"
+                  type="number"
+                  name="y" 
+                  id="y"
+                  onChange={cambioEntrada}
+                ></input>
+                <aside className={clas.y} id="aside">
+                  {texto.y}
+                </aside>
+              </div>
+            </div>
+
+            <div className={styles.submit}>
+              <input
+                type="submit"
+                className={styles.verde}
+                value="Subir"
+                onClick={subir}
+              />
+            </div>
           </div>
+
         </section>
       </div>
     </>
