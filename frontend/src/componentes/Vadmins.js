@@ -102,7 +102,7 @@ export default function Vadmins() {
       const apellidoUsuario = apellido.value;
       const correoUsuario = correo.value;
       const contraseniaUsuario = null;
-      const avatarUsuario = nArchivo;
+      const avatarUsuario = nArchivo == "default_avatar.jpg" ? null : nArchivo;;
       const rolId = null;
       const fecha = null;
       if (nArchivo !== "default_avatar.jpg") {
@@ -298,7 +298,7 @@ export default function Vadmins() {
                             onChange={seleccionar}
                           />
                           <button>
-                            <label for={"4" + lista.Id}>{nArchivo}</label>
+                            <label for={"4" + lista.Id}>Imagen</label>
                           </button>
                         </div>
                       )}
