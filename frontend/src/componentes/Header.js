@@ -189,7 +189,7 @@ function Header() {
       }
 
     } else {
-      Swal.fire("Debe Cambiar Almenos un valor");
+      Swal.fire("Debe cambiar almenos un valor");
       setClas2({
         nombre: "",
         apellido: "",
