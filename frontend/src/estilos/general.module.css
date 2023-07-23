@@ -174,7 +174,7 @@
   width: 100%;
   background-color: #EDEAE1;
   display: flex;
-  align-content: start;
+  align-content: flex-start;
   height: 100%;
   flex-wrap: wrap;
 }
@@ -195,7 +195,7 @@
   display: flex;
   position: absolute;
   top: 10%;
-  justify-content: start;
+  justify-content: flex-start;
   flex-wrap: wrap;
   height: 25%;
 }

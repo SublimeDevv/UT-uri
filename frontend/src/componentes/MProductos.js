@@ -104,7 +104,7 @@ export default function MProductos() {
         nArchivo3 !== "Imagen" &&
         nArchivo4 !== "Imagen"
       ) {
-        setClas({ ...clas, ["imagen1"]: `${styles.error} ${styles.ocultar}` });
+        setClas({ ...clas, imagen1: `${styles.error} ${styles.ocultar}` });
 
         const imagenes = [archivo1, archivo2, archivo3, archivo4];
 
@@ -172,24 +172,24 @@ export default function MProductos() {
       } else {
         setClas({
           ...clas,
-          ["imagen1"]: styles.error,
+          imagen1: styles.error,
         });
-        setTexto({ ...texto, ["imagen1"]: "Estos campos son obligatorios" });
+        setTexto({ ...texto, imagen1: "Estos campos son obligatorios" });
       }
     } else {
       setClas({
         ...clas,
-        ["nombre"]: body.nombre.length === 0 ? styles.error : "",
-        ["info"]: body.info.length === 0 ? styles.error : "",
-        ["x"]: body.x.length === 0 ? styles.error : "",
-        ["y"]: body.y.length === 0 ? styles.error : "",
+        nombre: body.nombre.length === 0 ? styles.error : "",
+        info: body.info.length === 0 ? styles.error : "",
+        x: body.x.length === 0 ? styles.error : "",
+        y: body.y.length === 0 ? styles.error : "",
       });
       setTexto({
         ...clas,
-        ["nombre"]: body.nombre.length === 0 ? "Este campo es obligatorio" : "",
-        ["info"]: body.info.length === 0 ? "Este campo es obligatorio" : "",
-        ["x"]: body.x.length === 0 ? "Este campo es obligatorio" : "",
-        ["y"]: body.y.length === 0 ? "Este campo es obligatorio" : "",
+        nombre: body.nombre.length === 0 ? "Este campo es obligatorio" : "",
+        info: body.info.length === 0 ? "Este campo es obligatorio" : "",
+        x: body.x.length === 0 ? "Este campo es obligatorio" : "",
+        y: body.y.length === 0 ? "Este campo es obligatorio" : "",
       });
     }
   };
@@ -198,7 +198,7 @@ export default function MProductos() {
     setBody({ ...body, [name]: value });
   };
   const seleccion = (e) => {
-    setBody({ ...body, ["id"]: e.target.value });
+    setBody({ ...body, id: e.target.value });
   };
   return (
     <>

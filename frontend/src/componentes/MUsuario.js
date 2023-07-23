@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import styles from "../estilos/crear_cuenta.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -67,20 +67,16 @@ export default function MUsuario() {
     );
 
     if (verificarCorreo.data.Estatus === 'EXITOSO') {
-      setTexto({ ...texto, ["Correo"]: "El correo que ingresaste ya existe." });
-      setClas({ ...clas, ["Correo"]: styles.error });
+      setTexto({ ...texto, Correo: "El correo que ingresaste ya existe." });
+      setClas({ ...clas, Correo: styles.error });
       return;
     }
 
     const correoRegex = /^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/;
     const filtrarCaracteres = correoRegex.test(body.Correo);
     if (!filtrarCaracteres) {
-      setTexto({
-        ...texto,
-        ["Correo"]:
-          "El correo que ingresaste no debe contener caracteres especiales y espacios en blancos.",
-      });
-      setClas({ ...clas, ["Correo"]: styles.error });
+      setTexto({...texto, Correo: "El correo que ingresaste no debe contener caracteres especiales y espacios en blancos."});
+      setClas({ ...clas, Correo: styles.error });
       return;
     }
     const contraseniaRegex =
@@ -89,24 +85,22 @@ export default function MUsuario() {
     if (!comprobarContrasenia) {
       setTexto({
         ...texto,
-        ["Contrasenia"]:
-          "La contraseña debe tener mínimo 8 caracteres, mayúsculas y minúsculas, digitos y al menos un caracter especial(?=.*[@$!%*#?&])",
+        Contrasenia:
+          "La contraseña debe tener mínimo 8 caracteres, mayúsculas y minúsculas, dígitos y al menos un caracter especial(?=.*[@$!%*#?&])",
       });
-      setClas({ ...clas, ["Contrasenia"]: styles.error });
+      
+      setClas({ ...clas, Contrasenia: styles.error });
       return;
     }
 
     if (body.Contrasenia !== body.ConfirmarContrasenia) {
-      setTexto({
-        ...texto,
-        ["ConfirmarContrasenia"]: "Las contraseñas deben coincidir.",
-      });
-      setClas({ ...clas, ["ConfirmarContrasenia"]: styles.error });
+      setTexto( {...texto, ConfirmarContrasenia: "Las contraseñas deben coincidir." });
+      setClas({ ...clas, ConfirmarContrasenia: styles.error });      
       return;
     }
 
     try {
-      const respuesta = await axios.post(
+      await axios.post(
         "http://localhost:8081/api/usuarios/RegistrarUsuario",
         {
           Nombre: body.Nombre,
@@ -140,15 +134,15 @@ export default function MUsuario() {
     if (e.target.classList.contains("nf-md-eye")) {
       e.target.classList.remove("nf-md-eye");
       e.target.classList.add("nf-md-eye_off");
-      elemento == 1
-        ? setOcultar({ ...ocultar, ["uno"]: "text" })
-        : setOcultar({ ...ocultar, ["dos"]: "text" });
+      elemento === 1
+        ? setOcultar({ ...ocultar, uno: "text" })
+        : setOcultar({ ...ocultar, dos: "text" });
     } else {
       e.target.classList.remove("nf-md-eye_off");
       e.target.classList.add("nf-md-eye");
-      elemento == 1
-        ? setOcultar({ ...ocultar, ["uno"]: "password" })
-        : setOcultar({ ...ocultar, ["dos"]: "password" });
+      elemento === 1
+        ? setOcultar({ ...ocultar, uno: "password" })
+        : setOcultar({ ...ocultar, dos: "password" });
     }
   };
   

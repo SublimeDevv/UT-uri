@@ -149,7 +149,7 @@
     padding: 20px;
     flex-wrap: wrap;
     justify-content: center;
-    align-content: start;
+    align-content: flex-start;
 }
 .madmin h2{
     height: 10%;

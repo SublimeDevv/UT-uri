@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../estilos/formularios.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 export default function MListas() {
-  const [listas, setListas] = useState([]);
   const [texto, setTexto] = useState({
     nombre: "Este campo es obligatorio",
     info: "Este campo es obligatorio",

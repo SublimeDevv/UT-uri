@@ -66,7 +66,7 @@ export default function Productos() {
                     </span>
                   </div>
                   <figure>
-                    <img src={require("../../images/" + obtenerImagenes[0])} alt="" />
+                    <img src={require("../../images/" + obtenerImagenes[0])} alt="Cargando" />
                   </figure>
                 </div>
               </>

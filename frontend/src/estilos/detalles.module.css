@@ -73,19 +73,25 @@
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 #000c;
   transition: box-shadow 0.3s ease;
+  transition-property: all;
+  transition-duration: .3s;
 }
 .span aside figure img:hover{
   box-shadow: 0 4px 8px 0 #000;
 }
+.span aside figure img:active{
+  transition-property: all;
+  transition-duration: .3s;
+  transform: scale(1.3);
+}
 .contenedor{
   width: 100%;
   height: 50%;
+  display: flex;
+  position: relative;
+  z-index: 2;
+  justify-content: center;
   padding: 20px;
-}
-.mapa{
-  width: 100%;
-  height: 100%;
-  background-color: #eee;
 }
 .span .div {
   width: 50%;
@@ -166,6 +172,76 @@
   text-decoration: none;
   width: 100%;
 }
+/*Menu de imagenes*/
+.borroso{
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3a3a3a9f;
+}
+.span aside .contenedor span{
+  width: 90%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #eee;
+}
+.slider{
+  width: 500px;
+  height: 300px;
+  position: fixed;
+  z-index: 100;
+  box-shadow: 0 8px 32px 0 #000;
+  top: 50%;
+  border-radius: 20px;
+  overflow:hidden;
+  left: 50%;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+.slider span{
+  width: 400%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.carril section{
+  width: calc(100% / 4);
+  height: 100%;
+}
+.carril img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+.izquierda, .derecha{
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-size: 30px;
+  top:50%;
+  z-index: 200;
+  color: #fff;
+  transform: translate(0, -50%);
+}
+.izquierda:hover{
+  background-color: #0005;
+  color: #fff;
+}
+.derecha{
+  right: 0px;
+}
+.derecha:hover{
+  background-color: #0005;
+  color: #fff;
+}
 @media only screen and (max-width: 950px) {
   .span {
     flex-wrap: wrap;
@@ -188,6 +264,10 @@
   }
 }
 @media only screen and (max-width: 600px) {
+  .slider{
+    width: 350px;
+    height: 210px;
+  }
   .info{
     width: 100%;
   }
@@ -198,13 +278,15 @@
     padding: 0 20px;
   }
 }
-/*Menu de imagenes*/
-.borroso{
-  position: fixed;
-  z-index: 50;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #3a3a3a9f;
+@media only screen and (max-width: 360px) {
+  .slider{
+    width: 250px;
+    height: 150px;
+  }
+  .ruta p{
+    font-size: 13px;
+  }
+  .a1,.a2{
+    font-size: 13px;
+  }
 }
