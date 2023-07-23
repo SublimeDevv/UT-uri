@@ -110,7 +110,7 @@ export default function Detalle() {
                 </figure>
                 <div className={styles.contenedor}>
                   <span className={styles.mapa}>
-                    <ObtenerMapa />
+                    <ObtenerMapa x={detalle.Latitud} y={detalle.Longitud} />
                   </span>
                 </div>
               </aside>

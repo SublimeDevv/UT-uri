@@ -178,7 +178,7 @@ function Header() {
                 contrasenia: "",
                 contrasenia2: "",
               });
-              setNarchivo(usuario.Avatar);
+              //setNarchivo(usuario.Avatar);
               document.getElementById("img").style.backgroundColor = "#fff";
               setTimeout(async () => {
                 await setUsuario(datosModificados);

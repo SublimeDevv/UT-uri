@@ -137,6 +137,8 @@ export default function MProductos() {
         const p_Descripcion = body.info;
         const p_Personas = 5;
         const p_Precio = 500.25;
+        const p_Latitud = body.x;
+        const p_Longitud = body.y;
 
         try {
           const respuesta = await axios.post(
@@ -149,6 +151,8 @@ export default function MProductos() {
               p_Descripcion,
               p_Personas,
               p_Precio,
+              p_Latitud,
+              p_Longitud
             }
           );
           if (respuesta.data.Estatus === "EXITOSO") {

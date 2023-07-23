@@ -90,9 +90,9 @@ router.delete("/EliminarDetalle/:detalleId", (peticion, respuesta) => {
 });
 
 router.post("/AgregarLugarYDetalle", (peticion, respuesta) => {
-  const { p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio } = peticion.body;
-  const query = "CALL SP_Crear_Lugar_Detalle(?, ?, ?, ?, ?, ?, ?)";
-  conexion.query(query, [p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio], (error) => {
+  const { p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio, p_Latitud, p_Longitud } = peticion.body;
+  const query = "CALL SP_Crear_Lugar_Detalle(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  conexion.query(query, [p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio, p_Latitud, p_Longitud], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al agregar el lugar y detalle" });
     } else {

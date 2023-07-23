@@ -77,7 +77,7 @@ export default function Dashboards({ components }) {
           </p>
         </span>
         <span className={`${styles.estadistica} ${styles.opcion3}`}>
-          <ObtenerMapa/>
+          <ObtenerMapa x={21.04845} y={-86.84675}/>
         </span>
         <span
           className={`${styles.usuario} ${styles.opcion}`}

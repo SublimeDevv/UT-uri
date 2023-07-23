@@ -5,9 +5,10 @@ import { MarkerIcon } from "./react-leaflet-icon.js";
 import axios from "axios";
 import styles from '../estilos/general.module.css'
 
-const LocalizacionInicial = [21.04845, -86.84675];
 
-const ObtenerMapa = () => {
+const ObtenerMapa = ({x: latitud, y: longitud}) => {
+  const LocalizacionInicial = [latitud, longitud];
+
   const [Localizacion, setLocalizacion] = useState(LocalizacionInicial);
   const [LugarNombre, setLugarNombre] = useState("");
 
