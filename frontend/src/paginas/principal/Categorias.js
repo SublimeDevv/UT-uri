@@ -15,7 +15,7 @@ function Categorias() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/obtenerCategorias`
+          `http://localhost:8081/api/categorias/ObtenerCategorias`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {

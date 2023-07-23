@@ -14,7 +14,7 @@ export default function Vusuarios() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/Usuarios`);
+        const respuesta = await axios.get(`http://localhost:8081/api/usuarios/Usuarios`);
         if (respuesta.data.Estatus === "EXITOSO") {
           setListas(respuesta.data.Resultado);
         } else {
@@ -44,7 +44,7 @@ export default function Vusuarios() {
       const usuarioId = valor;
       try {
         const respuesta = await axios.delete(
-          `http://localhost:8081/EliminarUsuario/${usuarioId}`
+          `http://localhost:8081/api/usuarios/EliminarUsuario/${usuarioId}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           console.log("Admin eliminado correctamente");
@@ -103,7 +103,7 @@ export default function Vusuarios() {
         const imagen = new FormData();
         imagen.append("image", archivo);
         try {
-          await axios.post("http://localhost:8081/subirAvatares", imagen);
+          await axios.post("http://localhost:8081/api/imagenes/subirAvatares", imagen);
           console.log("La foto del usuario se actualizo correctamente.")
         } catch (error) {
           console.log("Error al actualizar la foto del usuarrio: " + error)
@@ -111,7 +111,7 @@ export default function Vusuarios() {
       }
       try {
         const respuesta = await axios.put(
-          `http://localhost:8081/ActualizarUsuario/${usuarioId}`,
+          `http://localhost:8081/api/usuarios/ActualizarUsuario/${usuarioId}`,
           {
             nombreUsuario,
             apellidoUsuario,
@@ -200,7 +200,7 @@ export default function Vusuarios() {
       const nuevoRol = 1;
       try {
         await axios.put(
-          `http://localhost:8081/CambiarRolUsuario/${valor}`,
+          `http://localhost:8081/api/usuarios/CambiarRolUsuario/${valor}`,
           {
             nuevoRol: nuevoRol,
           }

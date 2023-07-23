@@ -25,7 +25,7 @@ export default function MAdministradores() {
     });
     try {
       const respuesta = await axios.put(
-        `http://localhost:8081/EliminarAdministrador/${adminId}`
+        `http://localhost:8081/api/usuarios/EliminarAdministrador/${adminId}`
       );
       if (respuesta.data.Estatus === "EXITOSO") {
         console.log("Administrador eliminado");
@@ -45,7 +45,7 @@ export default function MAdministradores() {
   const fetchData = async () => {
     try {
       const respuesta = await axios.get(
-        "http://localhost:8081/ObtenerUsuarios"
+        "http://localhost:8081/api/usuarios/ObtenerAdministradores"
       );
       if (respuesta.data.Estatus === "EXITOSO") {
         setListas(respuesta.data.Resultado);

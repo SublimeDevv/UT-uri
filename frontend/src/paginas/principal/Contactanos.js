@@ -31,7 +31,7 @@ function Contactanos() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8081/FormularioContacto",
+        "http://localhost:8081/api/formulario/FormularioContacto",
         {
           nombre,
           correo,

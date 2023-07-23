@@ -13,7 +13,7 @@ export default function Detalle() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/ObtenerDetalles/${id}`
+          `http://localhost:8081/api/lugares/ObtenerDetalles/${id}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {

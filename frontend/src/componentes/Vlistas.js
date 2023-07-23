@@ -11,7 +11,7 @@ export default function Vlistas() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const respuesta = await axios.get(`http://localhost:8081/ObtenerCategorias`);
+                const respuesta = await axios.get(`http://localhost:8081/api/categorias/ObtenerCategorias`);
                 if (respuesta.data.Estatus === "EXITOSO") {
                     setListas(respuesta.data.Resultado);
                 } else {
@@ -41,7 +41,7 @@ export default function Vlistas() {
         if (confirmed) {
             const categoriaId = valor;
             try {
-                const respuesta = await axios.put(`http://localhost:8081/OcultarCategoria/${categoriaId}`);
+                const respuesta = await axios.put(`http://localhost:8081/api/categorias/OcultarCategoria/${categoriaId}`);
                 if (respuesta.data.Estatus === "EXITOSO") {
                     console.log("Categoria eliminada correctamente");
                     setNeedsUpdate(true);
@@ -89,7 +89,7 @@ export default function Vlistas() {
             const imagenCategoria = null;
 
             try {
-                const respuesta = await axios.put(`http://localhost:8081/ActualizarCategoria/${categoriaId}`, { nombreCategoria, descripcionCategoria, imagenCategoria })
+                const respuesta = await axios.put(`http://localhost:8081/api/categorias/ActualizarCategoria/${categoriaId}`, { nombreCategoria, descripcionCategoria, imagenCategoria })
                 console.log(respuesta.data)
                 if (respuesta.data.Estatus === "EXITOSO") {
                     console.log("Se modifico el usuario");
