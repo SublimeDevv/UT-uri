@@ -42,7 +42,6 @@ export default function Productos() {
       <Header />
       <main className={styles.main}>
         <section className={styles.info}>
-          <h1 className={styles.h1}> </h1>
           <h1 className={styles.h1}>Todos Nuestros Productos</h1>
           {listas.map((lista, index) => {
             const obtenerImagenes = JSON.parse(lista.Imagenes)

@@ -15,6 +15,7 @@
   margin: auto;
   box-shadow: 0px 0px 1px #333;
 }
+/*Ruta*/
 .info a:hover {
   cursor: default;
 }
@@ -24,7 +25,7 @@
 .ruta {
   width: 100%;
   display: flex;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 .a1 {
   text-decoration: none;
@@ -43,46 +44,63 @@
   font-family: roboto-b;
   color: #000;
 }
+/*Menu de detalles*/
 .info {
-  padding: 0 5%;
-  min-height: 75vh;
+  padding: 0 50px;
 }
 .info .span {
   width: 100%;
   height: 90%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
-.span .figure {
+.span aside{
   width: 40%;
+  min-height: 400px;
+}
+.span aside figure {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  padding: 15px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
-.uno,
-.dos,
-.tres {
-  width: 60%;
-  height: 30%;
-  position: relative;
+.span aside figure img{
+  width: 90%;
+  object-fit: cover;
   border-radius: 20px;
+  box-shadow: 0 4px 8px 0 #000c;
+  transition: box-shadow 0.3s ease;
+  transition-property: all;
+  transition-duration: .3s;
 }
-.uno {
-  bottom: -30;
-  z-index: 1;
+.span aside figure img:hover{
+  box-shadow: 0 4px 8px 0 #000;
 }
-.dos {
-  left: 30%;
+.span aside figure img:active{
+  transition-property: all;
+  transition-duration: .3s;
+  transform: scale(1.3);
+}
+.contenedor{
+  width: 100%;
+  height: 50%;
+  display: flex;
+  position: relative;
   z-index: 2;
+  justify-content: center;
+  padding: 20px;
 }
-.tres {
-  top: -30;
-  z-index: 3;
-}
-.span div {
-  width: 45%;
-  padding: 2% 4%;
+.span .div {
+  width: 50%;
+  padding: 30px;
   padding-bottom: 30px;
+  display: flex;
+  align-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .span h1 {
   font-size: 30px;
@@ -120,7 +138,7 @@
   align-items: center;
   justify-content: space-evenly;
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .p2 {
   font-family: roboto-b;
@@ -154,24 +172,88 @@
   text-decoration: none;
   width: 100%;
 }
-@media only screen and (max-width: 800px) {
+/*Menu de imagenes*/
+.borroso{
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3a3a3a9f;
+}
+.span aside .contenedor span{
+  width: 90%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #eee;
+}
+.slider{
+  width: 500px;
+  height: 300px;
+  position: fixed;
+  z-index: 100;
+  box-shadow: 0 8px 32px 0 #000;
+  top: 50%;
+  border-radius: 20px;
+  overflow:hidden;
+  left: 50%;
+  padding: 0;
+  transform: translate(-50%, -50%);
+}
+.slider span{
+  width: 400%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.carril section{
+  width: calc(100% / 4);
+  height: 100%;
+}
+.carril img{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+.izquierda, .derecha{
+  width: 10%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-size: 30px;
+  top:50%;
+  z-index: 200;
+  color: #fff;
+  transform: translate(0, -50%);
+}
+.izquierda:hover{
+  background-color: #0005;
+  color: #fff;
+}
+.derecha{
+  right: 0px;
+}
+.derecha:hover{
+  background-color: #0005;
+  color: #fff;
+}
+@media only screen and (max-width: 950px) {
   .span {
     flex-wrap: wrap;
   }
-  .span .figure {
-    height: 400px;
-  }
-  .span div {
+  .span aside {
     width: 100%;
   }
-  .uno,
-  .dos,
-  .tres {
-    width: 100%;
+  .span aside figure img{
+    height: 100%;
   }
-  .span .figure {
-    position: relative;
-    left: -30;
+  .span .div {
+    width: 100%;
   }
   .a1,
   .a2 {
@@ -182,7 +264,29 @@
   }
 }
 @media only screen and (max-width: 600px) {
+  .slider{
+    width: 350px;
+    height: 210px;
+  }
   .info{
     width: 100%;
+  }
+  .span .p{
+    font-size: 15px;
+  }
+  .info {
+    padding: 0 20px;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .slider{
+    width: 250px;
+    height: 150px;
+  }
+  .ruta p{
+    font-size: 13px;
+  }
+  .a1,.a2{
+    font-size: 13px;
   }
 }
