@@ -15,6 +15,7 @@
   margin: auto;
   box-shadow: 0px 0px 1px #333;
 }
+/*Ruta*/
 .info a:hover {
   cursor: default;
 }
@@ -24,7 +25,7 @@
 .ruta {
   width: 100%;
   display: flex;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 .a1 {
   text-decoration: none;
@@ -43,46 +44,57 @@
   font-family: roboto-b;
   color: #000;
 }
+/*Menu de detalles*/
 .info {
-  padding: 0 5%;
-  min-height: 75vh;
+  padding: 0 50px;
 }
 .info .span {
   width: 100%;
   height: 90%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
-.span .figure {
+.span aside{
   width: 40%;
+  min-height: 400px;
+}
+.span aside figure {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  padding: 15px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
-.uno,
-.dos,
-.tres {
-  width: 60%;
-  height: 30%;
-  position: relative;
+.span aside figure img{
+  width: 90%;
+  object-fit: cover;
   border-radius: 20px;
+  box-shadow: 0 4px 8px 0 #000c;
+  transition: box-shadow 0.3s ease;
 }
-.uno {
-  bottom: -30;
-  z-index: 1;
+.span aside figure img:hover{
+  box-shadow: 0 4px 8px 0 #000;
 }
-.dos {
-  left: 30%;
-  z-index: 2;
+.contenedor{
+  width: 100%;
+  height: 50%;
+  padding: 20px;
 }
-.tres {
-  top: -30;
-  z-index: 3;
+.mapa{
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
 }
-.span div {
-  width: 45%;
-  padding: 2% 4%;
+.span .div {
+  width: 50%;
+  padding: 30px;
   padding-bottom: 30px;
+  display: flex;
+  align-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .span h1 {
   font-size: 30px;
@@ -120,7 +132,7 @@
   align-items: center;
   justify-content: space-evenly;
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .p2 {
   font-family: roboto-b;
@@ -154,24 +166,18 @@
   text-decoration: none;
   width: 100%;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 950px) {
   .span {
     flex-wrap: wrap;
   }
-  .span .figure {
-    height: 400px;
-  }
-  .span div {
+  .span aside {
     width: 100%;
   }
-  .uno,
-  .dos,
-  .tres {
-    width: 100%;
+  .span aside figure img{
+    height: 100%;
   }
-  .span .figure {
-    position: relative;
-    left: -30;
+  .span .div {
+    width: 100%;
   }
   .a1,
   .a2 {
@@ -185,4 +191,20 @@
   .info{
     width: 100%;
   }
+  .span .p{
+    font-size: 15px;
+  }
+  .info {
+    padding: 0 20px;
+  }
+}
+/*Menu de imagenes*/
+.borroso{
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3a3a3a9f;
 }
