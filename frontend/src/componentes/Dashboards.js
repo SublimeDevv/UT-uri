@@ -42,7 +42,7 @@ export default function Dashboards({ components }) {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/obtenerCantidad`
+          `http://localhost:8081/api/usuarios/obtenerCantidad`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           setValores({

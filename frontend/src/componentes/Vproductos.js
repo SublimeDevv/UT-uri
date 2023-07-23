@@ -13,7 +13,7 @@ export default function Vproductos() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/ObtenerProductos/`
+          `http://localhost:8081/api/lugares/ObtenerProductos/`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           setListas(respuesta.data.Resultado);
@@ -50,7 +50,7 @@ export default function Vproductos() {
       categoria.style.border = "none";
       try {
         const response = await axios.put(
-          `http://localhost:8081/OcultarLugar/${valor}`
+          `http://localhost:8081/api/lugares/OcultarLugar/${valor}`
         );
         if (response.data.Estatus === "EXITOSO") {
           console.log("Viaje ocultado correctamente");
@@ -105,7 +105,7 @@ export default function Vproductos() {
       categoria.style.border = "none";
       try {
         const respuesta = await axios.put(
-          `http://localhost:8081/ActualizarLugar/${lugarId}`,
+          `http://localhost:8081/api/lugares/ActualizarLugar/${lugarId}`,
           { nombreLugar, informacionLugar, imagenesLugar }
         );
         if (respuesta.data.Estatus === "EXITOSO") {

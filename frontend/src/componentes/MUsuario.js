@@ -60,7 +60,7 @@ export default function MUsuario() {
     }
 
     const verificarCorreo = await axios.post(
-      "http://localhost:8081/VerificarCorreo",
+      "http://localhost:8081/api/usuarios/VerificarCorreo",
       {
         Correo: body.Correo,
       }
@@ -107,7 +107,7 @@ export default function MUsuario() {
 
     try {
       const respuesta = await axios.post(
-        "http://localhost:8081/RegistrarUsuario",
+        "http://localhost:8081/api/usuarios/RegistrarUsuario",
         {
           Nombre: body.Nombre,
           Apellido: body.Apellido,

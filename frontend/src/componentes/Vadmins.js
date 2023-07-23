@@ -16,7 +16,7 @@ export default function Vadmins() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/ObtenerUsuarios`
+          `http://localhost:8081/api/usuarios/ObtenerAdministradores`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           setListas(respuesta.data.Resultado);
@@ -52,7 +52,7 @@ export default function Vadmins() {
         });
       try {
         const respuesta = await axios.put(
-          `http://localhost:8081/EliminarAdministrador/${adminId}`
+          `http://localhost:8081/api/usuarios/EliminarAdministrador/${adminId}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           Swal.fire(
@@ -109,7 +109,7 @@ export default function Vadmins() {
         const imagen = new FormData();
         imagen.append("image", archivo);
         try {
-          await axios.post("http://localhost:8081/subirAvatares", imagen);
+          await axios.post("http://localhost:8081/api/imagenes/subirAvatares", imagen);
           console.log("La foto del usuario se actualizo correctamente.")
           const storedData = localStorage.getItem("usuario");
           const datosUsuario = JSON.parse(storedData) || {};
@@ -122,7 +122,7 @@ export default function Vadmins() {
       }
       try {
         const respuesta = await axios.put(
-          `http://localhost:8081/ActualizarUsuario/${usuarioId}`,
+          `http://localhost:8081/api/usuarios/ActualizarUsuario/${usuarioId}`,
           {
             nombreUsuario,
             apellidoUsuario,
@@ -200,7 +200,7 @@ export default function Vadmins() {
       const nuevoRol = 2;
       try {
         await axios.put(
-          `http://localhost:8081/CambiarRolUsuario/${valor}`,
+          `http://localhost:8081/api/usuarios/CambiarRolUsuario/${valor}`,
           {
             nuevoRol: nuevoRol,
           }

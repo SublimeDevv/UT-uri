@@ -41,7 +41,7 @@ export default function MProductos() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/ObtenerCategorias`
+          `http://localhost:8081/api/categorias/ObtenerCategorias`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           setListas(respuesta.data.Resultado);
@@ -114,7 +114,7 @@ export default function MProductos() {
             formData.append("imagen", imagen);
           });
 
-          await axios.post("http://localhost:8081/subirVarias", formData);
+          await axios.post("http://localhost:8081/api/imagenes/subirVarias", formData);
           console.log("Imágenes subidas correctamente");
           Swal("¡Éxito!", "El producto se agregó correctamente.", "success");
         } catch (error) {
@@ -140,7 +140,7 @@ export default function MProductos() {
 
         try {
           const respuesta = await axios.post(
-            `http://localhost:8081/AgregarLugarYDetalle`,
+            `http://localhost:8081/api/lugares/AgregarLugarYDetalle`,
             {
               p_Nombre,
               p_Informacion,

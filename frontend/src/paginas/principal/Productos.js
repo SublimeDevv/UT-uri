@@ -16,7 +16,7 @@ export default function Productos() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/ObtenerProductos`);
+        const respuesta = await axios.get(`http://localhost:8081/api/lugares/ObtenerProductos`);
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {
             navigate('/', { replace: true });

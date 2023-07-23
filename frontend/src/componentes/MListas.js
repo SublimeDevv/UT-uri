@@ -49,13 +49,13 @@ export default function MListas() {
           const descripcionCategoria = body.info;
           const imagenCategoria = nArchivo;
           try {
-            await axios.post("http://localhost:8081/subirImagenes", imagen1);
+            await axios.post("http://localhost:8081/api/imagenes/subirImagenes", imagen1);
           } catch (error) {
             console.log("Error al subir la imagen: " + error);
           }
 
           const respuesta = await axios.post(
-            "http://localhost:8081/AgregarCategoria",
+            "http://localhost:8081/api/categorias/AgregarCategoria",
             { nombreCategoria, descripcionCategoria, imagenCategoria }
           );
 
@@ -66,6 +66,9 @@ export default function MListas() {
               nombre: "",
               info: "",
             });
+            document.getElementById("img").style.backgroundColor = "#fff";
+            document.getElementById("nombre").value = "";
+            document.getElementById("info").value = "";
             Swal.fire(
               'Categoría creada con éxito',
               'success'
@@ -99,12 +102,12 @@ export default function MListas() {
         <section className={styles.mlistas}>
           <h1 className={styles.h1}>Agregando categorias</h1>
           <label>Nombre de la categoria:</label>
-          <input type="text" name="nombre" onChange={cambioEntrada}></input>
+          <input type="text" id="nombre" name="nombre" onChange={cambioEntrada}></input>
           <aside className={clas.nombre} id="aside">
             {texto.nombre}
           </aside>
           <label>Informacion:</label>
-          <textarea name="info" onChange={cambioEntrada}></textarea>
+          <textarea name="info" id="info" onChange={cambioEntrada}></textarea>
           <aside className={clas.info} id="aside">
             {texto.info}
           </aside>

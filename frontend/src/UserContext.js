@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
 
   const obtenerUsuarioActual = async () => {
     try {
-      const response = await axios.get("http://localhost:8081/UsuarioActual", {
+      const response = await axios.get("http://localhost:8081/api/usuarios/UsuarioActual", {
         headers: {
           Authorization: localStorage.getItem("token")
         }

@@ -15,7 +15,7 @@ function Lista() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/ObtenerViajes/${id}`);
+        const respuesta = await axios.get(`http://localhost:8081/api/lugares/ObtenerViajes/${id}`);
         if (respuesta.data.Estatus === "EXITOSO") {
           if (respuesta.data.Resultado.length === 0) {
             navigate('/', { replace: true });
