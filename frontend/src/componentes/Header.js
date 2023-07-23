@@ -21,8 +21,8 @@ function Header() {
     contrasenia2: "",
   });
   const [informacion, setInfromacion] = useState({
-    nombre: usuario.Nombre,
-    apellido: usuario.Apellido,
+    nombre: "",
+    apellido: "",
     contraseña: "Contraseña",
     contraseña2: "Confirma contraseña",
   });
@@ -67,6 +67,13 @@ function Header() {
   useEffect(() => {
     const verificarSesion = localStorage.getItem("token");
     if (verificarSesion) {
+      setNarchivo(usuario.Avatar);
+      setInfromacion({
+        nombre: usuario.Nombre,
+        apellido: usuario.Apellido,
+        contraseña: "Contraseña",
+        contraseña2: "Confirma contraseña",
+      });
       setEstadoUsuario(true);
       setInterfaz(true);
     }
@@ -229,7 +236,6 @@ function Header() {
           <figcaption id={style.nomUsuario}>
             {interfaz ? (
               <div className={clas}>
-                <p className={style.cuenta}>Mi cuenta</p>
                 <div className={style.contenido}>
                   <div className={style.banner}></div>
                   <div className={style.usuario}>
