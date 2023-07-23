@@ -102,7 +102,7 @@ export default function Vadmins() {
       const apellidoUsuario = apellido.value;
       const correoUsuario = correo.value;
       const contraseniaUsuario = null;
-      const avatarUsuario = nArchivo == "default_avatar.jpg" ? null : nArchivo;;
+      const avatarUsuario = nArchivo ===   "default_avatar.jpg" ? null : nArchivo;;
       const rolId = null;
       const fecha = null;
       if (nArchivo !== "default_avatar.jpg") {

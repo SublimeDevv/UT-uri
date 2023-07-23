@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 
 export default function MAdministradores() {
   const { usuario } = useContext(UserContext)
-  const [id, setID] = useState(7);
   const [needsUpdate, setNeedsUpdate] = useState(false);
   const [listas, setListas] = useState([]);
   const [boton, setBoton] = useState(
@@ -14,7 +13,6 @@ export default function MAdministradores() {
   );
 
   const seleccionar = (id, event) => {
-    setID(id);
     setBoton(<button onClick={() => borrar(id)}>Borrar Administrador</button>);
   };
 

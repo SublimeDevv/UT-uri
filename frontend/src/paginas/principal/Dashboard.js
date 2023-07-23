@@ -1,15 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "../../estilos/dashboard.module.css";
 import Dashboards from "../../componentes/Dashboards";
-import MUsuario from "../../componentes/MUsuario";
-import MAdministradores from "../../componentes/MAdministradores";
-import MProductos from "../../componentes/MProductos";
-import MListas from "../../componentes/MListas";
-import Vusuarios from "../../componentes/Vusuarios";
 import Vadmins from "../../componentes/Vadmins";
-import Vlistas from "../../componentes/Vlistas";
-import Vproductos from "../../componentes/Vproductos";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import AltasCategorias from "../../componentes/AltasCategorias";
@@ -55,13 +47,13 @@ function Dashboard() {
   const mostrar = () => {
     setClases({
       ...clases,
-      ["menu"]: `${styles.navegacion} ${styles.mostrar}`,
+      menu: `${styles.navegacion} ${styles.mostrar}`,
     });
   };
   const ocultar = () => {
     setClases({
       ...clases,
-      ["menu"]: `${styles.navegacion} ${styles.ocultar}`,
+      menu: `${styles.navegacion} ${styles.ocultar}`,
     });
   };
 

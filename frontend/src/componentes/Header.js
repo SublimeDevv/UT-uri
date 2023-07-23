@@ -13,12 +13,6 @@ function Header() {
   const [interfaz, setInterfaz] = useState(false);
   const [ocultarojo, setOcultarojo] = useState(true);
   const [ocultarojo2, setOcultarojo2] = useState(true);
-
-  const [text, setText] = useState(
-    <Link className={style.a} to={"/iniciar"}>
-      Iniciar Sesion
-    </Link>
-  );
   const navigate = useNavigate();
   const [body, setBody] = useState({
     nombre: "",
@@ -32,7 +26,6 @@ function Header() {
     contraseña: "Contraseña",
     contraseña2: "Confirma contraseña",
   });
-  const [opcion, setOpcion] = useState("");
   const [nArchivo, setNarchivo] = useState(usuario.Avatar);
   const [archivo, setArchivo] = useState(null);
   const [clas, setClas] = useState(`${style.interfaz} ${style.ocultar}`);
@@ -62,7 +55,6 @@ function Header() {
   };
   const moverse = (e) => {
     const seleccionado = e.target.value;
-    setOpcion(seleccionado);
     if (seleccionado === "categorias") {
       navigate("/categorias");
     } else if (seleccionado === "productos") {
@@ -104,7 +96,7 @@ function Header() {
         });
 
         if (textoIngresado) {
-          const verificarUsuario = await axios.post("http://localhost:8081/IniciarSesion", {
+          const verificarUsuario = await axios.post("http://localhost:8081/api/usuarios/IniciarSesion", {
             Correo: usuario.Correo,
             Contrasenia: textoIngresado,
           });
@@ -117,7 +109,7 @@ function Header() {
           return;
         }
       }
-      if (body.contrasenia == body.contrasenia2) {
+      if (body.contrasenia === body.contrasenia2) {
         const { value: confirmed } = await Swal.fire({
           title: "¿Estás seguro?",
           text: "Se modificaran los datos",
@@ -193,7 +185,7 @@ function Header() {
         } else {
         }
       } else {
-        setBody({ ...body, ["contrasenia2"]: "" });
+        setBody({ ...body, contrasenia2: "" });
         setClas2({ contrasenia2: style.ocultar2 });
         setInfromacion({ contraseña2: "Las contraseñas deben ser iguales" });
       }

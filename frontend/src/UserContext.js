@@ -5,7 +5,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(() => {
     const usuarioAlmacenado = localStorage.getItem("usuario");
-    return usuarioAlmacenado ? JSON.parse(usuarioAlmacenado) : null;
+    return usuarioAlmacenado ? JSON.parse(usuarioAlmacenado) : "";
   });
 
   useEffect(() => {

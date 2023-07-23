@@ -1,6 +1,6 @@
 import styles from "../../estilos/lista.module.css";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../../componentes/Header";
@@ -42,7 +42,7 @@ export default function Productos() {
       <Header />
       <main className={styles.main}>
         <section className={styles.info}>
-          <h1 className={styles.h1}></h1>
+          <h1 className={styles.h1}> </h1>
           <h1 className={styles.h1}>Todos Nuestros Productos</h1>
           {listas.map((lista, index) => {
             const obtenerImagenes = JSON.parse(lista.Imagenes)
@@ -67,7 +67,7 @@ export default function Productos() {
                     </span>
                   </div>
                   <figure>
-                    <img src={require("../../images/" + obtenerImagenes[0])} alt="" />
+                    <img src={require("../../images/" + obtenerImagenes[0])} alt="Cargando" />
                   </figure>
                 </div>
               </>
