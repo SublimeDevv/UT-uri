@@ -59,7 +59,7 @@ export default function Productos() {
                   <div>
                     <h2>{lista.NombreLugar}</h2>
                     <p>{lista.Informacion}</p>
-                    <span>
+                    <span className={styles.span}>
                       <Link to={"/detalles/" + lista.Id}>
                         <button>Detalles</button>
                       </Link>

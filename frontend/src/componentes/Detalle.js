@@ -8,6 +8,7 @@ import ObtenerMapa from "./ObtenerMapa";
 export default function Detalle() {
   const { id } = useParams();
   const [detalles, setDetalle] = useState([]);
+  const [sub, setSub] = useState([]);
   const navigate = useNavigate();
   const [borroso, setBorroso] = useState(false);
   const [slider, setSlider] = useState(false);
@@ -27,6 +28,25 @@ export default function Detalle() {
             return;
           }
           setDetalle(respuesta.data.Resultado);
+          console.log(detalles);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [id, navigate]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const respuesta = await axios.get(
+          `http://localhost:8081/api/lugares/ObtenerSubcategorias/${id}`
+        );
+        if (respuesta.data.Estatus === "EXITOSO") {
+          setSub(respuesta.data.Resultado);
         } else {
           console.log("Error");
         }
@@ -79,6 +99,19 @@ export default function Detalle() {
         const obtenerImagenes = JSON.parse(detalle.Imagenes)
         return (
           <>
+            <div className={styles.ruta}>
+              <Link to={"/categorias"} className={styles.a1}>
+                Categorias
+              </Link>
+              <p>»</p>
+              <Link to={"/lista/"+ detalle.CategoriaNombre} className={styles.a1}>
+                Listas
+              </Link>
+              <p>»</p>
+              <Link to={"/detalles"} className={styles.a2}>
+                Detalles
+              </Link>
+            </div>
             <span className={styles.span}>
               {borroso && <div onClick={ocultar} className={styles.borroso}></div>}
               {slider && <article className={styles.slider}>
@@ -118,22 +151,22 @@ export default function Detalle() {
               <div key={index} className={styles.div}>
                 <h1>{detalle.Nombre}</h1>
                 <p className={styles.p}>{detalle.Descripcion}</p>
-                <span>
-                  <figure className={styles.fig}>
-                    <div className={styles.orden}>
-                      <i className="nf nf-md-walk">{detalle.Personas}</i>
-                    </div>
-                    <p className={styles.Personas}>Personas</p>
-                  </figure>
-                  <p className={styles.p2}>$ {detalle.Precio}</p>
-                </span>
-                <section id={styles.boton}>
-                  <Link to={"/pago"}>
-                    <button>
-                      <i className="nf nf-fa-plane"> Ir al pago</i>
-                    </button>
-                  </Link>
-                </section>
+                <div className={styles.categorias}>
+                  <p className={styles.cat1}>Categorias</p>
+                  <Link to={"/lista/" + detalle.CategoriaNombre} className={styles.etiqueta}>{detalle.CategoriaNombre}</Link>
+                </div>
+                <div className={styles.categorias}>
+                  <p>Etiquetas</p>
+                  <div className={styles.contenido}>
+                    {sub[0] ? (
+                      sub[0].map((subcategoria, index) => {
+                        return <Link to={"/etiquetas/"+subcategoria.Id} className={styles.etiqueta} key={index}>{subcategoria.Nombre}</Link>;
+                      })
+                    ) : (
+                      <p>No hay subcategorías disponibles.</p>
+                    )}
+                  </div>
+                </div>
               </div>
             </span>
           </>

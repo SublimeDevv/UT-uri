@@ -111,6 +111,8 @@
   position: absolute;
   bottom: 5px;
   color: #3C4446;
+  width: 100%;
+  text-align: center;
   font-family: roboto-r;
   font-size: 25px;
 }

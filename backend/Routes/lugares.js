@@ -65,6 +65,32 @@ router.get("/ObtenerDetalles/:id", (peticion, respuesta) => {
   });
 });
 
+router.get("/ObtenerSubcategorias/:id", (peticion, respuesta) => {
+  const id = peticion.params.id;
+  const sql = "Call SP_ObtenerSubcategorias(?)";
+  conexion.query(sql,[id], (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+
+router.get("/Subcategorias/:id", (peticion, respuesta) => {
+  const id = peticion.params.id;
+  const sql = "select * from VW_Obtener_Subcategorias where SubcategoriaID = ?";
+  conexion.query(sql,[id], (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+
+router.get("/ObtenerNumeroRegistros", (peticion, respuesta) => {
+  const sql = "SELECT count(*) AS ids from lugares group by @@identity";
+  conexion.query(sql,(error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+
 router.post("/AgregarDetalle", (peticion, respuesta) => {
   const { descripcionDetalle, personasDetalle, precioDetalle, lugarId } = peticion.body;
   const query = "CALL SP_Agregar_Detalle(?, ?, ?, ?)";

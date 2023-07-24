@@ -9,6 +9,7 @@ import AltasLugares from "../../componentes/AltasLugares";
 import Usuario from "../../componentes/Usuario";
 import Categorias from "../../componentes/Categorias";
 import Producto from "../../componentes/Producto";
+import Msubcategoria from "../../componentes/Msubcategoria";
 
 function Dashboard() {
   const { usuario } = useContext(UserContext);
@@ -103,6 +104,12 @@ function Dashboard() {
               onClick={() => components(<Producto />)}
             >
               Productos
+            </p>
+            <p
+              className={styles.opciones2}
+              onClick={() => components(<Msubcategoria />)}
+            >
+              Etiquetas
             </p>
             <p className={styles.opciones}>Altas</p>
             <p

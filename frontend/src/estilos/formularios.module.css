@@ -389,3 +389,24 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.etiquetas{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.etiquetas p{
+    font-size: 15px;
+}
+.check{
+    align-items: center;
+    display: flex;
+}
+input[type="checkbox"]{
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    margin-right: 10px;
+  }
+.mlistas .textarea{
+    height: 40%;
+}

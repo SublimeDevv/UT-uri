@@ -13,6 +13,7 @@ import Detalles from "./paginas/principal/Detalles";
 import Dashboard from "./paginas/principal/Dashboard";
 import RutaPrivada from "./RutaPrivada";
 import Productos from "./paginas/principal/Productos";
+import Subcategorias from "./paginas/principal/Subcategorias";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <Route path="/contactanos" element={<Contactanos />} />
           <Route path="/iniciar" element={<IniciarSesion />} />
           <Route path="/crear" element={<CrearCuenta />} />
-          <Route path="/pago" element={<Pago />} />
+          <Route path="/etiquetas/:id" element={<Subcategorias />} />
           <Route path="/lista/:id" element={<Listas />} />
           <Route path="/detalles/:id" element={<Detalles />} />
           <Route path="*" element={<Navigate to="/" />} />

@@ -16,9 +16,20 @@ function Contactanos() {
     asunto: "",
     mensaje: "",
   });
+  const [formularioEnviado, setFormularioEnviado] = useState(false);
 
   const enviarFormulario = async (e) => {
     e.preventDefault();
+    
+    if (formularioEnviado) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Espere!",
+        text: "Debe esperar al menos 1 minuto para enviar otro correo",
+      });
+      return;
+    }
+
     if (!nombre || !correo || !asunto || !mensaje) {
       setErrores({
         nombre: nombre ? "" : "El nombre es requerido.",
@@ -28,7 +39,10 @@ function Contactanos() {
       });
       return;
     }
-
+    setFormularioEnviado(true);
+    setTimeout(() => {
+      setFormularioEnviado(false);
+    }, 60000);
     try {
       const response = await axios.post(
         "http://localhost:8081/api/formulario/FormularioContacto",
@@ -59,9 +73,11 @@ function Contactanos() {
         });
       } else {
         console.log("Error al enviar el formulario");
+        setFormularioEnviado(false);
       }
     } catch (error) {
       console.log("Error al enviar el formulario:", error);
+      setFormularioEnviado(false);
     }
   };
 

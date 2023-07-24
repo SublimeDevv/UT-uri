@@ -12,8 +12,11 @@ export default function MProductos() {
     imagen3: "Este campo es obligatorio",
     x: "Este campo es obligatorio",
     y: "Este campo es obligatorio",
+    check:"Este campo es obligatorio",
   });
   const [listas, setListas] = useState([]);
+  const [registo, setRegistro] = useState([]);
+  const [sub, setSub] = useState([]);
   const [clas, setClas] = useState({
     nombre: `${styles.error} ${styles.ocultar}`,
     info: `${styles.error} ${styles.ocultar}`,
@@ -21,11 +24,13 @@ export default function MProductos() {
     y: `${styles.error} ${styles.ocultar}`,
     imagen1: `${styles.error} ${styles.ocultar}`,
     imagen2: `${styles.error} ${styles.imagenes}`,
+    check:`${styles.error} ${styles.ocultar}`,
   });
   const [nArchivo1, setNarchivo1] = useState("Imagen");
   const [nArchivo2, setNarchivo2] = useState("Imagen");
   const [nArchivo3, setNarchivo3] = useState("Imagen");
   const [nArchivo4, setNarchivo4] = useState("Imagen");
+  const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState([]);
   const [body, setBody] = useState({
     id: "1",
     nombre: "",
@@ -40,20 +45,40 @@ export default function MProductos() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(
+        const categoriasRespuesta = await axios.get(
           `http://localhost:8081/api/categorias/ObtenerCategorias`
         );
-        if (respuesta.data.Estatus === "EXITOSO") {
-          setListas(respuesta.data.Resultado);
+        const lugaresRespuesta = await axios.get(
+          `http://localhost:8081/api/lugares/ObtenerNumeroRegistros`
+        );
+        const subRespuesta = await axios.get(
+          `http://localhost:8081/api/subcategorias/Subcategorias`
+        );
+
+        if (categoriasRespuesta.data.Estatus === "EXITOSO") {
+          setListas(categoriasRespuesta.data.Resultado);
         } else {
-          console.log("Error");
+          console.log("Error obteniendo categorías");
+        }
+
+        if (lugaresRespuesta.data.Estatus === "EXITOSO") {
+          setRegistro(lugaresRespuesta.data.Resultado[0]);
+        } else {
+          console.log("Error obteniendo registros de lugares");
+        }
+
+        if (subRespuesta.data.Estatus === "EXITOSO") {
+          setSub(subRespuesta.data.Resultado);
+          console.log(sub);
+        } else {
+          console.log("Error obteniendo registros de lugares");
         }
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  });
+  }, []);
   const seleccionar1 = (e) => {
     if (e.target.files[0]) {
       setArchivo1(e.target.files[0]);
@@ -97,88 +122,110 @@ export default function MProductos() {
   const subir = async () => {
     clas.info = `${styles.error} ${styles.ocultar}`;
     clas.nombre = `${styles.error} ${styles.ocultar}`;
-    if (body.nombre && body.info) {
-      if (
-        nArchivo1 !== "Imagen" &&
-        nArchivo2 !== "Imagen" &&
-        nArchivo3 !== "Imagen" &&
-        nArchivo4 !== "Imagen"
-      ) {
-        setClas({ ...clas, imagen1: `${styles.error} ${styles.ocultar}` });
-
-        const imagenes = [archivo1, archivo2, archivo3, archivo4];
-
-        try {
-          const formData = new FormData();
-          imagenes.forEach((imagen, index) => {
-            formData.append("imagen", imagen);
-          });
-
-          await axios.post("http://localhost:8081/api/imagenes/subirVarias", formData);
-          console.log("Imágenes subidas correctamente");
-          Swal("¡Éxito!", "El producto se agregó correctamente.", "success");
-        } catch (error) {
-          console.error("Error al subir las imágenes:", error.message);
+    clas.x = `${styles.error} ${styles.ocultar}`;
+    clas.y = `${styles.error} ${styles.ocultar}`;
+    clas.check = `${styles.error} ${styles.ocultar}`;
+    clas.imagen1 = `${styles.error} ${styles.ocultar}`;
+    if (body.nombre && body.info && body.x && body.y) {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const etiquetas = [];
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          etiquetas.push(checkbox.value);
         }
+      })
+      if (etiquetas.length) {
+        if (
+          nArchivo1 !== "Imagen" &&
+          nArchivo2 !== "Imagen" &&
+          nArchivo3 !== "Imagen" &&
+          nArchivo4 !== "Imagen"
+        ) {
+          setClas({ ...clas, imagen1: `${styles.error} ${styles.ocultar}` });
 
-        const p_Nombre = body.nombre;
-        const p_Informacion = body.info;
-        const p_Imagenes =
-          '["listas/' +
-          nArchivo1 +
-          '", "listas/' +
-          nArchivo2 +
-          '", "listas/' +
-          nArchivo3 +
-          '", "listas/' +
-          nArchivo4 +
-          '"]';
-        const p_CategoriaID = body.id;
-        const p_Descripcion = body.info;
-        const p_Personas = 5;
-        const p_Precio = 500.25;
-        const p_Latitud = body.x;
-        const p_Longitud = body.y;
+          const imagenes = [archivo1, archivo2, archivo3, archivo4];
 
-        try {
-          const respuesta = await axios.post(
-            `http://localhost:8081/api/lugares/AgregarLugarYDetalle`,
-            {
-              p_Nombre,
-              p_Informacion,
-              p_Imagenes,
-              p_CategoriaID,
-              p_Descripcion,
-              p_Personas,
-              p_Precio,
-              p_Latitud,
-              p_Longitud
-            }
-          );
-          if (respuesta.data.Estatus === "EXITOSO") {
-            setNarchivo1("Imagen");
-            setNarchivo2("Imagen");
-            setNarchivo3("Imagen");
-            setNarchivo4("Imagen");
-            document.getElementById("img1").style.backgroundColor = "#fff";
-            document.getElementById("img2").style.backgroundColor = "#fff";
-            document.getElementById("img3").style.backgroundColor = "#fff";
-            document.getElementById("img4").style.backgroundColor = "#fff";
-            document.getElementById("nombre").value = "";
-            document.getElementById("info").value = "";
-            document.getElementById("x").value = "";
-            document.getElementById("y").value = "";
-            Swal.fire("El producto se agrego correctamente", "success");
+          try {
+            const formData = new FormData();
+            imagenes.forEach((imagen, index) => {
+              formData.append("imagen", imagen);
+            });
+
+            await axios.post("http://localhost:8081/api/imagenes/subirVarias", formData);
+            console.log("Imágenes subidas correctamente");
+            Swal("¡Éxito!", "El producto se agregó correctamente.", "success");
+          } catch (error) {
+            console.error("Error al subir las imágenes:", error.message);
           }
-        } catch (error) {
-          console.log("Error al crear el producto: " + error);
+          const p_Nombre = body.nombre;
+          const p_Informacion = body.info;
+          const p_Imagenes =
+            '["listas/' +
+            nArchivo1 +
+            '", "listas/' +
+            nArchivo2 +
+            '", "listas/' +
+            nArchivo3 +
+            '", "listas/' +
+            nArchivo4 +
+            '"]';
+          const p_CategoriaID = body.id;
+          const p_Descripcion = body.info;
+          const p_Personas = 5;
+          const p_Precio = 500.25;
+          const p_Latitud = body.x;
+          const p_Longitud = body.y;
+          const lugarId = registo.ids + 1;
+
+          try {
+            const respuesta = await axios.post(
+              `http://localhost:8081/api/lugares/AgregarLugarYDetalle`,
+              {
+                p_Nombre,
+                p_Informacion,
+                p_Imagenes,
+                p_CategoriaID,
+                p_Descripcion,
+                p_Personas,
+                p_Precio,
+                p_Latitud,
+                p_Longitud
+              }
+            );
+            etiquetas.forEach((etiqueta) => {
+              axios.post(
+                `http://localhost:8081/api/subcategorias/AgregarSubcategoriaLugar`,
+                { lugarId, subcategoriaId: etiqueta }
+              );
+            });
+            if (respuesta.data.Estatus === "EXITOSO") {
+              setNarchivo1("Imagen");
+              setNarchivo2("Imagen");
+              setNarchivo3("Imagen");
+              setNarchivo4("Imagen");
+              document.getElementById("img1").style.backgroundColor = "#fff";
+              document.getElementById("img2").style.backgroundColor = "#fff";
+              document.getElementById("img3").style.backgroundColor = "#fff";
+              document.getElementById("img4").style.backgroundColor = "#fff";
+              document.getElementById("nombre").value = "";
+              document.getElementById("info").value = "";
+              document.getElementById("x").value = "";
+              document.getElementById("y").value = "";
+              Swal.fire("El producto se agrego correctamente");
+            }
+          } catch (error) {
+            console.log("Error al crear el producto: " + error);
+          }
+        } else {
+          setClas({
+            ...clas,
+            imagen1: styles.error,
+          });
+          setTexto({ ...texto, imagen1: "Estos campos son obligatorios" });
         }
       } else {
-        setClas({
-          ...clas,
-          imagen1: styles.error,
-        });
-        setTexto({ ...texto, imagen1: "Estos campos son obligatorios" });
+        setClas({...clas, check: styles.error});
+        setTexto({...clas, check: "Debe seleccionar almenos uno"});
       }
     } else {
       setClas({
@@ -240,7 +287,51 @@ export default function MProductos() {
             <aside className={clas.info} id="aside">
               {texto.info}
             </aside>
-            <p htmlFor="input">Sube una imagen:</p>
+            <p>Coordenadas:</p>
+            <div className={styles.coordenada}>
+              <div className={styles.coordenadas}>
+                <input
+                  type="number"
+                  placeholder="Coordenada X"
+                  id="x"
+                  name="x"
+                  onChange={cambioEntrada}
+                ></input>
+                <aside className={clas.x} id="aside">
+                  {texto.x}
+                </aside>
+              </div>
+
+              <div className={styles.coordenadas}>
+                <input
+                  placeholder="Coordenada Y"
+                  type="number"
+                  name="y"
+                  id="y"
+                  onChange={cambioEntrada}
+                ></input>
+                <aside className={clas.y} id="aside">
+                  {texto.y}
+                </aside>
+              </div>
+            </div>
+            <p>Escoge sus etiquetas:</p>
+            <div className={styles.etiquetas}>
+              {sub.map((subcategorias, index) => {
+                return (
+                  <>
+                    <div className={styles.check}>
+                      <input type="checkbox" value={subcategorias.Id} />
+                      <p>{subcategorias.Nombre}</p>
+                    </div>
+                  </>
+                )
+              })}
+            </div>
+            <aside className={clas.check} id="aside">
+              {texto.check}
+            </aside>
+            <p htmlFor="input">Sube las imagenes:</p>
             <input
               type="file"
               accept=".jpg,.jpeg,.png"
@@ -298,35 +389,6 @@ export default function MProductos() {
             <div className={styles.aside2}>
               <aside className={clas.imagen1}>{texto.imagen1} </aside>
             </div>
-            <p>Coordenadas:</p>
-            <div className={styles.coordenada}>
-              <div className={styles.coordenadas}>
-                <input
-                  type="number"
-                  placeholder="Coordenada X"
-                  id="x"
-                  name="x"
-                  onChange={cambioEntrada}
-                ></input>
-                <aside className={clas.x} id="aside">
-                  {texto.x}
-                </aside>
-              </div>
-
-              <div className={styles.coordenadas}>
-                <input
-                  placeholder="Coordenada Y"
-                  type="number"
-                  name="y" 
-                  id="y"
-                  onChange={cambioEntrada}
-                ></input>
-                <aside className={clas.y} id="aside">
-                  {texto.y}
-                </aside>
-              </div>
-            </div>
-
             <div className={styles.submit}>
               <input
                 type="submit"

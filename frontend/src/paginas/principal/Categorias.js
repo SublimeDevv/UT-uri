@@ -83,7 +83,7 @@ function Categorias() {
                   <div>
                     <h2>Tours {lista.Nombre}</h2>
                     <p>{lista.Descripcion}</p>
-                    <span>
+                    <span className={styles.span}>
                       <Link to={"/lista/" + lista.Nombre}>
                         <button>Ver Lugares</button>
                       </Link>

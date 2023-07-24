@@ -11,19 +11,6 @@ function Detalles() {
       <Header />
       <main className={styles.main}>
         <section className={styles.info}>
-          <div className={styles.ruta}>
-            <Link to={"/categorias"} className={styles.a1}>
-              Categorias
-            </Link>
-            <p>»</p>
-            <Link to={"/lista"} className={styles.a1}>
-              Listas
-            </Link>
-            <p>»</p>
-            <Link to={"/detalles"} className={styles.a2}>
-              Detalles
-            </Link>
-          </div>
           <Detalle />
         </section>
       </main>

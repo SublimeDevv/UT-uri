@@ -67,6 +67,21 @@ h2 {
   font-size: 20px;
   font-family: roboto-r;
 }
+.introduccion2 {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.introduccion2 p {
+  width: 100%;
+  text-align: justify;
+  font-size: 20px;
+  text-align: center;
+  font-family: roboto-r;
+  margin-bottom: 15px;
+}
 .introduccion img {
   width: 40%;
 }
@@ -153,7 +168,7 @@ h2 {
 .uno {
   order: 2;
 }
-span a{
+.span a{
   width: 100%;
   display: flex;
   justify-content: center;
@@ -184,4 +199,10 @@ span a{
   .info{
     width: 100%;
   }
+}
+.span a{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
 }
