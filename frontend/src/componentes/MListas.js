@@ -68,10 +68,7 @@ export default function MListas() {
             document.getElementById("img").style.backgroundColor = "#fff";
             document.getElementById("nombre").value = "";
             document.getElementById("info").value = "";
-            Swal.fire(
-              'Categoría creada con éxito',
-              'success'
-            );
+            Swal.fire('Categoría creada con éxito');
           }
         } catch (error) {
           console.error(error);

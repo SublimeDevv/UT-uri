@@ -60,7 +60,7 @@ export default function Productos() {
                     <h2>{lista.Nombre}</h2>
                     <p>{lista.Informacion}</p>
                     <span className={styles.span}>
-                    <Link to={"/guiadelcentroturistico/detalles/" + lista.Id+"/"+(lista.Nombre.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))}>
+                    <Link to={"/centroturistico/detalles/" + lista.Id+"/"+(lista.Nombre.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))}>
                         <button>Detalles</button>
                       </Link>
                     </span>

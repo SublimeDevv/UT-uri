@@ -8,7 +8,7 @@ import Detalle from "../../componentes/Detalle";
 function Detalles() {
   const { id, nombre } = useParams();
   useEffect(() => {
-    const url = `/guiadelcentroturistico/detalles/${nombre}`;
+    const url = `/centroturistico/detalles/${nombre}`;
     window.history.replaceState({}, "", url);
   }, []);
   return (

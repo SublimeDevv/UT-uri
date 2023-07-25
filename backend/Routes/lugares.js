@@ -85,7 +85,7 @@ router.get("/ObtenerCategorias/:id", (peticion, respuesta) => {
 
 router.get("/Subcategorias/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "Select * from VW_Obtener_Relacion where SubcategoriasId = ? and SubcategoriasEstatus = 1";
+  const sql = "select * from VW_Obtener_Relacion where SubcategoriasId = ? and Estatus = 1";
   conexion.query(sql,[id], (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });

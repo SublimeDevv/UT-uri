@@ -1,6 +1,6 @@
 .main {
   width: 100%;
-  min-height: 75%;
+  min-height: 75vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -10,6 +10,7 @@
 }
 .info {
   width: 80%;
+  height: 100%;
   background-color: #fff;
   margin: auto;
   box-shadow: 0px 0px 1px #333;

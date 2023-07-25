@@ -26,9 +26,9 @@ function App() {
           <Route path="/contactanos" element={<Contactanos />} />
           <Route path="/iniciar" element={<IniciarSesion />} />
           <Route path="/crear" element={<CrearCuenta />} />
-          <Route path="/etiquetas/:id" element={<Subcategorias />} />
-          <Route path="/guiadelcentroturistico/:id" element={<Listas />} />
-          <Route path="/guiadelcentroturistico/detalles/:id/:nombre" element={<Detalles/>} />
+          <Route path="/etiquetas/:id/:nombre" element={<Subcategorias />} />
+          <Route path="/centroturistico/:id" element={<Listas />} />
+          <Route path="/centroturistico/detalles/:id/:nombre" element={<Detalles/>} />
           <Route path="*" element={<Navigate to="/" />} />
           <Route element={<RutaPrivada roles={[1]}/>}>
             <Route path="/dashboard" element={<Dashboard/>}/>

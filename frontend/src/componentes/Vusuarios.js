@@ -48,10 +48,7 @@ export default function Vusuarios() {
         if (respuesta.data.Estatus === "EXITOSO") {
           console.log("Admin eliminado correctamente");
           setNeedsUpdate(true);
-          Swal.fire(
-            'Admin ocultado correctamente',
-            'success'
-          );
+          Swal.fire('Admin ocultado correctamente');
         } else {
           console.log("Error al eliminar admin");
         }

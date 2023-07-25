@@ -125,7 +125,7 @@ export default function Detalle() {
                 Categorias
               </Link>
               <p>»</p>
-              <Link to={"/guiadelcentroturistico/" + detalle.CategoriaNombre} className={styles.a1}>
+              <Link to={"/centroturistico/" + detalle.CategoriaNombre} className={styles.a1}>
                 Productos
               </Link>
               <p>»</p>
@@ -165,7 +165,7 @@ export default function Detalle() {
                   <p className={styles.cat1}>Categorias</p>
                   <div className={styles.contenido}>
                     {cat.map((categoria, index) => {
-                      return <Link to={"/guiadelcentroturistico/" + categoria.Nombre} className={styles.etiqueta} key={index}>{categoria.Nombre}</Link>;
+                      return <Link to={"/centroturistico/" + categoria.Nombre} className={styles.etiqueta} key={index}>{categoria.Nombre}</Link>;
                     })}
                   </div>
                 </div>
@@ -173,7 +173,7 @@ export default function Detalle() {
                   <p>Etiquetas</p>
                   <div className={styles.contenido}>
                       {sub.map((subcategoria, index) => {
-                        return <Link to={"/etiquetas/" + subcategoria.SubcategoriaID} className={styles.etiqueta} key={index}>{subcategoria.SubcategoriasNombre}</Link>;
+                        return <Link to={"/etiquetas/" + subcategoria.SubcategoriaID+"/"+(subcategoria.SubcategoriasNombre.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))} className={styles.etiqueta} key={index}>{subcategoria.SubcategoriasNombre}</Link>;
                       })}
                   </div>
                 </div>

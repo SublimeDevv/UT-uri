@@ -117,7 +117,57 @@ export default function MProductos() {
     clas.y = `${styles.error} ${styles.ocultar}`;
     clas.check = `${styles.error} ${styles.ocultar}`;
     clas.imagen1 = `${styles.error} ${styles.ocultar}`;
+    const auxiliar2 = body.x;
+    let lat;
+    const comprobar2 = /\./;
+    if (comprobar2.test(auxiliar2)) {
+      lat = body.x.split(".");
+      if (lat[0].length > 2 || lat[1].length > 8) {
+        if (lat[0].length > 2) {
+          setClas({ ...clas, x: styles.error, });
+          setTexto({ ...clas, x: "Este campo no puede tener mas de 2 numeros enteros", });
+          return
+        }
+        if (lat[1].length > 8) {
+          setClas({ ...clas, x: styles.error, });
+          setTexto({ ...clas, x: "Este campo no puede tener mas de 8 numeros decimales", });
+          return
+        }
+      }
+    } else {
+      lat = [body.x];
+      if (lat[0].length > 2) {
+        setClas({ ...clas, x: styles.error, });
+        setTexto({ ...clas, x: "Este campo no puede tener mas de 2 numeros enteros", });
+        return
+      }
+    }
     if (body.nombre && body.info && body.x && body.y) {
+      const auxiliar = body.y;
+      let long;
+      const comprobar = /\./;
+      if (comprobar.test(auxiliar)) {
+        long = body.y.split(".");
+        if (long[0].length > 2 || long[1].length > 8) {
+          if (long[0].length > 2) {
+            setClas({ ...clas, y: styles.error, });
+            setTexto({ ...clas, y: "Este campo no puede tener mas de 2 numeros enteros", });
+            return
+          }
+          if (long[1].length > 8) {
+            setClas({ ...clas, y: styles.error, });
+            setTexto({ ...clas, y: "Este campo no puede tener mas de 8 numeros decimales", });
+            return
+          }
+        }
+      } else {
+        long = [body.y];
+        if (long[0].length > 2) {
+          setClas({ ...clas, y: styles.error, });
+          setTexto({ ...clas, y: "Este campo no puede tener mas de 2 numeros enteros", });
+          return
+        }
+      }
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       const etiquetas = [];
       checkboxes.forEach((checkbox) => {
@@ -157,7 +207,7 @@ export default function MProductos() {
             nArchivo3 !== "Imagen" ? "listas/" + nArchivo3 : null,
             nArchivo4 !== "Imagen" ? "listas/" + nArchivo4 : null,
           ].filter((element) => element !== null);
-          
+
           const p_Imagenes = JSON.stringify(p_Imageness);
           const p_Descripcion = body.info;
           const p_Personas = 5;
@@ -199,18 +249,21 @@ export default function MProductos() {
               document.getElementById("info").value = "";
               document.getElementById("x").value = "";
               document.getElementById("y").value = "";
+              checkboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+              });
               Swal.fire("El producto se agrego correctamente");
             }
           } catch (error) {
             console.log("Error al crear el producto: " + error);
             console.log(p_Nombre,
-                p_Informacion,
-                p_Imagenes,
-                p_Descripcion,
-                p_Personas,
-                p_Precio,
-                p_Latitud,
-                p_Longitud)
+              p_Informacion,
+              p_Imagenes,
+              p_Descripcion,
+              p_Personas,
+              p_Precio,
+              p_Latitud,
+              p_Longitud)
           }
         } else {
           setClas({
@@ -249,7 +302,7 @@ export default function MProductos() {
       <div className={styles.contenedor}>
         <section className={styles.mlistas}>
           <div className={styles.mlista}>
-            <h1 className={styles.h1}>Agregando productos</h1>
+            <h1 className={styles.h1}> Agregando productos</h1>
             <p>Nombre del producto:</p>
             <input
               type="text"
@@ -307,6 +360,7 @@ export default function MProductos() {
                 )
               })}
             </div>
+            <br></br>
             <aside className={clas.check} id="aside">
               {texto.check}
             </aside>

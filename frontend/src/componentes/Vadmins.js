@@ -55,10 +55,7 @@ export default function Vadmins() {
           `http://localhost:8081/api/usuarios/EliminarAdministrador/${adminId}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
-          Swal.fire(
-            'Administrador eliminado',
-            'success'
-          );
+          Swal.fire('Administrador eliminado');
           setNeedsUpdate(true);
           console.log("Administrador eliminado");
         }

@@ -40,11 +40,12 @@ html{
     text-align: center;
     color:#fff;
     width: 100%;
+    font-size: 20px;
     font-family:roboto-r;
 }
 .head figure img{
-    height: 100px;
-    width: 100px;
+    height: 120px;
+    width: 120px;
     margin-bottom: 10px;
     border-radius: 50%;
     object-fit: cover;

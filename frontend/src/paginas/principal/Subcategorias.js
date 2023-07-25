@@ -10,7 +10,11 @@ let estilo = "";
 let stylecount = 0;
 
 export default function Subcategorias() {
-    const { id } = useParams();
+    const { id, nombre } = useParams();
+  useEffect(() => {
+    const url = `/centroturistico/detalles/${nombre}`;
+    window.history.replaceState({}, "", url);
+  }, []);
     const navigate = useNavigate();
     const [listas, setListas] = useState([]);
 
@@ -64,7 +68,7 @@ export default function Subcategorias() {
                                         <h2>{lista.Nombre}</h2>
                                         <p>{lista.Informacion}</p>
                                         <span className={styles.span}>
-                                            <Link to={"/detalles/" + lista.Id}>
+                                            <Link to={"/centroturistico/detalles/" + lista.Id+"/"+(lista.Nombre.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))}>
                                                 <button>Detalles</button>
                                             </Link>
                                         </span>

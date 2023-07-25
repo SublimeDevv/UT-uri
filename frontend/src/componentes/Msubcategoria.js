@@ -55,10 +55,7 @@ export default function Msubcategoria() {
                     });
                     document.getElementById("nombre").value = "";
                     document.getElementById("info").value = "";
-                    Swal.fire(
-                        'Etiqueta creada con éxito',
-                        'success'
-                    );
+                    Swal.fire('Etiqueta creada con éxito');
                 }
             } catch (error) {
                 console.error(error);
