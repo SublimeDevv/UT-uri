@@ -12,9 +12,8 @@ export default function MProductos() {
     imagen3: "Este campo es obligatorio",
     x: "Este campo es obligatorio",
     y: "Este campo es obligatorio",
-    check:"Este campo es obligatorio",
+    check: "Este campo es obligatorio",
   });
-  const [listas, setListas] = useState([]);
   const [registo, setRegistro] = useState([]);
   const [sub, setSub] = useState([]);
   const [clas, setClas] = useState({
@@ -24,7 +23,7 @@ export default function MProductos() {
     y: `${styles.error} ${styles.ocultar}`,
     imagen1: `${styles.error} ${styles.ocultar}`,
     imagen2: `${styles.error} ${styles.imagenes}`,
-    check:`${styles.error} ${styles.ocultar}`,
+    check: `${styles.error} ${styles.ocultar}`,
   });
   const [nArchivo1, setNarchivo1] = useState("Imagen");
   const [nArchivo2, setNarchivo2] = useState("Imagen");
@@ -32,7 +31,6 @@ export default function MProductos() {
   const [nArchivo4, setNarchivo4] = useState("Imagen");
   const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState([]);
   const [body, setBody] = useState({
-    id: "1",
     nombre: "",
     info: "",
     x: "",
@@ -45,9 +43,6 @@ export default function MProductos() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriasRespuesta = await axios.get(
-          `http://localhost:8081/api/categorias/ObtenerCategorias`
-        );
         const lugaresRespuesta = await axios.get(
           `http://localhost:8081/api/lugares/ObtenerNumeroRegistros`
         );
@@ -55,11 +50,7 @@ export default function MProductos() {
           `http://localhost:8081/api/subcategorias/Subcategorias`
         );
 
-        if (categoriasRespuesta.data.Estatus === "EXITOSO") {
-          setListas(categoriasRespuesta.data.Resultado);
-        } else {
-          console.log("Error obteniendo categorías");
-        }
+
 
         if (lugaresRespuesta.data.Estatus === "EXITOSO") {
           setRegistro(lugaresRespuesta.data.Resultado[0]);
@@ -136,14 +127,15 @@ export default function MProductos() {
       })
       if (etiquetas.length) {
         if (
-          nArchivo1 !== "Imagen" &&
-          nArchivo2 !== "Imagen" &&
-          nArchivo3 !== "Imagen" &&
+          nArchivo1 !== "Imagen" ||
+          nArchivo2 !== "Imagen" ||
+          nArchivo3 !== "Imagen" ||
           nArchivo4 !== "Imagen"
         ) {
           setClas({ ...clas, imagen1: `${styles.error} ${styles.ocultar}` });
 
-          const imagenes = [archivo1, archivo2, archivo3, archivo4];
+          const imageness = [archivo1, archivo2, archivo3, archivo4];
+          const imagenes = imageness.filter(Boolean);
 
           try {
             const formData = new FormData();
@@ -159,17 +151,14 @@ export default function MProductos() {
           }
           const p_Nombre = body.nombre;
           const p_Informacion = body.info;
-          const p_Imagenes =
-            '["listas/' +
-            nArchivo1 +
-            '", "listas/' +
-            nArchivo2 +
-            '", "listas/' +
-            nArchivo3 +
-            '", "listas/' +
-            nArchivo4 +
-            '"]';
-          const p_CategoriaID = body.id;
+          const p_Imageness = [
+            nArchivo1 !== "Imagen" ? "listas/" + nArchivo1 : null,
+            nArchivo2 !== "Imagen" ? "listas/" + nArchivo2 : null,
+            nArchivo3 !== "Imagen" ? "listas/" + nArchivo3 : null,
+            nArchivo4 !== "Imagen" ? "listas/" + nArchivo4 : null,
+          ].filter((element) => element !== null);
+          
+          const p_Imagenes = JSON.stringify(p_Imageness);
           const p_Descripcion = body.info;
           const p_Personas = 5;
           const p_Precio = 500.25;
@@ -184,7 +173,6 @@ export default function MProductos() {
                 p_Nombre,
                 p_Informacion,
                 p_Imagenes,
-                p_CategoriaID,
                 p_Descripcion,
                 p_Personas,
                 p_Precio,
@@ -215,17 +203,25 @@ export default function MProductos() {
             }
           } catch (error) {
             console.log("Error al crear el producto: " + error);
+            console.log(p_Nombre,
+                p_Informacion,
+                p_Imagenes,
+                p_Descripcion,
+                p_Personas,
+                p_Precio,
+                p_Latitud,
+                p_Longitud)
           }
         } else {
           setClas({
             ...clas,
             imagen1: styles.error,
           });
-          setTexto({ ...texto, imagen1: "Estos campos son obligatorios" });
+          setTexto({ ...texto, imagen1: "Debe agregar almenos una imagen" });
         }
       } else {
-        setClas({...clas, check: styles.error});
-        setTexto({...clas, check: "Debe seleccionar almenos uno"});
+        setClas({ ...clas, check: styles.error });
+        setTexto({ ...clas, check: "Debe seleccionar almenos uno" });
       }
     } else {
       setClas({
@@ -248,9 +244,6 @@ export default function MProductos() {
     const { name, value } = target;
     setBody({ ...body, [name]: value });
   };
-  const seleccion = (e) => {
-    setBody({ ...body, id: e.target.value });
-  };
   return (
     <>
       <div className={styles.contenedor}>
@@ -267,20 +260,6 @@ export default function MProductos() {
             <aside className={clas.nombre} id="aside">
               {texto.nombre}
             </aside>
-            <p>A que categoria pertence:</p>
-            <div className={styles.select}>
-              <select>
-                {listas.map((lista, index) => {
-                  return (
-                    <>
-                      <option value={lista.Id} onClick={seleccion}>
-                        {lista.Nombre}
-                      </option>
-                    </>
-                  );
-                })}
-              </select>
-            </div>
 
             <p>Informacion:</p>
             <textarea name="info" id="info" onChange={cambioEntrada}></textarea>

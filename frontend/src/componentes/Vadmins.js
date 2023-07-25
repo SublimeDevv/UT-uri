@@ -35,6 +35,11 @@ export default function Vadmins() {
   }, [needsUpdate]);
 
   const borrar = async (adminId) => {
+    if (usuario.Id === adminId)
+    return Swal.fire({
+      icon: "error",
+      title: "No puedes eliminarte a ti mismo.",
+    });
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
       text: 'Se borrará permanentemente',
@@ -45,11 +50,6 @@ export default function Vadmins() {
     });
 
     if (confirmed) {
-      if (usuario.Id === adminId)
-        return Swal.fire({
-          icon: "error",
-          title: "No puedes eliminarte a ti mismo.",
-        });
       try {
         const respuesta = await axios.put(
           `http://localhost:8081/api/usuarios/EliminarAdministrador/${adminId}`
@@ -145,6 +145,18 @@ export default function Vadmins() {
       } catch (error) {
         console.log(error);
       }
+      setModifiedRows((prevModifiedRows) => ({
+        ...prevModifiedRows,
+        [valor]: false,
+      }));
+      setBotones(false);
+    }else {
+      let nombre = document.getElementById("1" + valor);
+      let apellido = document.getElementById("2" + valor);
+      let correo = document.getElementById("3" + valor);
+      nombre.style.border = "none";
+      apellido.style.border = "none";
+      correo.style.border = "none";
       setModifiedRows((prevModifiedRows) => ({
         ...prevModifiedRows,
         [valor]: false,

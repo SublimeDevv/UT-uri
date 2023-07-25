@@ -9,9 +9,12 @@ export default function Detalle() {
   const { id } = useParams();
   const [detalles, setDetalle] = useState([]);
   const [sub, setSub] = useState([]);
+  const [cat, setCat] = useState([]);
   const navigate = useNavigate();
   const [borroso, setBorroso] = useState(false);
   const [slider, setSlider] = useState(false);
+  const [tamaño, setTamaño] = useState(false);
+  const [contadores, setContadores] = useState(0);
   var operacion = 0, contador = 0, boton = true;
   function habilitar() {
     boton = true;
@@ -45,8 +48,16 @@ export default function Detalle() {
         const respuesta = await axios.get(
           `http://localhost:8081/api/lugares/ObtenerSubcategorias/${id}`
         );
+        const respuesta2 = await axios.get(
+          `http://localhost:8081/api/lugares/ObtenerCategorias/${id}`
+        );
         if (respuesta.data.Estatus === "EXITOSO") {
           setSub(respuesta.data.Resultado);
+        } else {
+          console.log("Error");
+        }
+        if (respuesta2.data.Estatus === "EXITOSO") {
+          setCat(respuesta2.data.Resultado);
         } else {
           console.log("Error");
         }
@@ -65,38 +76,48 @@ export default function Detalle() {
     setBorroso(true);
     setSlider(true)
   };
-  const derecha = () => {
-    if (boton) {
-      contador++;
-      operacion = operacion + 25;
-      if (contador >= 4) {
-        contador = 0;
-        operacion = 0;
-      }
-      document.getElementById("carril").style.transform = `translate(-${operacion}%)`;
-      document.getElementById("carril").style.transition = "all ease 0.75s";
-      boton = false;
-      setTimeout(habilitar, 750);
-    }
-  }
   const izquierda = () => {
     if (boton) {
       contador--;
-      operacion = operacion - 25;
       if (contador < 0) {
-        contador = 3;
-        operacion = 75;
+        contador = tamaño - 1;
       }
+      operacion = contador * (100 / tamaño);
       document.getElementById("carril").style.transform = `translate(-${operacion}%)`;
       document.getElementById("carril").style.transition = "all ease 0.75s";
       boton = false;
       setTimeout(habilitar, 750);
     }
-  }
+  };
+
+  const derecha = () => {
+    if (boton) {
+      contador++;
+      if (contador >= tamaño) {
+        contador = 0;
+      }
+      operacion = contador * (100 / tamaño);
+      document.getElementById("carril").style.transform = `translate(-${operacion}%)`;
+      document.getElementById("carril").style.transition = "all ease 0.75s";
+      boton = false;
+      setTimeout(habilitar, 750);
+    }
+  };
+
+  const definir = (tamaños) => {
+    let tamaño2 = tamaños * 100;
+    document.getElementById("carril").style.width = `${tamaño2}%`;
+    const secciones = document.querySelectorAll(".mod");
+    secciones.forEach((seccion) => {
+      seccion.style.width = `calc(100% / ${tamaños})`;
+    });
+    setTamaño(tamaños);
+  };
   return (
     <>
       {detalles.map((detalle, index) => {
         const obtenerImagenes = JSON.parse(detalle.Imagenes)
+        console.log(obtenerImagenes.length);
         return (
           <>
             <div className={styles.ruta}>
@@ -104,8 +125,8 @@ export default function Detalle() {
                 Categorias
               </Link>
               <p>»</p>
-              <Link to={"/lista/"+ detalle.CategoriaNombre} className={styles.a1}>
-                Listas
+              <Link to={"/guiadelcentroturistico/" + detalle.CategoriaNombre} className={styles.a1}>
+                Productos
               </Link>
               <p>»</p>
               <Link to={"/detalles"} className={styles.a2}>
@@ -113,34 +134,23 @@ export default function Detalle() {
               </Link>
             </div>
             <span className={styles.span}>
-              {borroso && <div onClick={ocultar} className={styles.borroso}></div>}
+              {borroso && <div onClick={()=>{ocultar(); setContadores(contador);}} className={styles.borroso}></div>}
               {slider && <article className={styles.slider}>
                 <div onClick={izquierda} className={styles.izquierda}><i className="nf nf-cod-chevron_left"></i></div>
                 <span id="carril" className={styles.carril}>
-                  <section>
-                    <img src={require("../images/" + obtenerImagenes[0])}></img>
-                  </section>
-                  <section>
-                    <img src={require("../images/" + obtenerImagenes[1])}></img>
-                  </section>
-                  <section>
-                    <img src={require("../images/" + obtenerImagenes[2])}></img>
-                  </section>
-                  <section>
-                    <img src={require("../images/" + obtenerImagenes[3])}></img>
-                  </section>
+                  {obtenerImagenes.map((imagen, index) => (
+                    <section key={index} className="mod">
+                      <img
+                        src={require("../images/" + imagen)}
+                        alt={`Imagen ${index + 1}`}
+                        onLoad={() => { definir(obtenerImagenes.length) }}
+                      />
+                    </section>
+                  ))}
                 </span>
                 <div onClick={derecha} className={styles.derecha}><i className="nf nf-cod-chevron_right"></i></div>
               </article>}
               <aside>
-                <figure tabIndex="0" className={styles.figure}>
-                  <img
-                    onClick={mostrar}
-                    src={require("../images/" + obtenerImagenes[0])}
-                    alt=""
-                    className={styles.uno}
-                  />
-                </figure>
                 <div className={styles.contenedor}>
                   <span className={styles.mapa}>
                     <ObtenerMapa x={detalle.Latitud} y={detalle.Longitud} />
@@ -153,22 +163,33 @@ export default function Detalle() {
                 <p className={styles.p}>{detalle.Descripcion}</p>
                 <div className={styles.categorias}>
                   <p className={styles.cat1}>Categorias</p>
-                  <Link to={"/lista/" + detalle.CategoriaNombre} className={styles.etiqueta}>{detalle.CategoriaNombre}</Link>
+                  <div className={styles.contenido}>
+                    {cat.map((categoria, index) => {
+                      return <Link to={"/guiadelcentroturistico/" + categoria.Nombre} className={styles.etiqueta} key={index}>{categoria.Nombre}</Link>;
+                    })}
+                  </div>
                 </div>
                 <div className={styles.categorias}>
                   <p>Etiquetas</p>
                   <div className={styles.contenido}>
-                    {sub[0] ? (
-                      sub[0].map((subcategoria, index) => {
-                        return <Link to={"/etiquetas/"+subcategoria.Id} className={styles.etiqueta} key={index}>{subcategoria.Nombre}</Link>;
-                      })
-                    ) : (
-                      <p>No hay subcategorías disponibles.</p>
-                    )}
+                      {sub.map((subcategoria, index) => {
+                        return <Link to={"/etiquetas/" + subcategoria.SubcategoriaID} className={styles.etiqueta} key={index}>{subcategoria.SubcategoriasNombre}</Link>;
+                      })}
                   </div>
                 </div>
               </div>
             </span>
+            <div className={styles.imagen}>
+              <figure tabIndex="0" className={styles.figure}>
+                <img
+                  onClick={mostrar}
+                  src={require("../images/" + obtenerImagenes[contadores])}
+                  alt=""
+                  className={styles.uno}
+                />
+              </figure>
+            </div>
+
           </>
         );
       })}

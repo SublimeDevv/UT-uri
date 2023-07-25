@@ -43,12 +43,12 @@ export default function Subcategorias() {
             <Header />
             <main className={styles.main}>
                 <section className={styles.info}>
-                    <h1 className={styles.h1}>{listas[0].SubcategoriaNombre}</h1>
+                    <h1 className={styles.h1}>{listas[0].SubcategoriasNombre}</h1>
                     <div className={styles.introduccion2}>
-                        <p>{listas[0].SubcategoriaDescripcion}</p>
+                        <p>{listas[0].SubategoriaDescripcion}</p>
                     </div>
                     {listas.map((lista, index) => {
-                        const obtenerImagenes = JSON.parse(lista.LugarImagenes)
+                        const obtenerImagenes = JSON.parse(lista.Imagenes)
                         if (stylecount === 0) {
                             stylecount = 1;
                             estilo = styles.seccion;
@@ -61,10 +61,10 @@ export default function Subcategorias() {
                             <>
                                 <div key={index} className={estilo}>
                                     <div>
-                                        <h2>{lista.LugarNombre}</h2>
-                                        <p>{lista.LugarInformacion}</p>
+                                        <h2>{lista.Nombre}</h2>
+                                        <p>{lista.Informacion}</p>
                                         <span className={styles.span}>
-                                            <Link to={"/detalles/" + lista.LugarID}>
+                                            <Link to={"/detalles/" + lista.Id}>
                                                 <button>Detalles</button>
                                             </Link>
                                         </span>

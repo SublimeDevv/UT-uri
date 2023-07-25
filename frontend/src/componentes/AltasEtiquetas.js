@@ -3,14 +3,18 @@ import styles from "../estilos/vistas.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function AltasLugares() {
+export default function AltasEtiquetas() {
   const [listas, setListas] = useState([]);
   const [modifiedRows, setModifiedRows] = useState({});
+  const [botones, setBotones] = useState(false);
   const [needsUpdate, setNeedsUpdate] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const respuesta = await axios.get(`http://localhost:8081/api/lugares/AltasProductos`);
+        const respuesta = await axios.get(
+          `http://localhost:8081/api/subcategorias/ObtenerSubcategoriaBaja`
+        );
         if (respuesta.data.Estatus === "EXITOSO") {
           setListas(respuesta.data.Resultado);
         } else {
@@ -26,7 +30,7 @@ export default function AltasLugares() {
       fetchData();
     }
   }, [needsUpdate]);
-  const enviar = async (valor) => {
+  const borrar = async (valor) => {
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
       text: 'Se activará la etiqueta',
@@ -37,13 +41,19 @@ export default function AltasLugares() {
     });
 
     if (confirmed) {
-      const categoriaId = valor;
+      const subcategoriaId = valor;
       try {
-        const respuesta = await axios.put(`http://localhost:8081/api/lugares/AltaProductos/${categoriaId}`);
-        if (respuesta.data.Estatus === "EXITOSO") {
+        const response = await axios.put(
+          `http://localhost:8081/api/subcategorias/MostrarSubcategoria/${subcategoriaId}`
+        );
+        if (response.data.Estatus === "EXITOSO") {
+          console.log("Viaje ocultado correctamente");
+          Swal.fire(
+            'Etiqueta activada correctamente'
+          );
           setNeedsUpdate(true);
         } else {
-          console.log("Error");
+          console.log("Hubo un error al tratar de oculta");
         }
       } catch (error) {
         console.log(error);
@@ -53,15 +63,15 @@ export default function AltasLugares() {
   return (
     <>
       <section className={styles.vusuarios}>
-        <h1>Viajes dados de baja:</h1>
+        <h1>Etiquetas dadas de baja:</h1>
         <div className={styles.scroll}>
           <table>
             <thead>
               <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
-              <td>nombre categorias</td>
-              <td>Dar de alta</td>
+              <td>Categoria ID</td>
+              <td>Dar de Alta</td>
             </thead>
             {listas.map((lista, index) => {
               const valor = lista.Id;
@@ -69,15 +79,24 @@ export default function AltasLugares() {
                 <>
                   <tr>
                     <td>{lista.Id}</td>
-                    <td>{lista.Nombre}</td>
-                    <td><textarea disabled="true">{lista.Informacion}</textarea></td>
-                    <td>{lista.CategoriasNombre}</td>
                     <td>
-                      <button
-                        onClick={() => {
-                          enviar(valor);
-                        }}
-                      >
+                      <input
+                        type="text"
+                        id={"1" + lista.Id}
+                        disabled={!modifiedRows[valor]}
+                        value={lista.Nombre}
+                      />
+                    </td>
+                    <td>
+                      <textarea
+                        id={"2" + lista.Id}
+                        disabled={!modifiedRows[valor]}
+                        value={lista.Descripcion}
+                      />
+                    </td>
+                    <td>{lista.CategoriaID}</td>
+                    <td>
+                      <button disabled={botones} onClick={()=>borrar(valor)}>
                         <i class="nf nf-md-transfer_up"></i>
                       </button>
                     </td>

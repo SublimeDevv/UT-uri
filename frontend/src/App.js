@@ -27,7 +27,7 @@ function App() {
           <Route path="/iniciar" element={<IniciarSesion />} />
           <Route path="/crear" element={<CrearCuenta />} />
           <Route path="/etiquetas/:id" element={<Subcategorias />} />
-          <Route path="/lista/:id" element={<Listas />} />
+          <Route path="/guiadelcentroturistico/:id" element={<Listas />} />
           <Route path="/detalles/:id" element={<Detalles />} />
           <Route path="*" element={<Navigate to="/" />} />
           <Route element={<RutaPrivada roles={[1]}/>}>

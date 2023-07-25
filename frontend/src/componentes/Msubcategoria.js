@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../estilos/formularios.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -12,9 +12,27 @@ export default function Msubcategoria() {
         info: `${styles.error} ${styles.ocultar}`,
     });
     const [body, setBody] = useState({
+        id: "1",
         nombre: "",
         info: "",
     });
+    
+    const [listas, setListas] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const categoriasRespuesta = await axios.get(
+                `http://localhost:8081/api/categorias/ObtenerCategorias`
+            );
+            if (categoriasRespuesta.data.Estatus === "EXITOSO") {
+                setListas(categoriasRespuesta.data.Resultado);
+                setBody({...body,id:categoriasRespuesta.data.Resultado[0].Id})
+            } else {
+                console.log("Error obteniendo categorías");
+            }
+        };
+        fetchData();
+    }, []);
 
     const subir = async () => {
         clas.info = `${styles.error} ${styles.ocultar}`;
@@ -22,10 +40,11 @@ export default function Msubcategoria() {
         if (body.nombre && body.info) {
             const Nombre = body.nombre;
             const Descripcion = body.info;
+            const CategoriaID = body.id;
             try {
                 const respuesta = await axios.post(
                     "http://localhost:8081/api/subcategorias/CrearSubcategoria",
-                    { Nombre, Descripcion }
+                    { Nombre, Descripcion, CategoriaID }
                 );
 
                 if (respuesta.data.Estatus === "EXITOSO") {
@@ -62,6 +81,10 @@ export default function Msubcategoria() {
         const { name, value } = target;
         setBody({ ...body, [name]: value });
     };
+
+    const seleccion = (e) => {
+        setBody({ ...body, id: e.target.value });
+      };
     return (
         <>
             <div className={styles.contenedor}>
@@ -72,6 +95,21 @@ export default function Msubcategoria() {
                     <aside className={clas.nombre} id="aside">
                         {texto.nombre}
                     </aside>
+
+                    <p>A que categoria pertence:</p>
+                    <div className={styles.select} onChange={seleccion}>
+                        <select>
+                            {listas.map((lista, index) => {
+                                return (
+                                    <>
+                                        <option value={lista.Id}>
+                                            {lista.Nombre}
+                                        </option>
+                                    </>
+                                );
+                            })}
+                        </select>
+                    </div>
                     <label>Descripcion:</label>
                     <textarea className={styles.textarea} name="info" id="info" onChange={cambioEntrada}></textarea>
                     <aside className={clas.info} id="aside">

@@ -3,7 +3,7 @@ import styles from "../estilos/vistas.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function Vproductos() {
+export default function Vsubcategorias() {
   const [listas, setListas] = useState([]);
   const [modifiedRows, setModifiedRows] = useState({});
   const [botones, setBotones] = useState(false);
@@ -13,7 +13,7 @@ export default function Vproductos() {
     const fetchData = async () => {
       try {
         const respuesta = await axios.get(
-          `http://localhost:8081/api/lugares/ObtenerProductos/`
+          `http://localhost:8081/api/subcategorias/ObtenerSubcategoria`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           setListas(respuesta.data.Resultado);
@@ -34,7 +34,7 @@ export default function Vproductos() {
   const borrar = async (valor) => {
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Se desactivará el producto',
+      text: 'Se desactivará la etiqueta',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, estoy seguro',
@@ -46,14 +46,15 @@ export default function Vproductos() {
       let descripcion = document.getElementById("2" + valor);
       nombre.style.border = "none";
       descripcion.style.border = "none";
+      const subcategoriaId = valor;
       try {
         const response = await axios.put(
-          `http://localhost:8081/api/lugares/OcultarLugar/${valor}`
+          `http://localhost:8081/api/subcategorias/OcultarSubcategoria/${subcategoriaId}`
         );
         if (response.data.Estatus === "EXITOSO") {
           console.log("Viaje ocultado correctamente");
           Swal.fire(
-            'Viaje ocultado correctamente'
+            'Etiqueta ocultada correctamente'
           );
           setNeedsUpdate(true);
         } else {
@@ -89,17 +90,16 @@ export default function Vproductos() {
     if (confirmed) {
       let nombre = document.getElementById("1" + valor);
       let descripcion = document.getElementById("2" + valor);
-      const lugarId = valor;
-      const nombreLugar = nombre.value;
-      const informacionLugar = descripcion.value;
-      const imagenesLugar = null;
+      const subcategoriaId = valor;
+      const Nombre = nombre.value;
+      const Descripcion = descripcion.value;
 
       nombre.style.border = "none";
       descripcion.style.border = "none";
       try {
         const respuesta = await axios.put(
-          `http://localhost:8081/api/lugares/ActualizarLugar/${lugarId}`,
-          { nombreLugar, informacionLugar, imagenesLugar }
+          `http://localhost:8081/api/subcategorias/ModificarSubcategoria/${subcategoriaId}`,
+          { Nombre, Descripcion}
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           console.log("Se modifico el lugar con exito");
@@ -152,7 +152,7 @@ export default function Vproductos() {
   return (
     <>
       <section className={styles.vusuarios}>
-        <h1>Viajes:</h1>
+        <h1>Etiquetas:</h1>
         <div className={styles.scroll}>
           <table>
             <thead>
@@ -160,6 +160,7 @@ export default function Vproductos() {
               <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
+              <td>Categoria ID</td>
               <td>Dar de baja</td>
             </thead>
             {listas.map((lista, index) => {
@@ -199,9 +200,10 @@ export default function Vproductos() {
                       <textarea
                         id={"2" + lista.Id}
                         disabled={!modifiedRows[valor]}
-                        value={lista.Informacion}
+                        value={lista.Descripcion}
                       />
                     </td>
+                    <td>{lista.CategoriaID}</td>
                     <td>
                       <button disabled={botones} onClick={() => borrar(valor)}>
                         <i class="nf nf-md-transfer_down"></i>

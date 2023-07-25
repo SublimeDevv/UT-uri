@@ -10,6 +10,8 @@ import Usuario from "../../componentes/Usuario";
 import Categorias from "../../componentes/Categorias";
 import Producto from "../../componentes/Producto";
 import Msubcategoria from "../../componentes/Msubcategoria";
+import Etiquetas from "../../componentes/Etiquetas";
+import AltasEtiquetas from "../../componentes/AltasEtiquetas";
 
 function Dashboard() {
   const { usuario } = useContext(UserContext);
@@ -107,11 +109,11 @@ function Dashboard() {
             </p>
             <p
               className={styles.opciones2}
-              onClick={() => components(<Msubcategoria />)}
+              onClick={() => components(<Etiquetas />)}
             >
               Etiquetas
             </p>
-            <p className={styles.opciones}>Altas</p>
+            <p className={styles.opciones}>Bajas</p>
             <p
               className={styles.opciones2}
               onClick={() => components(<AltasCategorias />)}
@@ -124,10 +126,13 @@ function Dashboard() {
             >
               Productos
             </p>
+            <p
+              className={styles.opciones2}
+              onClick={() => components(<AltasEtiquetas />)}
+            >
+              Etiquetas
+            </p>
           </div>
-          <figure className={styles.figure}>
-            <img src={require("../../images/logo.png")}></img>
-          </figure>
         </aside>
         <i className="nf nf-cod-menu" id={styles.mostrar} onClick={mostrar}></i>
         <section className={styles.contenedores} onClick={ocultar}>
