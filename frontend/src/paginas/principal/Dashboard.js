@@ -126,7 +126,6 @@ function Dashboard() {
             </p>
           </div>
           <figure className={styles.figure}>
-            <img src={require("../../images/logo.png")}></img>
           </figure>
         </aside>
         <i className="nf nf-cod-menu" id={styles.mostrar} onClick={mostrar}></i>

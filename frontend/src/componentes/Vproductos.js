@@ -134,7 +134,7 @@ export default function Vproductos() {
     nombre.style.border = "2px solid #131a22";
     descripcion.style.border = "2px solid #131a22";
     categoria.style.border = "2px solid #131a22";
-    categoria.addEventListener("input", function () {
+    nombre.addEventListener("input", function () {
       const nuevoValor = nombre.value;
       nombre.value = nuevoValor;
     });

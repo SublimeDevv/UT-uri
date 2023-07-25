@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { UserContext } from "../UserContext";
 
 export default function Vadmins() {
-  const { usuario } = useContext(UserContext);
+  const { usuario, obtenerUsuarioActual } = useContext(UserContext);
   const [needsUpdate, setNeedsUpdate] = useState(false);
   const [listas, setListas] = useState([]);
   const [modifiedRows, setModifiedRows] = useState({});
@@ -67,6 +67,7 @@ export default function Vadmins() {
       }
     }
   };
+
   const cancelar = (valor) => {
     let nombre = document.getElementById("1" + valor);
     let apellido = document.getElementById("2" + valor);
@@ -80,6 +81,7 @@ export default function Vadmins() {
     }));
     setBotones(false);
   };
+
   const enviar = async (valor) => {
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
@@ -111,11 +113,12 @@ export default function Vadmins() {
         try {
           await axios.post("http://localhost:8081/api/imagenes/subirAvatares", imagen);
           console.log("La foto del usuario se actualizo correctamente.")
-          const storedData = localStorage.getItem("usuario");
-          const datosUsuario = JSON.parse(storedData) || {};
-          datosUsuario.Avatar = nArchivo;
-          localStorage.setItem("usuario", JSON.stringify(datosUsuario));
-
+          if (usuario.Id === usuarioId) {
+            const storedData = localStorage.getItem("usuario");
+            const datosUsuario = JSON.parse(storedData) || {};
+            datosUsuario.Avatar = nArchivo;
+            localStorage.setItem("usuario", JSON.stringify(datosUsuario));
+          }
         } catch (error) {
           console.log("Error al actualizar la foto del usuarrio: "+ error)
         }
@@ -139,6 +142,9 @@ export default function Vadmins() {
             'Datos Actualizados'
           );
           setNeedsUpdate(true);
+          setTimeout(() => {
+            obtenerUsuarioActual()
+          }, 1500);
         } else {
           console.log("Error al modificar al usuario");
         }
@@ -179,6 +185,7 @@ export default function Vadmins() {
   };
   const seleccionar = (e) => {
     if (e.target.files[0]) {
+      console.log("entreaqui")
       setArchivo(e.target.files[0]);
       setNarchivo(e.target.files[0].name);
     } else {

@@ -4,8 +4,8 @@ import conexion from "../dbconfig.js";
 const router = new Router();
 
 router.post("/AgregarLugar", (peticion, respuesta) => {
-  const { nombreLugar, informacionLugar, imagenesLugar, categoriaId } = peticion.body;
-  const query = "CALL SP_Agregar_Lugar(?, ?, ?, ?)";
+  const { nombreLugar, informacionLugar, imagenesLugar } = peticion.body;
+  const query = "CALL SP_Agregar_Lugar(?, ?, ?)";
   conexion.query(query, [nombreLugar, informacionLugar, imagenesLugar, categoriaId], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al agregar el lugar" });
@@ -172,5 +172,20 @@ router.put("/ActualizarDetalle/:detalleId", (peticion, respuesta) => {
     }
   });
 });
+
+router.put("/OcultarSubcategoria/:subcategoriaId", (peticion, respuesta) => {
+  const subcategoriaId = peticion.params.subcategoriaId;
+  const query = "CALL SP_OcultarSubcategoria(?)";
+
+  conexion.query(query, [subcategoriaId], (error) => {
+    if (error) {
+      console.error("Error al ocultar la subcategoría: ", error);
+      respuesta.status(500).json({ Error: "Error al ocultar la subcategoría" });
+    } else {
+      respuesta.json({ Estatus: "EXITOSO", Mensaje: "Subcategoría ocultada correctamente." });
+    }
+  });
+});
+
 
 export default router;
