@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../estilos/vistas.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function AltasCategorias() {
   const [listas, setListas] = useState([]);
@@ -26,16 +27,27 @@ export default function AltasCategorias() {
     }
   }, [needsUpdate]);
   const enviar = async (valor) => {
-    const categoriaId = valor;
-    try {
-      const respuesta = await axios.put(`http://localhost:8081/api/categorias/AltaCategoria/${categoriaId}`);
-      if (respuesta.data.Estatus === "EXITOSO") {
-        setNeedsUpdate(true);
-      } else {
-        console.log("Error");
+    const { value: confirmed } = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Se activará la etiqueta',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar',
+    });
+
+    if (confirmed) {
+      const categoriaId = valor;
+      try {
+        const respuesta = await axios.put(`http://localhost:8081/api/categorias/AltaCategoria/${categoriaId}`);
+        if (respuesta.data.Estatus === "EXITOSO") {
+          setNeedsUpdate(true);
+        } else {
+          console.log("Error");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
   return (

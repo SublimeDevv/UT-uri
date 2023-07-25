@@ -57,7 +57,7 @@ export default function Productos() {
               <>
                 <div key={index} className={estilo}>
                   <div>
-                    <h2>{lista.NombreLugar}</h2>
+                    <h2>{lista.Nombre}</h2>
                     <p>{lista.Informacion}</p>
                     <span className={styles.span}>
                       <Link to={"/detalles/" + lista.Id}>

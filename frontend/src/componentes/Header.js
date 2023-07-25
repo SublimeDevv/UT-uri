@@ -67,7 +67,6 @@ function Header() {
   useEffect(() => {
     const verificarSesion = localStorage.getItem("token");
     if (verificarSesion) {
-      setNarchivo(usuario.Avatar);
       setInfromacion({
         nombre: usuario.Nombre,
         apellido: usuario.Apellido,
@@ -76,6 +75,9 @@ function Header() {
       });
       setEstadoUsuario(true);
       setInterfaz(true);
+      setTimeout(() => {
+        setNarchivo(usuario.Avatar);
+      }, 3000);
     }
   }, []);
   const enviar = async () => {
@@ -162,7 +164,7 @@ function Header() {
               datosUsuario.Apellido = body.apellido === "" ? usuario.Apellido : body.apellido;
               datosUsuario.Avatar = nArchivo;
               localStorage.setItem("usuario", JSON.stringify(datosUsuario));
-              
+
               const datosModificados = {
                 ...usuario,
                 Nombre: body.nombre === "" ? usuario.Nombre : body.nombre,
@@ -182,7 +184,7 @@ function Header() {
               document.getElementById("img").style.backgroundColor = "#fff";
               setTimeout(async () => {
                 await setUsuario(datosModificados);
-              }, 1000 );              
+              }, 1000);
             } else {
               console.log("Error al modificar al usuario");
             }
@@ -197,7 +199,7 @@ function Header() {
         setInfromacion({ contraseña2: "Las contraseñas deben ser iguales" });
       }
     } else {
-      Swal.fire("Debe cambiar almenos un valor");
+      Swal.fire("Debe agregar almenos un valor a modificar");
       setClas2({
         nombre: "",
         apellido: "",

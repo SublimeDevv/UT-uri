@@ -16,7 +16,7 @@ function Listas() {
             </Link>
             <p>»</p>
             <Link className={styles.a2}>
-              Lista
+              Productos
             </Link>
           </div>
 

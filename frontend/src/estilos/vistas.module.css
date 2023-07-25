@@ -21,11 +21,14 @@
 table {
     width: 100%;
     max-height: 60vh;
+    position: relative;
     border-collapse: collapse;
     font-size: 16px;
     background-color: #fff;
 }
 thead {
+    position: sticky;
+    top: -1px;
     padding: 10px;
     background-color: #131a22;
     color: #fff;
@@ -37,7 +40,6 @@ td {
     padding: 10px;
     font-family: roboto-r;
     text-align: center;
-    height: 150px;
     border: 1px solid #989898;
 }
 thead td{

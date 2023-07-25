@@ -6,7 +6,7 @@ const router = new Router();
 router.post("/AgregarLugar", (peticion, respuesta) => {
   const { nombreLugar, informacionLugar, imagenesLugar } = peticion.body;
   const query = "CALL SP_Agregar_Lugar(?, ?, ?)";
-  conexion.query(query, [nombreLugar, informacionLugar, imagenesLugar, categoriaId], (error) => {
+  conexion.query(query, [nombreLugar, informacionLugar, imagenesLugar], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al agregar el lugar" });
     } else {
@@ -40,7 +40,7 @@ router.put("/OcultarLugar/:lugarId", (peticion, respuesta) => {
 });
 
 router.get("/ObtenerProductos", (peticion, respuesta) => {
-  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE Estado = 1";
+  const sql = "SELECT * from VW_Obtener_Relacion WHERE Estatus = 1 group by Id";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -49,7 +49,7 @@ router.get("/ObtenerProductos", (peticion, respuesta) => {
 
 router.get("/ObtenerViajes/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE NombreCategoria = ? AND Estado = 1";
+  const sql = "SELECT Id, CategoriaDescripcion as Descripcion, Informacion, CategoriaImagen as Imagen, Imagenes, CategoriasNombre as NombreCategoria, Nombre as NombreLugar FROM VW_Obtener_Relacion WHERE CategoriasNombre = ? AND Estatus = 1 group by Id";
   conexion.query(sql, [id], (error, resultado) => {
     if (error) return respuesta.status(500).json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -58,7 +58,7 @@ router.get("/ObtenerViajes/:id", (peticion, respuesta) => {
 
 router.get("/ObtenerDetalles/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "SELECT * FROM VW_Obtener_Lugares_Detalles WHERE LugarID = ? AND Estado = 1";
+  const sql = "select Id, Nombre, Informacion as Descripcion, Imagenes, Estatus, Latitud, Longitud, CategoriasNombre as CategoriaNombre from VW_Obtener_Relacion where id = ? AND Estatus = 1 group by Id";
   conexion.query(sql, [id], (error, resultado) => {
     if (error) return respuesta.status(500).json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -67,7 +67,16 @@ router.get("/ObtenerDetalles/:id", (peticion, respuesta) => {
 
 router.get("/ObtenerSubcategorias/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "Call SP_ObtenerSubcategorias(?)";
+  const sql = "Select SubcategoriasNombre, SubcategoriaID from VW_Obtener_Relacion where LugarID = ? and SubcategoriasEstatus = 1 ";
+  conexion.query(sql,[id], (error, resultado) => {
+    if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
+    return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
+  });
+});
+
+router.get("/ObtenerCategorias/:id", (peticion, respuesta) => {
+  const id = peticion.params.id;
+  const sql = "select CategoriasId as Id, CategoriasNombre as Nombre from VW_Obtener_Relacion where Id = ? and CategoriaEstatus = 1 group by CategoriasNombre";
   conexion.query(sql,[id], (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -76,7 +85,7 @@ router.get("/ObtenerSubcategorias/:id", (peticion, respuesta) => {
 
 router.get("/Subcategorias/:id", (peticion, respuesta) => {
   const id = peticion.params.id;
-  const sql = "select * from VW_Obtener_Subcategorias where SubcategoriaID = ?";
+  const sql = "Select * from VW_Obtener_Relacion where SubcategoriasId = ? and SubcategoriasEstatus = 1";
   conexion.query(sql,[id], (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -116,9 +125,9 @@ router.delete("/EliminarDetalle/:detalleId", (peticion, respuesta) => {
 });
 
 router.post("/AgregarLugarYDetalle", (peticion, respuesta) => {
-  const { p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio, p_Latitud, p_Longitud } = peticion.body;
-  const query = "CALL SP_Crear_Lugar_Detalle(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-  conexion.query(query, [p_Nombre, p_Informacion, p_Imagenes, p_CategoriaID, p_Descripcion, p_Personas, p_Precio, p_Latitud, p_Longitud], (error) => {
+  const { p_Nombre, p_Informacion, p_Imagenes, p_Descripcion, p_Personas, p_Precio, p_Latitud, p_Longitud } = peticion.body;
+  const query = "CALL SP_Crear_Lugar_Detalle(?, ?, ?, ?, ?, ?, ?, ?)";
+  conexion.query(query, [p_Nombre, p_Informacion, p_Imagenes, p_Descripcion, p_Personas, p_Precio, p_Latitud, p_Longitud], (error) => {
     if (error) {
       respuesta.status(500).json({ Error: "Error al agregar el lugar y detalle" });
     } else {
@@ -128,7 +137,7 @@ router.post("/AgregarLugarYDetalle", (peticion, respuesta) => {
 });
 
 router.get("/AltasProductos", (peticion, respuesta) => {
-  const sql = "SELECT * FROM VW_Obtener_Viajes WHERE Estado = 0";
+  const sql = "SELECT * from VW_Obtener_Relacion WHERE Estatus = 0";
   conexion.query(sql, (error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });
@@ -172,20 +181,5 @@ router.put("/ActualizarDetalle/:detalleId", (peticion, respuesta) => {
     }
   });
 });
-
-router.put("/OcultarSubcategoria/:subcategoriaId", (peticion, respuesta) => {
-  const subcategoriaId = peticion.params.subcategoriaId;
-  const query = "CALL SP_OcultarSubcategoria(?)";
-
-  conexion.query(query, [subcategoriaId], (error) => {
-    if (error) {
-      console.error("Error al ocultar la subcategoría: ", error);
-      respuesta.status(500).json({ Error: "Error al ocultar la subcategoría" });
-    } else {
-      respuesta.json({ Estatus: "EXITOSO", Mensaje: "Subcategoría ocultada correctamente." });
-    }
-  });
-});
-
 
 export default router;

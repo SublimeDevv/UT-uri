@@ -46,8 +46,7 @@ export default function Vlistas() {
                     console.log("Categoria eliminada correctamente");
                     setNeedsUpdate(true);
                     Swal.fire(
-                        'Categoria ocultada correctamente',
-                        'success'
+                        'Categoria ocultada correctamente'
                       );
                 } else {
                     console.log("Error al eliminar la categoria")
@@ -110,7 +109,17 @@ export default function Vlistas() {
                 [valor]: false,
             }));
             setBotones(false);
-        }
+        }else {
+            let nombre = document.getElementById("1" + valor);
+            let apellido = document.getElementById("2" + valor);
+            nombre.style.border = "none";
+            apellido.style.border = "none";
+            setModifiedRows((prevModifiedRows) => ({
+              ...prevModifiedRows,
+              [valor]: false,
+            }));
+            setBotones(false);
+          }
     }
     const modificar = (valor) => {
         let nombre = document.getElementById("1" + valor);
