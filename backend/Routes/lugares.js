@@ -93,7 +93,7 @@ router.get("/Subcategorias/:id", (peticion, respuesta) => {
 });
 
 router.get("/ObtenerNumeroRegistros", (peticion, respuesta) => {
-  const sql = "SELECT count(*) AS ids from lugares group by @@identity";
+  const sql = "SELECT COUNT(*) AS ids FROM Lugares GROUP BY @@identity";
   conexion.query(sql,(error, resultado) => {
     if (error) return respuesta.json([{ Error: "Error en la consulta" }]);
     return respuesta.json({ Estatus: "EXITOSO", Resultado: resultado });

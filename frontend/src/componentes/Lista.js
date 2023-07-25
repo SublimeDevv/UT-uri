@@ -64,7 +64,7 @@ function Lista() {
                 <h2>{lista.NombreLugar}</h2>
                 <p>{lista.Informacion}</p>
                 <span className={styles.span}>
-                  <Link to={"/detalles/" + lista.Id}>
+                  <Link to={"/guiadelcentroturistico/detalles/" + lista.Id+"/"+(lista.NombreLugar.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))}>
                     <button>Detalles</button>
                   </Link>
                 </span>
@@ -75,6 +75,7 @@ function Lista() {
             </div>
           </>
         );
+        
       })}
     </>
   );

@@ -1,11 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../../componentes/Header";
 import Footer from "../../componentes/Footer";
 import styles from "../../estilos/detalles.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Detalle from "../../componentes/Detalle";
 
 function Detalles() {
+  const { id, nombre } = useParams();
+  useEffect(() => {
+    const url = `/guiadelcentroturistico/detalles/${nombre}`;
+    window.history.replaceState({}, "", url);
+  }, []);
   return (
     <>
       <Header />
