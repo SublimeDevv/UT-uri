@@ -50,7 +50,7 @@ export default function IniciarSesion() {
       localStorage.setItem("token", verificarUsuario.data.token);
       
       await obtenerUsuarioActual();
-      navigate("/");
+      navigate("/dashboard");
     } else {
       setErrores({ Contrasenia: "Contraseña incorrecta." });
     }

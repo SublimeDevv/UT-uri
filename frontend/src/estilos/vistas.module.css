@@ -152,3 +152,53 @@ td textarea {
     color: #131a22;
     font-size: 25px;
 }
+.iconos{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+.borroso{
+    position: fixed;
+    z-index: 350;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #3a3a3a9f;
+  }
+  .span aside .contenedor span{
+    width: 90%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: #eee;
+  }
+  .slider{
+    width: 300px;
+    height: 300px;
+    position: fixed;
+    z-index: 400;
+    box-shadow: 0 8px 32px 0 #000;
+    top: 50%;
+    border-radius: 50%;
+    overflow:hidden;
+    left: 50%;
+    padding: 0;
+    transform: translate(-50%, -50%);
+  }
+  .slider span{
+    width: 400%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  .carril section{
+    width: calc(100% / 4);
+    height: 100%;
+  }
+  .carril img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+  }

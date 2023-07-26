@@ -134,7 +134,7 @@ export default function Detalle() {
               </Link>
             </div>
             <span className={styles.span}>
-              {borroso && <div onClick={()=>{ocultar(); setContadores(contador);}} className={styles.borroso}></div>}
+              {borroso && <div onClick={() => { ocultar(); setContadores(contador); }} className={styles.borroso}></div>}
               {slider && <article className={styles.slider}>
                 <div onClick={izquierda} className={styles.izquierda}><i className="nf nf-cod-chevron_left"></i></div>
                 <span id="carril" className={styles.carril}>
@@ -161,6 +161,16 @@ export default function Detalle() {
               <div key={index} className={styles.div}>
                 <h1>{detalle.Nombre}</h1>
                 <p className={styles.p}>{detalle.Descripcion}</p>
+                <div className={styles.imagen}>
+                  <figure tabIndex="0" className={styles.figure}>
+                    <img
+                      onClick={mostrar}
+                      src={require("../images/" + obtenerImagenes[contadores])}
+                      alt=""
+                      className={styles.uno}
+                    />
+                  </figure>
+                </div>
                 <div className={styles.categorias}>
                   <p className={styles.cat1}>Categorias</p>
                   <div className={styles.contenido}>
@@ -172,23 +182,13 @@ export default function Detalle() {
                 <div className={styles.categorias}>
                   <p>Etiquetas</p>
                   <div className={styles.contenido}>
-                      {sub.map((subcategoria, index) => {
-                        return <Link to={"/etiquetas/" + subcategoria.SubcategoriaID+"/"+(subcategoria.SubcategoriasNombre.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))} className={styles.etiqueta} key={index}>{subcategoria.SubcategoriasNombre}</Link>;
-                      })}
+                    {sub.map((subcategoria, index) => {
+                      return <Link to={"/etiquetas/" + subcategoria.SubcategoriaID + "/" + (subcategoria.SubcategoriasNombre.trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, ""))} className={styles.etiqueta} key={index}>{subcategoria.SubcategoriasNombre}</Link>;
+                    })}
                   </div>
                 </div>
               </div>
             </span>
-            <div className={styles.imagen}>
-              <figure tabIndex="0" className={styles.figure}>
-                <img
-                  onClick={mostrar}
-                  src={require("../images/" + obtenerImagenes[contadores])}
-                  alt=""
-                  className={styles.uno}
-                />
-              </figure>
-            </div>
 
           </>
         );

@@ -13,19 +13,24 @@ html{
     background-color: #131a22;
     width: 18.75%;
     height: 100%;
-    padding: 20px;
+    padding: 20px 0;
     min-width: 200px;
     min-height: 100vh;
     display: flex;
     align-content: space-between;
     flex-wrap: wrap;
 }
-.navegacion p{
-    margin: 3px;
-}
+.triangleleft {
+    position: absolute;
+    right: 0px;
+    margin-left: 10px;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid #0000;
+  }
 .head{
     width: 100%;
-    height: 60%;
+    height: 100%;
     padding-top: 15px;
     display: flex;
     flex-wrap: wrap;
@@ -35,13 +40,14 @@ html{
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 5px;
+    height: 160px;
 }
 .head figcaption{
     text-align: center;
     color:#fff;
     width: 100%;
     font-size: 20px;
-    font-family:roboto-r;
+    font-family:roboto-l;
 }
 .head figure img{
     height: 120px;
@@ -52,29 +58,47 @@ html{
 }
 .head i{
     color: #fff;
-    width: 100%;
     display: inline;
-    margin: 20px 0 0 0;
-    font-size: 20px;
-}
-.head i p{
-    display: inline;
-    color: #fff;
-    margin-left: 10px;
-    font-family:roboto-r;
-}
-.head .opciones{
-    width: 100%;
-    margin-left: 30px;
-    color: #fff;
-    font-family:roboto-r;
+    font-size: 25px;
 }
 .head .opciones2{
-    width: 100%;
-    margin-left: 50px;
+    text-transform: uppercase;
+    text-align: right;
     color: #fff;
+    margin-left: 10px;
+    font-size: 18px;
     font-family:roboto-l;
+}
+.contenido{
+    position: relative;
+    height: calc(100vh - 200px);
+    min-height: calc(100% - 200px);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+}
+.contenido span{
+    width: 100%;
+    padding: 0 0 0 35px;
+    height: calc(100% / 9);
+    display: flex;
+    justify-content: left;
+    align-items: center;
     cursor:pointer;
+}
+.contenido span:hover{
+    background-color: #fff1;
+    transition-property: all;
+    transition-duration: .3s;
+}
+.contenido span:hover > .triangleleft{
+    border-right: 20px solid #fff;
+    transition-property: all;
+    transition-duration: .3s;
+}
+.contenido span:hover > p{
+    font-family: roboto-r;
 }
 .navegacion figure{
     width: 100%;
@@ -114,7 +138,74 @@ html{
 #mostrar{
     display: none;
 }
+hr{
+    border: none;
+    outline: 0.1px solid #fff1;
+    width: 90%;
+    margin: auto;
+}
+/**/
+.borroso{
+    position: fixed;
+    z-index: 350;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #3a3a3a9f;
+  }
+  .span aside .contenedor span{
+    width: 90%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: #eee;
+  }
+  .slider{
+    width: 500px;
+    min-height: 300px;
+    max-height: 500px;
+    position: fixed;
+    z-index: 400;
+    box-shadow: 0 8px 32px 0 #000;
+    top: 50%;
+    border-radius: 20px;
+    overflow:hidden;
+    left: 50%;
+    padding: 0;
+    transform: translate(-50%, -50%);
+  }
+  .slider span{
+    width: 400%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  .carril section{
+    width: calc(100% / 4);
+    height: 100%;
+  }
+  .carril img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+  }
 @media only screen and (max-width: 600px) {
+    .slider{
+        width: 300px;
+        min-height: 210px;
+        max-height: 400px;
+    }
+    .triangleleft{
+        border:none;
+    }
+    .contenido span{
+        padding: 0 0 0 10px;
+    }
+    .contenido span:hover > .triangleleft{
+        border:none;
+    }
     .contenedores{
         width: 100%;
     }
@@ -139,5 +230,12 @@ html{
         z-index: 10;
         font-weight: bold;
         cursor:pointer;
+    }
+}
+@media only screen and (max-width: 360px) {
+    .slider{
+        width: 250px;
+        min-height: 150px;
+        max-height: 300px;
     }
 }
