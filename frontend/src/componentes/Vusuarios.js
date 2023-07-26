@@ -10,6 +10,9 @@ export default function Vusuarios() {
   const [botones, setBotones] = useState(false);
   const [nArchivo, setNarchivo] = useState("default_avatar.jpg");
   const [archivo, setArchivo] = useState(null);
+  const [slider, setSlider] = useState(false);
+  const [imagen, setImagen]=useState("");
+  const [borroso, setBorroso] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,9 +49,8 @@ export default function Vusuarios() {
           `http://localhost:8081/api/usuarios/EliminarUsuario/${usuarioId}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
-          console.log("Admin eliminado correctamente");
           setNeedsUpdate(true);
-          Swal.fire('Admin ocultado correctamente');
+          Swal.fire('Usuario eliminado correctamente');
         } else {
           console.log("Error al eliminar admin");
         }
@@ -210,8 +212,27 @@ export default function Vusuarios() {
       }
     }
   };
+  const mostrar2 = (image) => {
+    setImagen(image)
+    setBorroso(true);
+    setSlider(true)
+  };
+  const ocultar2 = () => {
+    setBorroso(false);
+    setSlider(false)
+  };
   return (
     <>
+      {borroso && <div onClick={ocultar2} className={styles.borroso}></div>}
+      {slider && <article className={styles.slider}>
+        <span id="carril" className={styles.carril}>
+          <section className="mod">
+            <img
+              src={require("../images/avatares/" + imagen)}
+            />
+          </section>
+        </span>
+      </article>}
       <section className={styles.vusuarios}>
         <h1>Usuarios:</h1>
         <div className={styles.scroll}>
@@ -279,11 +300,10 @@ export default function Vusuarios() {
                     </td>
                     <td>
                       {!modifiedRows[valor] ? (
-                        <input
-                          type="text"
-                          id={"4" + lista.Id}
-                          disabled={!modifiedRows[valor]}
-                          value={lista.Avatar}
+                        <img
+                          onClick={()=>mostrar2(lista.Avatar)}
+                          className={styles.iconos}
+                          src={require("../images/avatares/" + lista.Avatar)}
                         />
                       ) : (
                         <div className={styles.subir}>

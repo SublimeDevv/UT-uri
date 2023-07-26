@@ -8,11 +8,14 @@ import axios from "axios";
 function Header() {
   const { usuario, setUsuario } = useContext(UserContext);
 
-  const [borroso, setBorroso] = useState(false);
+  const [borroso2, setBorroso2] = useState(false);
   const [EstadoUsuario, setEstadoUsuario] = useState(false);
   const [interfaz, setInterfaz] = useState(false);
   const [ocultarojo, setOcultarojo] = useState(true);
   const [ocultarojo2, setOcultarojo2] = useState(true);
+  const [borroso, setBorroso] = useState(false);
+  const [slider, setSlider] = useState(false);
+  const [imagen, setImagen] = useState("")
   const navigate = useNavigate();
   const [body, setBody] = useState({
     nombre: "",
@@ -28,6 +31,7 @@ function Header() {
   });
   const [nArchivo, setNarchivo] = useState(usuario.Avatar);
   const [archivo, setArchivo] = useState(null);
+  const [sub, setSub] = useState([]);
   const [clas, setClas] = useState(`${style.interfaz} ${style.ocultar}`);
   const [clas2, setClas2] = useState({
     nombre: "",
@@ -35,13 +39,14 @@ function Header() {
     contrasenia: "",
     contrasenia2: "",
   });
+
   const mostrar = () => {
     setClas(style.interfaz);
-    setBorroso(true);
+    setBorroso2(true);
   };
   const ocultar = () => {
     setClas(`${style.interfaz} ${style.ocultar}`);
-    setBorroso(false);
+    setBorroso2(false);
   };
   const seleccionar = (e) => {
     if (e.target.files[0]) {
@@ -79,6 +84,23 @@ function Header() {
         setNarchivo(usuario.Avatar);
       }, 3000);
     }
+    const fetchData = async () => {
+      try {
+        const subRespuesta = await axios.get(
+          `http://localhost:8081/api/subcategorias/Subcategorias`
+        );
+
+        if (subRespuesta.data.Estatus === "EXITOSO") {
+          setSub(subRespuesta.data.Resultado);
+          console.log(sub);
+        } else {
+          console.log("Error obteniendo registros de lugares");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
   const enviar = async () => {
     if (body.nombre.length > 0 || body.apellido.length > 0 || body.contrasenia.length > 0 || body.contrasenia2.length > 0 || nArchivo !== usuario.Avatar) {
@@ -220,9 +242,28 @@ function Header() {
   const toggleMostrarContrasenia2 = () => {
     setOcultarojo2(!ocultarojo2);
   };
+  const mostrar2 = (image) => {
+    setImagen(image)
+    setBorroso(true);
+    setSlider(true)
+  };
+  const ocultar2 = () => {
+    setBorroso(false);
+    setSlider(false)
+  };
   return (
     <>
-      {borroso && <div onClick={ocultar} className={style.borroso}></div>}
+      {borroso && <div onClick={ocultar2} className={style.borroso}></div>}
+      {slider && <article className={style.slider}>
+        <span id="carril" className={style.carril}>
+          <section className="mod">
+            <img
+              src={require("../images/avatares/" + imagen)}
+            />
+          </section>
+        </span>
+      </article>}
+      {borroso2 && <div onClick={ocultar} className={style.borroso2}></div>}
       <header id="encabezado" className={style.head}>
         <figure className={style.logo}>
           <Link className={style.a} to={"/"}>
@@ -242,7 +283,7 @@ function Header() {
                   <div className={style.banner}></div>
                   <div className={style.usuario}>
                     <figure>
-                      <img src={require("../images/avatares/" + usuario.Avatar)} alt="" id={style.imgUsuario} />
+                      <img onClick={() => mostrar2(usuario.Avatar)} src={require("../images/avatares/" + usuario.Avatar)} alt="" id={style.imgUsuario} />
                     </figure>
                     <p className={style.p1}>
                       {usuario.Nombre} {usuario.Apellido}
@@ -292,7 +333,7 @@ function Header() {
                     className={style.a}
                     to={"/"}
                     onClick={() => {
-                      setBorroso(false);
+                      setBorroso2(false);
                       localStorage.clear("token");
                       setEstadoUsuario(false);
                       setInterfaz(false);
@@ -317,6 +358,7 @@ function Header() {
             <option value="explorar">Explorar</option>
             <option value="categorias">Categorías</option>
             <option value="productos">Productos</option>
+            
           </select>
           <Link className={style.a} to={"/quienes_somos"}>
             Quiénes somos

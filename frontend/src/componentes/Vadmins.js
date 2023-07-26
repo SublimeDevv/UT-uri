@@ -12,6 +12,9 @@ export default function Vadmins() {
   const [botones, setBotones] = useState(false);
   const [nArchivo, setNarchivo] = useState("default_avatar.jpg");
   const [archivo, setArchivo] = useState(null);
+  const [slider, setSlider] = useState(false);
+  const [imagen, setImagen]=useState("");
+  const [borroso, setBorroso] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,10 +39,10 @@ export default function Vadmins() {
 
   const borrar = async (adminId) => {
     if (usuario.Id === adminId)
-    return Swal.fire({
-      icon: "error",
-      title: "No puedes eliminarte a ti mismo.",
-    });
+      return Swal.fire({
+        icon: "error",
+        title: "No puedes eliminarte a ti mismo.",
+      });
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
       text: 'Se borrará permanentemente',
@@ -101,7 +104,7 @@ export default function Vadmins() {
       const apellidoUsuario = apellido.value;
       const correoUsuario = correo.value;
       const contraseniaUsuario = null;
-      const avatarUsuario = nArchivo ===   "default_avatar.jpg" ? null : nArchivo;;
+      const avatarUsuario = nArchivo === "default_avatar.jpg" ? null : nArchivo;;
       const rolId = null;
       const fecha = null;
       if (nArchivo !== "default_avatar.jpg") {
@@ -117,7 +120,7 @@ export default function Vadmins() {
             localStorage.setItem("usuario", JSON.stringify(datosUsuario));
           }
         } catch (error) {
-          console.log("Error al actualizar la foto del usuarrio: "+ error)
+          console.log("Error al actualizar la foto del usuarrio: " + error)
         }
       }
       try {
@@ -153,7 +156,7 @@ export default function Vadmins() {
         [valor]: false,
       }));
       setBotones(false);
-    }else {
+    } else {
       let nombre = document.getElementById("1" + valor);
       let apellido = document.getElementById("2" + valor);
       let correo = document.getElementById("3" + valor);
@@ -202,7 +205,7 @@ export default function Vadmins() {
     }
   };
   const cambiar = async (valor) => {
-    if (valor === usuario.Id ) return Swal.fire({title: "¡No puedes bajarte de rango a ti mismo!", icon: "warning"})
+    if (valor === usuario.Id) return Swal.fire({ title: "¡No puedes bajarte de rango a ti mismo!", icon: "warning" })
     const { value: confirmed } = await Swal.fire({
       title: '¿Estás seguro?',
       text: 'El administrador se volvera un usuario',
@@ -230,8 +233,27 @@ export default function Vadmins() {
       }
     }
   };
+  const mostrar2 = (image) => {
+    setImagen(image)
+    setBorroso(true);
+    setSlider(true)
+  };
+  const ocultar2 = () => {
+    setBorroso(false);
+    setSlider(false)
+  };
   return (
     <>
+      {borroso && <div onClick={ocultar2} className={styles.borroso}></div>}
+      {slider && <article className={styles.slider}>
+        <span id="carril" className={styles.carril}>
+          <section className="mod">
+            <img
+              src={require("../images/avatares/" + imagen)}
+            />
+          </section>
+        </span>
+      </article>}
       <section className={styles.vusuarios}>
         <h1>Administradores:</h1>
         <div className={styles.scroll}>
@@ -299,11 +321,10 @@ export default function Vadmins() {
                     </td>
                     <td>
                       {!modifiedRows[valor] ? (
-                        <input
-                          type="text"
-                          id={"4" + lista.Id}
-                          disabled={!modifiedRows[valor]}
-                          value={lista.Avatar}
+                        <img
+                          onClick={() => mostrar2(lista.Avatar)}
+                          className={styles.iconos}
+                          src={require("../images/avatares/" + lista.Avatar)}
                         />
                       ) : (
                         <div className={styles.subir}>
