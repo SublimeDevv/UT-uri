@@ -130,7 +130,7 @@ export default function Detalle() {
               </Link>
               <p>»</p>
               <Link to={"/detalles"} className={styles.a2}>
-                Detalles
+                {detalle.Nombre}
               </Link>
             </div>
             <span className={styles.span}>
