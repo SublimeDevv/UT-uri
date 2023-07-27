@@ -148,7 +148,6 @@ export default function Vlistas() {
                     <table>
                         <thead>
                             <td>Modificar</td>
-                            <td>Id</td>
                             <td>nombre</td>
                             <td>Descripcion</td>
                             <td>Dar de baja</td>
@@ -168,7 +167,6 @@ export default function Vlistas() {
                                                 </div>
                                             )}
                                         </td>
-                                        <td>{lista.Id}</td>
                                         <td><input type="text" id={"1" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Nombre} /></td>
                                         <td><textarea id={"2" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Descripcion} /></td>
                                         <td><button disabled={botones} onClick={() => borrar(valor)}><i class="nf nf-md-transfer_down"></i></button></td>

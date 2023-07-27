@@ -157,10 +157,9 @@ export default function Vsubcategorias() {
           <table>
             <thead>
               <td>Modificar</td>
-              <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
-              <td>Categoria ID</td>
+              <td>Categoria</td>
               <td>Dar de baja</td>
             </thead>
             {listas.map((lista, index) => {
@@ -187,7 +186,6 @@ export default function Vsubcategorias() {
                         </div>
                       )}
                     </td>
-                    <td>{lista.Id}</td>
                     <td>
                       <input
                         type="text"
@@ -203,7 +201,7 @@ export default function Vsubcategorias() {
                         value={lista.Descripcion}
                       />
                     </td>
-                    <td>{lista.CategoriaID}</td>
+                    <td>{lista.CategoriasNombre}</td>
                     <td>
                       <button disabled={botones} onClick={() => borrar(valor)}>
                         <i class="nf nf-md-transfer_down"></i>

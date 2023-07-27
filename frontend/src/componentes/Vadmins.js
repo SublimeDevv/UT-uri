@@ -54,8 +54,8 @@ export default function Vadmins() {
 
     if (confirmed) {
       try {
-        const respuesta = await axios.put(
-          `http://localhost:8081/api/usuarios/EliminarAdministrador/${adminId}`
+        const respuesta = await axios.delete(
+          `http://localhost:8081/api/usuarios/EliminarUsuario/${adminId}`
         );
         if (respuesta.data.Estatus === "EXITOSO") {
           Swal.fire('Administrador eliminado');
@@ -141,10 +141,6 @@ export default function Vadmins() {
           Swal.fire(
             'Datos Actualizados'
           );
-          setNeedsUpdate(true);
-          setTimeout(() => {
-            obtenerUsuarioActual()
-          }, 1500);
         } else {
           console.log("Error al modificar al usuario");
         }
@@ -169,6 +165,12 @@ export default function Vadmins() {
       }));
       setBotones(false);
     }
+    setTimeout(() => {
+      setNeedsUpdate(true);
+      setTimeout(() => {
+        obtenerUsuarioActual()
+      }, 1500);
+    }, 1000);
   };
   const modificar = (valor) => {
     let nombre = document.getElementById("1" + valor);
@@ -260,7 +262,6 @@ export default function Vadmins() {
           <table>
             <thead>
               <td>Modificar</td>
-              <td>id</td>
               <td>nombres</td>
               <td>apellidos</td>
               <td>correo</td>
@@ -294,7 +295,6 @@ export default function Vadmins() {
                         </div>
                       )}
                     </td>
-                    <td>{lista.Id}</td>
                     <td>
                       <input
                         type="text"

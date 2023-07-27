@@ -57,7 +57,6 @@ export default function AltasCategorias() {
         <div className={styles.scroll}>
           <table>
             <thead>
-              <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
               <td>Dar de alta</td>
@@ -67,7 +66,6 @@ export default function AltasCategorias() {
               return (
                 <>
                   <tr key={lista.Id}>
-                    <td>{lista.Id}</td>
                     <td>{lista.Nombre}</td>
                     <td>{lista.Descripcion}</td>
                     <td>

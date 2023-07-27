@@ -67,7 +67,6 @@ export default function AltasEtiquetas() {
         <div className={styles.scroll}>
           <table>
             <thead>
-              <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
               <td>Categoria ID</td>
@@ -78,7 +77,6 @@ export default function AltasEtiquetas() {
               return (
                 <>
                   <tr>
-                    <td>{lista.Id}</td>
                     <td>
                       <input
                         type="text"

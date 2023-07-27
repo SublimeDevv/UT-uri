@@ -57,7 +57,6 @@ export default function AltasLugares() {
         <div className={styles.scroll}>
           <table>
             <thead>
-              <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
               <td>nombre categorias</td>
@@ -68,7 +67,6 @@ export default function AltasLugares() {
               return (
                 <>
                   <tr>
-                    <td>{lista.Id}</td>
                     <td>{lista.Nombre}</td>
                     <td><textarea disabled="true">{lista.Informacion}</textarea></td>
                     <td>{lista.CategoriasNombre}</td>

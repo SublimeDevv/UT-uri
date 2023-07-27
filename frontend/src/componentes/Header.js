@@ -326,7 +326,7 @@ function Header() {
                       <label for="documento">Selecciona una imagen</label>
                     </button>
                     <span>
-                      <button onClick={enviar}>Editar Perfil</button>
+                      <button onClick={enviar}>Guardar cambios</button>
                     </span>
                   </div>
                   <Link

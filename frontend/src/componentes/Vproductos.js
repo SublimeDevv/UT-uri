@@ -157,7 +157,6 @@ export default function Vproductos() {
           <table>
             <thead>
               <td>Modificar</td>
-              <td>Id</td>
               <td>nombre</td>
               <td>Descripcion</td>
               <td>Dar de baja</td>
@@ -186,7 +185,6 @@ export default function Vproductos() {
                         </div>
                       )}
                     </td>
-                    <td>{lista.Id}</td>
                     <td>
                       <input
                         type="text"

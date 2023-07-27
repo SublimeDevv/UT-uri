@@ -11,7 +11,7 @@ export default function Vusuarios() {
   const [nArchivo, setNarchivo] = useState("default_avatar.jpg");
   const [archivo, setArchivo] = useState(null);
   const [slider, setSlider] = useState(false);
-  const [imagen, setImagen]=useState("");
+  const [imagen, setImagen] = useState("");
   const [borroso, setBorroso] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
@@ -34,23 +34,21 @@ export default function Vusuarios() {
   }, [needsUpdate]);
   const borrar = async (valor) => {
     const { value: confirmed } = await Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Se borrará permanentemente',
-      icon: 'warning',
+      title: "¿Estás seguro?",
+      text: "Se borrará permanentemente",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Sí, estoy seguro',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: "Sí, estoy seguro",
+      cancelButtonText: "Cancelar",
     });
 
     if (confirmed) {
       const usuarioId = valor;
       try {
-        const respuesta = await axios.delete(
-          `http://localhost:8081/api/usuarios/EliminarUsuario/${usuarioId}`
-        );
+        const respuesta = await axios.delete(`http://localhost:8081/api/usuarios/EliminarUsuario/${usuarioId}`);
         if (respuesta.data.Estatus === "EXITOSO") {
           setNeedsUpdate(true);
-          Swal.fire('Usuario eliminado correctamente');
+          Swal.fire("Usuario eliminado correctamente");
         } else {
           console.log("Error al eliminar admin");
         }
@@ -74,64 +72,63 @@ export default function Vusuarios() {
   };
   const enviar = async (valor) => {
     const { value: confirmed } = await Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Se modificaran los datos',
-      icon: 'warning',
+      title: "¿Estás seguro?",
+      text: "Se modificarán los datos",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Sí, estoy seguro',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: "Sí, estoy seguro",
+      cancelButtonText: "Cancelar",
     });
 
     if (confirmed) {
-      let nombre = document.getElementById("1" + valor);
-      let apellido = document.getElementById("2" + valor);
-      let correo = document.getElementById("3" + valor);
-      nombre.style.border = "none";
-      apellido.style.border = "none";
-      correo.style.border = "none";
       const usuarioId = valor;
-      const nombreUsuario = nombre.value;
-      const apellidoUsuario = apellido.value;
-      const correoUsuario = correo.value;
+      const nombreUsuario = document.getElementById("1" + valor).value;
+      const apellidoUsuario = document.getElementById("2" + valor).value;
+      const correoUsuario = document.getElementById("3" + valor).value;
       const contraseniaUsuario = null;
       const avatarUsuario = nArchivo === "default_avatar.jpg" ? null : nArchivo;
       const rolId = null;
       const fecha = null;
+
       if (nArchivo !== "default_avatar.jpg") {
         const imagen = new FormData();
         imagen.append("image", archivo);
+
         try {
           await axios.post("http://localhost:8081/api/imagenes/subirAvatares", imagen);
-          console.log("La foto del usuario se actualizo correctamente.")
+          console.log("La foto del usuario se actualizó correctamente.");
         } catch (error) {
-          console.log("Error al actualizar la foto del usuarrio: " + error)
+          console.log("Error al actualizar la foto del usuario: " + error);
         }
       }
+
       try {
-        const respuesta = await axios.put(
-          `http://localhost:8081/api/usuarios/ActualizarUsuario/${usuarioId}`,
-          {
-            nombreUsuario,
-            apellidoUsuario,
-            correoUsuario,
-            contraseniaUsuario,
-            avatarUsuario,
-            rolId,
-            fecha,
-          }
-        );
+        const respuesta = await axios.put(`http://localhost:8081/api/usuarios/ActualizarUsuario/${usuarioId}`, {
+          nombreUsuario,
+          apellidoUsuario,
+          correoUsuario,
+          contraseniaUsuario,
+          avatarUsuario,
+          rolId,
+          fecha,
+        });
+
         if (respuesta.data.Estatus === "EXITOSO") {
           console.log("Usuario modificado correctamente");
-          Swal.fire(
-            'Usuario modificado correctamente'
-          );
-          setNeedsUpdate(true);
+          Swal.fire("Datos actualizados");
+          let nombre = document.getElementById("1" + valor);
+          let apellido = document.getElementById("2" + valor);
+          let correo = document.getElementById("3" + valor);
+          nombre.style.border = "none";
+          apellido.style.border = "none";
+          correo.style.border = "none";
         } else {
           console.log("Error al modificar al usuario");
         }
       } catch (error) {
         console.log(error);
       }
+
       setModifiedRows((prevModifiedRows) => ({
         ...prevModifiedRows,
         [valor]: false,
@@ -150,7 +147,11 @@ export default function Vusuarios() {
       }));
       setBotones(false);
     }
+    setTimeout(() => {
+      setNeedsUpdate(true);
+    }, 1000);
   };
+
   const modificar = (valor) => {
     let nombre = document.getElementById("1" + valor);
     let apellido = document.getElementById("2" + valor);
@@ -186,60 +187,55 @@ export default function Vusuarios() {
   };
   const cambiar = async (valor) => {
     const { value: confirmed } = await Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'El usuario tendrá los mismos permisos que un administrador.',
-      icon: 'warning',
+      title: "¿Estás seguro?",
+      text: "El usuario tendrá los mismos permisos que un administrador.",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Sí, estoy seguro',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: "Sí, estoy seguro",
+      cancelButtonText: "Cancelar",
     });
 
     if (confirmed) {
       const nuevoRol = 1;
       try {
-        await axios.put(
-          `http://localhost:8081/api/usuarios/CambiarRolUsuario/${valor}`,
-          {
-            nuevoRol: nuevoRol,
-          }
-        );
+        await axios.put(`http://localhost:8081/api/usuarios/CambiarRolUsuario/${valor}`, {
+          nuevoRol: nuevoRol,
+        });
         Swal.fire({
-          icon: 'success',
-          title: 'Rol cambiado exitosamente',
+          icon: "success",
+          title: "Rol cambiado exitosamente",
         });
         setNeedsUpdate(true);
-      } catch (error) {
-      }
+      } catch (error) {}
     }
   };
   const mostrar2 = (image) => {
-    setImagen(image)
+    setImagen(image);
     setBorroso(true);
-    setSlider(true)
+    setSlider(true);
   };
   const ocultar2 = () => {
     setBorroso(false);
-    setSlider(false)
+    setSlider(false);
   };
   return (
     <>
       {borroso && <div onClick={ocultar2} className={styles.borroso}></div>}
-      {slider && <article className={styles.slider}>
-        <span id="carril" className={styles.carril}>
-          <section className="mod">
-            <img
-              src={require("../images/avatares/" + imagen)}
-            />
-          </section>
-        </span>
-      </article>}
+      {slider && (
+        <article className={styles.slider}>
+          <span id="carril" className={styles.carril}>
+            <section className="mod">
+              <img src={require("../images/avatares/" + imagen)} />
+            </section>
+          </span>
+        </article>
+      )}
       <section className={styles.vusuarios}>
         <h1>Usuarios:</h1>
         <div className={styles.scroll}>
           <table>
             <thead>
               <td>Modificar</td>
-              <td>id</td>
               <td>nombres</td>
               <td>apellidos</td>
               <td>correo</td>
@@ -256,10 +252,7 @@ export default function Vusuarios() {
                   <tr>
                     <td>
                       {!modifiedRows[valor] ? (
-                        <button
-                          disabled={botones}
-                          onClick={() => modificar(valor)}
-                        >
+                        <button disabled={botones} onClick={() => modificar(valor)}>
                           <i class="nf nf-md-lead_pencil"></i>
                         </button>
                       ) : (
@@ -273,46 +266,21 @@ export default function Vusuarios() {
                         </div>
                       )}
                     </td>
-                    <td id={lista.Id}>{lista.Id}</td>
                     <td>
-                      <input
-                        type="text"
-                        id={"1" + lista.Id}
-                        disabled={!modifiedRows[valor]}
-                        value={lista.Nombre}
-                      />
+                      <input type="text" id={"1" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Nombre} />
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        id={"2" + lista.Id}
-                        disabled={!modifiedRows[valor]}
-                        value={lista.Apellido}
-                      />
+                      <input type="text" id={"2" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Apellido} />
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        id={"3" + lista.Id}
-                        disabled={!modifiedRows[valor]}
-                        value={lista.Correo}
-                      />
+                      <input type="text" id={"3" + lista.Id} disabled={!modifiedRows[valor]} value={lista.Correo} />
                     </td>
                     <td>
                       {!modifiedRows[valor] ? (
-                        <img
-                          onClick={()=>mostrar2(lista.Avatar)}
-                          className={styles.iconos}
-                          src={require("../images/avatares/" + lista.Avatar)}
-                        />
+                        <img onClick={() => mostrar2(lista.Avatar)} className={styles.iconos} src={require("../images/avatares/" + lista.Avatar)} />
                       ) : (
                         <div className={styles.subir}>
-                          <input
-                            type="file"
-                            id={"4" + lista.Id}
-                            accept=".jpg,.jpeg,.png"
-                            onChange={seleccionar}
-                          />
+                          <input type="file" id={"4" + lista.Id} accept=".jpg,.jpeg,.png" onChange={seleccionar} />
                           <button>
                             <label for={"4" + lista.Id}>Imagen</label>
                           </button>
@@ -320,7 +288,16 @@ export default function Vusuarios() {
                       )}
                     </td>
                     <td>{fecha[0]}</td>
-                    <td><button disabled={botones} onClick={() => { cambiar(valor) }}><i class="nf nf-md-transfer_up"></i></button></td>
+                    <td>
+                      <button
+                        disabled={botones}
+                        onClick={() => {
+                          cambiar(valor);
+                        }}
+                      >
+                        <i class="nf nf-md-transfer_up"></i>
+                      </button>
+                    </td>
                     <td>
                       <button disabled={botones} onClick={() => borrar(valor)}>
                         <i class="nf nf-cod-trash"></i>
